@@ -8,10 +8,32 @@ Team Members: Karen, Steven, Kalvin
 
 </br>
 
-<strong> Live Application: </strong>
+<strong> Live Application: <--Live Link here --> </strong>
 <strong>App type:</strong> Fullstack Serverless App<br/>
 <strong>Description:</strong> A dating designed for applications for gamers.
 <br/>
+</br>
+
+<details>
+
+<summary> :key: &nbsp; INSTALLATION INSTRUCTIONS HERE! </summary>
+<br/>
+<b>React Client </b> <br/>
+<ol>
+    <li>Clone the <a href="https://github.com/BCIT-SSD-2020-21/front-end-team1.git">AFK & Chill Repo</a> to your Local machine</li>
+    <li> Step 2</li>
+    <li>Step 3</li>
+</ol>
+<b></b>
+<ol>
+<li>Step 1</li>
+    <li>Step 2</li>
+    <li>Step 3</li>
+    
+</ol>
+</details>
+
+</br>
 
 ## :bookmark_tabs: &nbsp; FEATURE LIST
 
@@ -47,6 +69,8 @@ Team Members: Karen, Steven, Kalvin
 
 ### Use Case Diagram:
 
+</br>
+
 ### Low-Fidelity Prototype:
 
 Login:
@@ -69,3 +93,5 @@ All posts:
 
 Messaging:
 <img src="https://i.imgur.com/PYmLIM4.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+## References / Resources
