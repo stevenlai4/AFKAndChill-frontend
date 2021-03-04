@@ -28,8 +28,6 @@ Team Members: Karen, Steven, Kalvin
 1. Match with people that actually play the game (hard code). Ex. Hours played in game. Allows user to enter how many hours in game.
 2. User can only respond to the posts, if both users like each other
 3. filter how many profiles you can see.
-4.
-5.
 
 ### Functional Requirements
 
@@ -51,6 +49,23 @@ Team Members: Karen, Steven, Kalvin
 
 ### Low-Fidelity Prototype:
 
+Login:
 <img src="https://i.imgur.com/em7g9HG.png" alt="Low Fidelity for AFK & Chill" width="100%" />
 
-### ER Diagram
+Register:
+<img src="https://i.imgur.com/9LRtxFp.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+User bio:
+<img src="https://i.imgur.com/R2DoXRM.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+Match selection:
+<img src="https://i.imgur.com/O41YY8e.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+Creating a post:
+<img src="https://i.imgur.com/aIuVUL1.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+All posts:
+<img src="https://i.imgur.com/oIYj8VU.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+Messaging:
+<img src="https://i.imgur.com/PYmLIM4.png" alt="Low Fidelity for AFK & Chill" width="100%" />
