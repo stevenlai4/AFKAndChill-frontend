@@ -67,7 +67,9 @@ Team Members: Karen, Steven, Kalvin
 
 ## :file_folder: &nbsp; SUPPORTING DOCUMENTS
 
-### Use Case Diagram:
+### Database Diagram:
+
+<img src="https://i.imgur.com/To9YczG.png" alt="Low Fidelity for AFK & Chill" width="100%" />
 
 </br>
 
@@ -80,7 +82,7 @@ Register:
 <img src="https://i.imgur.com/9LRtxFp.png" alt="Low Fidelity for AFK & Chill" width="100%" />
 
 User bio:
-<img src="https://i.imgur.com/R2DoXRM.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+<img src="https://i.imgur.com/iQiwQLu.png" alt="Low Fidelity for AFK & Chill" width="100%" />
 
 Match selection:
 <img src="https://i.imgur.com/O41YY8e.png" alt="Low Fidelity for AFK & Chill" width="100%" />
