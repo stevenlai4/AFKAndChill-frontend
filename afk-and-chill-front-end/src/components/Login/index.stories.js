@@ -1,7 +1,7 @@
 import React from "react";
 import { actions } from "@storybook/addon-actions";
 
-import Login from "./Login";
+import Login from "../login";
 
 export default {
     title: "Login",
