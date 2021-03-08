@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { Auth } from "aws-amplify";
 
 import {
     TextField,
@@ -13,11 +14,16 @@ import {
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+
+    const submit = (e) => {
+        e.preventDefault();
+    };
+
     return (
         <div>
             <Card>
                 <CardContent>
-                    <form>
+                    <form onSubmit={submit}>
                         <TextField
                             label="username"
                             value={username}
