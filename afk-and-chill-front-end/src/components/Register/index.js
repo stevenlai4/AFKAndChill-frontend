@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import { Auth } from 'aws-amplify';
-import { Button } from "@material-ui/core";
-import { useHistory } from 'react-router-dom';
+// import { Button } from "@material-ui/core";
+// import { useHistory } from 'react-router-dom';
 
-export default function Register({ authenticate }){
+export default function Register({ setisAuthenticated }){
 const [username, setUserName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -20,8 +20,8 @@ const handleSubmit = async event => {
           email: email
         }
       });
-      authenticate(true);
-      console.log("successfully")
+      setisAuthenticated(true);
+      console.log("successfully Register")
     //   history.push("/protected");
     } catch (error) {
         console.error(error.message)

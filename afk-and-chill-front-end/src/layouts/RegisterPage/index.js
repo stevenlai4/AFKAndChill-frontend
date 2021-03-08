@@ -1,19 +1,7 @@
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 import Register from '../../components/Register'
 
-export default function LoginPage() {
-//   const history = useHistory()
-  
-    const [isAuthenticated, setisAuthenticated] = useState(false);
+export default function LoginPage({setisAuthenticated}) {
 
-    const authenticateUser = (authState) => {
-      setisAuthenticated(authState);
-    }
-  
-    useEffect(() => {
-      console.log(`Authenticated: ${isAuthenticated}`);
-    }, [isAuthenticated]);
-  
-
-  return <Register authenticate={authenticateUser} />
+  return <Register setisAuthenticated={setisAuthenticated} />
 }
