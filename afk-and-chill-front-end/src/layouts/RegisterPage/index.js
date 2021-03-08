@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import Register from '../../components/Register'
 
 export default function LoginPage() {
@@ -16,9 +16,4 @@ export default function LoginPage() {
   
 
   return <Register authenticate={authenticateUser} />
-        // <Register 
-        //   onClose={onClose} 
-        //   login={login}
-        //   onSubmitSignUp ={onSubmitSignUp}
-        //   />
 }

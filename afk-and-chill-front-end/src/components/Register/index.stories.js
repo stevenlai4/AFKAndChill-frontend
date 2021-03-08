@@ -1,18 +1,18 @@
 
-// import React from 'react'
-// import { actions } from '@storybook/addon-actions'
+import React from 'react'
+import { actions } from '@storybook/addon-actions'
 
-// import Login from './index'
+import Register from './index'
 
-// export default {
-//   title: 'Login',
-//   component: Login,
-// }
+export default {
+  title: 'Register',
+  component: Register,
+}
 
-// const events = actions({ onSubmit: 'submit', onClose: 'close' })
+const events = actions({ onSubmit: 'submit', onClose: 'close' })
 
-// export const Default = () => (
-//   <Login 
-//   {...events}
-//   ></Login>
-// )
+export const Default = () => (
+  <Register 
+  {...events}
+  ></Register>
+)

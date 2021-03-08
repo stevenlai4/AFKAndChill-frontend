@@ -4,8 +4,6 @@ import { Button } from "@material-ui/core";
 import { useHistory } from 'react-router-dom';
 
 export default function Register({ authenticate }){
-const history = useHistory();
-
 const [username, setUserName] = useState("");
 const [email, setEmail] = useState("");
 const [password, setPassword] = useState("");
@@ -23,10 +21,10 @@ const handleSubmit = async event => {
         }
       });
       authenticate(true);
+      console.log("successfully")
     //   history.push("/protected");
     } catch (error) {
         console.error(error.message)
-      // handle cognito error
     }
     };
 
