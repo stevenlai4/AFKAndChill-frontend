@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { AppBar, Select, Link, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, TextField, InputLabel, FormControl, Button } from '@material-ui/core'
+import { Select, InputBase, MenuItem, TextField, FormControl, Button } from '@material-ui/core'
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -157,7 +157,7 @@ export default function Register(props){
             <h1>Preferences</h1>
             <p>What is your gender?</p>
             <FormControl className={classes.formControl}>
-              <Select required={true} onChange={e => setGender(e.target.value)}>
+              <Select defaultValue="other" required={true} onChange={e => setGender(e.target.value)}>
                 <MenuItem value="male">Male</MenuItem>
                 <MenuItem value="female">Female</MenuItem>
                 <MenuItem value="other">Other</MenuItem>
@@ -165,7 +165,7 @@ export default function Register(props){
             </FormControl>
             <p>What gender do you want to chill with?</p>
             <FormControl className={classes.formControl}>
-              <Select onChange={e => setGenderPref(e.target.value)}>
+              <Select defaultValue="other" required={true} onChange={e => setGenderPref(e.target.value)}>
                 <MenuItem value="male">Male</MenuItem>
                 <MenuItem value="female">Female</MenuItem>
                 <MenuItem value="other">Other</MenuItem>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,6 @@ const useStyles = makeStyles({
 
 function Login({ setisAuthenticated }) {
     const classes = useStyles();
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -25,13 +24,12 @@ function Login({ setisAuthenticated }) {
         e.preventDefault();
         try {
             // cognito login api
-            const user = await Auth.signIn({
+            await Auth.signIn({
                 username:email,
                 password,
             });
             setisAuthenticated(true);
             console.log("Login Successful");
-            //   history.push("/protected");
         } catch (error) {
             console.error(error.message);
         }
