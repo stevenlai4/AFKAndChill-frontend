@@ -24,12 +24,13 @@ function Login({ setisAuthenticated }) {
         e.preventDefault();
         try {
             // cognito login api
-            await Auth.signIn({
+            const user = await Auth.signIn({
                 username:email,
                 password,
             });
             setisAuthenticated(true);
             console.log("Login Successful");
+            console.log(user)
         } catch (error) {
             console.error(error.message);
         }

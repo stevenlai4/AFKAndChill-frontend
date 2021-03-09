@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { Select, InputBase, MenuItem, TextField, FormControl, Button } from '@material-ui/core'
+import { Select, InputBase, MenuItem, TextField, FormControl, Button,Typography  } from '@material-ui/core'
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -105,9 +105,10 @@ export default function Register(props){
                     className="input"
                     id="username"
                     value={username}
+                    autoComplete="on"
                     onChange={e => setUserName(e.target.value)}
                 />
-            </p>
+            </p >
             <p className="control">
               <TextField
                 required={true}
@@ -117,6 +118,7 @@ export default function Register(props){
                 id="email"
                 className="input"
                 value={email}
+                autoComplete="on"
                 onChange={e => setEmail(e.target.value)}
               />
             </p>
@@ -129,6 +131,7 @@ export default function Register(props){
                     type="password"
                     id="password"
                     value={password}
+                    autoComplete="on"
                     onChange={e => setPassword(e.target.value)}
                 />
             </p>
@@ -141,10 +144,11 @@ export default function Register(props){
                     type="password"
                     id="confirmPassword"
                     value={confirmPassword}
+                    autoComplete="on"
                     onChange={e => setConfirmPassword(e.target.value)}
                 />
             </p>
-            </div>   
+            </div>
             <div>
             <input 
                     filename={file} 
@@ -172,7 +176,7 @@ export default function Register(props){
               </Select>
             </FormControl>
             <p>Games to chill with:</p>
-            <form className={classes.search} onSubmit={onSearch}>
+            <div className={classes.search} onSubmit={onSearch}>
                 <div className={classes.searchIcon}>
                     <SearchIcon />
                 </div>
@@ -186,7 +190,7 @@ export default function Register(props){
                 }}
                 inputProps={{ 'aria-label': 'search' }}
                 />
-            </form>
+            </div>
             <p className="control">
                 <Button variant="contained" color="primary" type="submit" id="Register">Submit</Button>
             </p>
