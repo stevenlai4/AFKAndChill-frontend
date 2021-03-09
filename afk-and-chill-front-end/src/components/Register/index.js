@@ -2,24 +2,25 @@ import React, {useState} from 'react';
 import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { AppBar, Avatar, Link, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu } from '@material-ui/core'
+import { AppBar, Select, Link, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, TextField, InputLabel, FormControl, Button } from '@material-ui/core'
 // import { Button } from "@material-ui/core";
 // import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-        position: "fixed",
-        top: 0,
-        width: "100%",
-        zIndex: 1000
+      flexGrow: 1,
+      position: "fixed",
+      top: 0,
+      width: "100%",
+      zIndex: 1000
       },
+    formControl: {
+      minWidth:100
+    },
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
-      borderWidth:10,
-    //   borderColor: theme.palette.info.dark,
-      backgroundColor: fade(theme.palette.info.light, 0.50),
+      backgroundColor: fade(theme.palette.text.secondary, 0.05),
       marginRight: theme.spacing(2),
       marginLeft: 0,
       width: '100%',
@@ -54,7 +55,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Register({ setisAuthenticated,props }){
     const classes = useStyles()
+
     const [search, setSearch] = useState("")
+    const [genderPref, setGenderPref] = useState("")
+    const [gender, setGender] = useState("")
 
     const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -87,76 +91,92 @@ export default function Register({ setisAuthenticated,props }){
 
  return (
     <section className="section auth">
-        <h1>Register</h1>
         <form onSubmit={handleSubmit}>
+            <h1>Register</h1>
             <p className="control">
-                <input
+                <TextField
+                    required={true}
                     type="text"
+                    label="username" 
+                    variant="outlined"
                     className="input"
                     id="username"
-                    placeholder="Enter username"
                     value={username}
                     onChange={e => setUserName(e.target.value)}
                 />
             </p>
             <p className="control">
-                <input
-                    type="email"
-                    id="email"
-                    className="input"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                />
+              <TextField
+                required={true}
+                label="email" 
+                variant="outlined"
+                type="email"
+                id="email"
+                className="input"
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
 
             </p>
             <p className="control">
-                <input
+                <TextField
+                    required={true}
+                    label="password" 
+                    variant="outlined"
                     className="input"
                     type="password"
                     id="password"
-                    placeholder="Password"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                 />
             </p>
             <p className="control">
-                <input
+                <TextField
+                    required={true}
+                    label="confirm password" 
+                    variant="outlined"
                     className="input"
                     type="password"
                     id="confirmPassword"
-                    placeholder="Confirm password"
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
                 />
             </p>
             <h1>Preferences</h1>
+            <p>What is your gender?</p>
+            <FormControl className={classes.formControl}>
+              <Select required={true} onChange={e => setGender(e.target.value)}>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
             <p>What gender do you want to chill with?</p>
-            <select name="genderPref" id="cars">
-                <option value="" disabled selected>Select select</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="other">Other</option>
-            </select>
+            <FormControl className={classes.formControl}>
+              <Select onChange={e => setGenderPref(e.target.value)}>
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
             <p>Games to chill with:</p>
-        <form className={classes.search} onSubmit={onSearch}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-            {console.log(search)}
-        </form>
+            <form className={classes.search} onSubmit={onSearch}>
+                <div className={classes.searchIcon}>
+                    <SearchIcon />
+                </div>
+                <InputBase
+                placeholder="Search…"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                />
+            </form>
             <p className="control">
-                <input type="submit" name="Register" className="button is-success" />
+                <Button variant="contained" color="primary" type="submit" id="Register">Submit</Button>
             </p>
         </form>
     </section>
