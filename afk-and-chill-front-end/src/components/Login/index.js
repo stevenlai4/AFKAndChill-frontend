@@ -1,10 +1,23 @@
 import React, { useState } from "react";
+import Card from "@material-ui/core/Card";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 
 import { TextField, Button } from "@material-ui/core";
 
+const useStyles = makeStyles({
+    root: {
+        maxWidth: 275,
+    },
+    title: {
+        fontSize: 14,
+    },
+});
+
 function Login({ authenticate }) {
+    const classes = useStyles();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -12,7 +25,7 @@ function Login({ authenticate }) {
         e.preventDefault();
         try {
             // cognito login api
-            await Auth.signIn({
+            const user = await Auth.signIn({
                 username,
                 password,
             });
@@ -26,43 +39,49 @@ function Login({ authenticate }) {
     };
 
     return (
-        <section className="Login-form">
-            <h1>Welcome to AFK & Chill</h1>
-            <form onSubmit={onSubmit}>
-                <p className="control">
-                    <TextField
-                        type="text"
-                        id="username"
-                        placeholder="username*"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </p>
-                <p className="control">
-                    <TextField
-                        type="password"
-                        id="password"
-                        placeholder="password*"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </p>
-                <p className="control">
-                    <Button
-                        variant="contained"
-                        className="button is-success"
-                        type="submit"
-                        name="Login"
-                    >
-                        Login
-                    </Button>
-                </p>
+        <section
+            className="Login-form"
+            style={{ flex: 1, flexDirection: "row" }}
+        >
+            <h1>AFK & Chill </h1>
+            <Card className={classes.root}>
+                <h3>Welcome to AFK & Chill</h3>
+                <form onSubmit={onSubmit}>
+                    <p className="control">
+                        <TextField
+                            type="text"
+                            id="username"
+                            placeholder="username*"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
+                    </p>
+                    <p className="control">
+                        <TextField
+                            type="password"
+                            id="password"
+                            placeholder="password*"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                    </p>
+                    <p className="control">
+                        <Button
+                            variant="contained"
+                            className="button is-success"
+                            type="submit"
+                            name="Login"
+                        >
+                            Login
+                        </Button>
+                    </p>
 
-                <p>
-                    Dont have an account?{" "}
-                    <Link to="/register">Create an Account</Link>
-                </p>
-            </form>
+                    <p>
+                        Dont have an account?{" "}
+                        <Link to="/register">Create an Account</Link>
+                    </p>
+                </form>
+            </Card>
         </section>
     );
 }
