@@ -59,6 +59,7 @@ export default function Register({ setisAuthenticated,props }){
     const [search, setSearch] = useState("")
     const [genderPref, setGenderPref] = useState("")
     const [gender, setGender] = useState("")
+    const [file, setFile] = useState()
 
     const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -92,6 +93,8 @@ export default function Register({ setisAuthenticated,props }){
  return (
     <section className="section auth">
         <form onSubmit={handleSubmit}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div> 
             <h1>Register</h1>
             <p className="control">
                 <TextField
@@ -116,7 +119,6 @@ export default function Register({ setisAuthenticated,props }){
                 value={email}
                 onChange={e => setEmail(e.target.value)}
               />
-
             </p>
             <p className="control">
                 <TextField
@@ -142,6 +144,16 @@ export default function Register({ setisAuthenticated,props }){
                     onChange={e => setConfirmPassword(e.target.value)}
                 />
             </p>
+            </div>   
+            <div>
+            <input 
+                    filename={file} 
+                    onChange={e => setFile(e.target.files[0])} 
+                    type="file" 
+                    accept="image/*"
+            ></input>
+            </div>
+            </div>
             <h1>Preferences</h1>
             <p>What is your gender?</p>
             <FormControl className={classes.formControl}>
