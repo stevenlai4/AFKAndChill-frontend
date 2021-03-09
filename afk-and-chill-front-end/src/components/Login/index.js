@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { TextField, Button } from "@material-ui/core";
 
-function Login({ setisAuthenticated }) {
+function Login({ authenticate }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -12,28 +12,28 @@ function Login({ setisAuthenticated }) {
         e.preventDefault();
         try {
             // cognito login api
-            await Auth.Login({
+            await Auth.signIn({
                 username,
                 password,
             });
-            setisAuthenticated(true);
+            authenticate(true);
             console.log("Login Successful");
             //   history.push("/protected");
         } catch (error) {
             console.error(error.message);
+            //handle cognito error
         }
     };
 
     return (
-        <section className="Login">
+        <section className="Login-form">
             <h1>Welcome to AFK & Chill</h1>
             <form onSubmit={onSubmit}>
                 <p className="control">
                     <TextField
                         type="text"
-                        className="input"
                         id="username"
-                        placeholder="Enter username"
+                        placeholder="username*"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                     />
@@ -42,8 +42,7 @@ function Login({ setisAuthenticated }) {
                     <TextField
                         type="password"
                         id="password"
-                        className="password"
-                        placeholder="Enter password"
+                        placeholder="password*"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -51,7 +50,7 @@ function Login({ setisAuthenticated }) {
                 <p className="control">
                     <Button
                         variant="contained"
-                        color="error"
+                        className="button is-success"
                         type="submit"
                         name="Login"
                     >
@@ -60,7 +59,7 @@ function Login({ setisAuthenticated }) {
                 </p>
 
                 <p>
-                    Dont have a an account?{" "}
+                    Dont have an account?{" "}
                     <Link to="/register">Create an Account</Link>
                 </p>
             </form>

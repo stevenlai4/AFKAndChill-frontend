@@ -17,9 +17,14 @@ function App() {
     return (
         <Router>
             {/* returns <Login setisAuthenticated={setisAuthenticated} />; */}
-            <Login setisAuthenticated={setisAuthenticated} />
+            {/* <Login setisAuthenticated={setisAuthenticated} /> */}
             <Switch>
-                <Route path="/register" component={Register} />
+                <Route path="/register">
+                    <Register setisAuthenticated={setisAuthenticated} />
+                </Route>
+                <Route exact path="/">
+                    <Login />
+                </Route>
             </Switch>
         </Router>
     );
