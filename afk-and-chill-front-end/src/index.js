@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Amplify from "aws-amplify";
 import config from "./config";
+
 Amplify.configure({
     Auth: {
         mandatorySignId: true,
@@ -13,6 +14,7 @@ Amplify.configure({
         userPoolWebClientId: config.cognito.APP_CLIENT_ID,
     },
 });
+
 ReactDOM.render(
     <React.StrictMode>
         <App />

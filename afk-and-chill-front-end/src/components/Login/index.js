@@ -1,30 +1,53 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
+import { Link } from "react-router-dom";
 
 import {
-    TextField,
-    Card,
-    CardContent,
-    CardHeader,
-    Button,
+    AppBar,
+    Select,
+    Link,
+    Toolbar,
+    IconButton,
     Typography,
+    InputBase,
+    Badge,
+    MenuItem,
+    Menu,
+    TextField,
+    InputLabel,
+    FormControl,
+    Button,
 } from "@material-ui/core";
 
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
-    const submit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
+        try {
+            // cognito login api
+            await Auth.Login({
+                username,
+                password,
+                attributes: {
+                    email: email,
+                },
+            });
+            setisAuthenticated(true);
+            console.log("Login Successful");
+            //   history.push("/protected");
+        } catch (error) {
+            console.error(error.message);
+        }
     };
 
     return (
-        <section className="section auth">
+        <section className="Login">
             <h1>Welcome to AFK & Chill</h1>
-            <form>
+            <form onSubmit={onSubmit}>
                 <p className="control">
-                    <input
+                    <TextField
                         type="text"
                         className="input"
                         id="username"
@@ -34,7 +57,7 @@ function Login() {
                     />
                 </p>
                 <p className="control">
-                    <input
+                    <TextField
                         type="password"
                         id="password"
                         className="password"
@@ -44,11 +67,19 @@ function Login() {
                     />
                 </p>
                 <p className="control">
-                    <input
+                    <Button
+                        variant="contained"
+                        color="error"
                         type="submit"
                         name="Login"
-                        className="button is-danger"
-                    />
+                    >
+                        Login
+                    </Button>
+                </p>
+
+                <p>
+                    Dont have a an account?{" "}
+                    <Link to="/register">Create an Account</Link>
                 </p>
             </form>
         </section>
