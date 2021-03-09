@@ -1,11 +1,6 @@
-// import {
-//   BrowserRouter as Router,
-//   Switch,
-//   Route,
-//   Link
-// } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
-//import Register from "./layouts/RegisterPage";
+import Register from "./layouts/RegisterPage";
 import Login from "./layouts/LoginPage";
 
 function App() {
@@ -19,7 +14,14 @@ function App() {
         console.log(`Authenticated: ${isAuthenticated}`);
     }, [isAuthenticated]);
 
-    return <Login setisAuthenticated={setisAuthenticated} />;
-    // return <Login setisAuthenticated={setisAuthenticated} />;
+    return (
+        <Router>
+            {/* returns <Login setisAuthenticated={setisAuthenticated} />; */}
+            <Login setisAuthenticated={setisAuthenticated} />
+            <Switch>
+                <Route path="/register" component={Register} />
+            </Switch>
+        </Router>
+    );
 }
 export default App;

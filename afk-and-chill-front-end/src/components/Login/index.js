@@ -2,24 +2,9 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 
-import {
-    AppBar,
-    Select,
-    Link,
-    Toolbar,
-    IconButton,
-    Typography,
-    InputBase,
-    Badge,
-    MenuItem,
-    Menu,
-    TextField,
-    InputLabel,
-    FormControl,
-    Button,
-} from "@material-ui/core";
+import { TextField, Button } from "@material-ui/core";
 
-function Login() {
+function Login({ setisAuthenticated }) {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -30,9 +15,6 @@ function Login() {
             await Auth.Login({
                 username,
                 password,
-                attributes: {
-                    email: email,
-                },
             });
             setisAuthenticated(true);
             console.log("Login Successful");
