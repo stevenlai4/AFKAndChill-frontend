@@ -15,10 +15,10 @@ const useStyles = makeStyles({
     },
 });
 
-function Login({ authenticate }) {
+function Login({ setisAuthenticated }) {
     const classes = useStyles();
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const onSubmit = async (e) => {
@@ -26,10 +26,10 @@ function Login({ authenticate }) {
         try {
             // cognito login api
             const user = await Auth.signIn({
-                username,
+                username:email,
                 password,
             });
-            authenticate(true);
+            setisAuthenticated(true);
             console.log("Login Successful");
             //   history.push("/protected");
         } catch (error) {
@@ -49,10 +49,10 @@ function Login({ authenticate }) {
                     <p className="control">
                         <TextField
                             type="text"
-                            id="username"
-                            placeholder="username*"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            id="email"
+                            placeholder="email*"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </p>
                     <p className="control">

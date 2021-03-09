@@ -3,8 +3,7 @@ import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { AppBar, Select, Link, Toolbar, IconButton, Typography, InputBase, Badge, MenuItem, Menu, TextField, InputLabel, FormControl, Button } from '@material-ui/core'
-// import { Button } from "@material-ui/core";
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,8 +52,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export default function Register({ setisAuthenticated,props }){
+export default function Register(props){
     const classes = useStyles()
+    const history = useHistory();
 
     const [search, setSearch] = useState("")
     const [genderPref, setGenderPref] = useState("")
@@ -76,15 +76,15 @@ export default function Register({ setisAuthenticated,props }){
         try {
         // cognito register api
         await Auth.signUp({
-            username,
+            username:email,
             password,
             attributes: {
-            email: email
+            email: email,
+            name:username
             }
         });
-        setisAuthenticated(true);
         console.log("Successfully Register")
-        //   history.push("/protected");
+        history.push("/");
         } catch (error) {
             console.error(error.message)
         }

@@ -20,10 +20,10 @@ function App() {
             {/* <Login setisAuthenticated={setisAuthenticated} /> */}
             <Switch>
                 <Route path="/register">
-                    <Register setisAuthenticated={setisAuthenticated} />
+                    <Register />
                 </Route>
                 <Route exact path="/">
-                    <Login />
+                    <Login setisAuthenticated={setisAuthenticated} />
                 </Route>
             </Switch>
         </Router>
