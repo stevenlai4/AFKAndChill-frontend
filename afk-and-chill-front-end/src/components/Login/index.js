@@ -34,7 +34,6 @@ function Login({ authenticate }) {
             //   history.push("/protected");
         } catch (error) {
             console.error(error.message);
-            //handle cognito error
         }
     };
 
