@@ -25,12 +25,12 @@ function Login({ setisAuthenticated }) {
         try {
             // cognito login api
             const user = await Auth.signIn({
-                username:email,
+                username: email,
                 password,
             });
             setisAuthenticated(true);
             console.log("Login Successful");
-            console.log(user)
+            console.log(user);
         } catch (error) {
             console.error(error.message);
         }
@@ -39,13 +39,13 @@ function Login({ setisAuthenticated }) {
     return (
         <section
             className="Login-form"
-            style={{ flex: 1, flexDirection: "row" }}
+            style={{ flex: "row", flexDirection: "column" }}
         >
             <h1>AFK & Chill </h1>
             <Card className={classes.root}>
                 <h3>Welcome to AFK & Chill</h3>
                 <form onSubmit={onSubmit}>
-                    <p className="control">
+                    <div className="control">
                         <TextField
                             type="text"
                             id="email"
@@ -53,8 +53,8 @@ function Login({ setisAuthenticated }) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                    </p>
-                    <p className="control">
+                    </div>
+                    <div className="control">
                         <TextField
                             type="password"
                             id="password"
@@ -62,8 +62,8 @@ function Login({ setisAuthenticated }) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                    </p>
-                    <p className="control">
+                    </div>
+                    <div className="control">
                         <Button
                             variant="contained"
                             className="button is-success"
@@ -72,12 +72,12 @@ function Login({ setisAuthenticated }) {
                         >
                             Login
                         </Button>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div>
                         Dont have an account?{" "}
                         <Link to="/register">Create an Account</Link>
-                    </p>
+                    </div>
                 </form>
             </Card>
         </section>
