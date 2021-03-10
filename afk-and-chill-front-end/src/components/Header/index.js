@@ -5,13 +5,32 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
 const Header = () => {
+    const history = useHistory();
+    const handleLogOut = async () => {
+        try {
+            await Auth.signOut();
+            console.log("Log Out successful");
+            history.push("/");
+        } catch (e) {
+            console.log(e.message);
+        }
+    };
+
     return (
         <Navbar expand="lg">
             <section>
                 <Navbar.Brand>
                     <h1>AFK & CHILL</h1>
                 </Navbar.Brand>
-                <h1>LOGOUT</h1>
+                <NavLink
+                    to="/"
+                    className=""
+                    onClick={() => {
+                        handleLogOut();
+                    }}
+                >
+                    LOGOUT
+                </NavLink>
                 <PersonIcon />
             </section>
             <Nav className="">
