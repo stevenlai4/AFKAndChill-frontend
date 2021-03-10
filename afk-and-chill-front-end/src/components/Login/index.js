@@ -25,12 +25,12 @@ function Login({ setisAuthenticated }) {
         try {
             // cognito login api
             const user = await Auth.signIn({
-                username:email,
+                username: email,
                 password,
             });
             setisAuthenticated(true);
             console.log("Login Successful");
-            console.log(user)
+            console.log(user);
         } catch (error) {
             console.error(error.message);
         }
@@ -39,7 +39,7 @@ function Login({ setisAuthenticated }) {
     return (
         <section
             className="Login-form"
-            style={{ flex: 1, flexDirection: "row" }}
+            style={{ flex: "row", flexDirection: "column" }}
         >
             <h1>AFK & Chill </h1>
             <Card className={classes.root}>
