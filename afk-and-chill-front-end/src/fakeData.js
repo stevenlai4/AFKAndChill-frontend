@@ -1,4 +1,4 @@
-export default [
+const fakeData = [
     {
       _id: "604830b960d88000078beaed",
       user_one:"60480a01be82a20008c2d887",
@@ -29,4 +29,6 @@ export default [
       ]
     }
   ];
+
+  export default fakeData;
   

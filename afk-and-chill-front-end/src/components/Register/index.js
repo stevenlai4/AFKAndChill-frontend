@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
-import { Select, InputBase, MenuItem, TextField, FormControl, Button,Typography  } from '@material-ui/core'
+import { Select, InputBase, MenuItem, TextField, FormControl, Button  } from '@material-ui/core'
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({

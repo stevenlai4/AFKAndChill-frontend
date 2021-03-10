@@ -3,7 +3,7 @@ import { actions } from '@storybook/addon-actions'
 
 import MessageForm from './index'
 
-export default {
+const messageForm = {
   title: 'Message Form',
   component: MessageForm,
 }
@@ -15,3 +15,5 @@ export const Default = () => (
   {...events}
   ></MessageForm>
 )
+
+export default messageForm;

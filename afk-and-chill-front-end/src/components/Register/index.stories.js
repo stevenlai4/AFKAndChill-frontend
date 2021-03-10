@@ -4,7 +4,7 @@ import { actions } from '@storybook/addon-actions'
 
 import Register from './index'
 
-export default {
+const register = {
   title: 'Register',
   component: Register,
 }
@@ -16,3 +16,5 @@ export const Default = () => (
   {...events}
   ></Register>
 )
+
+export default register;

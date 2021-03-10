@@ -1,10 +1,9 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Avatar, CardHeader, IconButton, Typography, Card, CardActionArea, CardActions, CardContent, CardMedia } from '@material-ui/core'
-import { Favorite, FavoriteBorder } from '@material-ui/icons'
+import { Avatar, CardHeader, Typography, Card, CardActions, CardContent, CardMedia } from '@material-ui/core'
 
-import CommentForm from '../MessageForm'
-import UserComment from '../UserMessage'
+import MessageForm from '../MessageForm'
+import UserMessage from '../UserMessage'
 
 const useStyles = makeStyles({
   root: {
@@ -23,50 +22,49 @@ const useStyles = makeStyles({
     justifyContent: "space-between",
     margin: "0 10px",
   },
-  commentForm: {
+  messageForm: {
     width: "100%"
   },
-  comment: {
+  message: {
     margin: "10px 0"
   },
-  comments: {
+  messages: {
     overflowY: "scroll"
   }
 })
 
-export default function Post({className, post, submitComment, likeClicked}) {
+export default function ChatBox({className, message, submitMessage}) {
   const classes = useStyles()
 
-  const onComment = data => {
-    submitComment({postId: post._id, text: data.message})
+  const onMessage = data => {
+    submitMessage({messageId: message._id, text: data.message})
   }
 
   return (
     <Card className={`${classes.root} ${className}`}>
-
         <CardMedia className={classes.media}
           component="img"
-          image={post.imageUrl}
+          image={message.imageUrl}
         />
 
         <div className={classes.otherData}>
             <CardHeader
             avatar={
             <Avatar className={classes.avatar}>
-                {post.username[0]}
+                {message.username[0]}
             </Avatar>}
-            title={post.username}
+            title={message.username}
             />
-            <CardContent className={classes.comments}>
-            {post.messages.map(comment => (
-            <UserComment key={comment.id} className={classes.comment} comment={comment}></UserComment>
+            <CardContent className={classes.message}>
+            {message.messages.map(message => (
+            <UserMessage key={message.id} className={classes.message} message={message}></UserMessage>
             ))}
 
             </CardContent>
             <div>
                 <CardActions>
                 </CardActions>
-                <CommentForm className={classes.commentForm} onSubmit={onComment}></CommentForm>
+                <MessageForm className={classes.messageForm} onSubmit={onMessage}></MessageForm>
             </div>
         </div>
       

@@ -1,21 +1,18 @@
 import React from 'react'
-import PostDetails from './index'
+import ChatBox from './index'
 import { actions } from '@storybook/addon-actions'
 
 import data from '../../fakeData'
 
-const events = actions({ submitComment: 'Submit Comment', likeClicked: 'like clicked' })
+const events = actions({ submitMessage: 'Submit Message' })
 
-export default {
-  title: 'Post Details',
-  component: PostDetails,
+const chatBox = {
+  title: 'Chat box',
+  component: ChatBox,
 }
 
-export const WithComments = () => (
-  <PostDetails {...events} post={data[0]} />
+export const Default = () => (
+  <ChatBox {...events} message={data[0]} />
 )
 
-
-// export const NoComments = () => (
-//   <PostDetails {...events} post={{...data[0], comments: [], totalComments: 0}} />
-// )
+export default chatBox;
