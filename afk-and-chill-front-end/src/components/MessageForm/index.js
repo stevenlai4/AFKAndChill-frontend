@@ -18,24 +18,24 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function NewPost({onSubmit}) {
+export default function MessageForm({onSubmit}) {
   const classes = useStyles()
 
-  const [comment, setComment] = useState("")
+  const [message, setMessage] = useState("")
 
   const submit = event => {
     event.preventDefault()
-    onSubmit({comment})
-    setComment("")
+    onSubmit({message})
+    setMessage("")
   }
 
   return (
       <form onSubmit={submit} className={classes.form}>
       
         <TextField className={classes.textField} 
-        value={comment} 
+        value={message} 
         multiline 
-        onChange={e => setComment(e.target.value)} 
+        onChange={e => setMessage(e.target.value)} 
         label="Add a message"
         rowsMax={4}
         variant="filled"

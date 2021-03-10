@@ -1,17 +1,17 @@
 import React from 'react'
 import { actions } from '@storybook/addon-actions'
 
-import CommentForm from './index'
+import MessageForm from './index'
 
 export default {
   title: 'Comment Form',
-  component: CommentForm,
+  component: MessageForm,
 }
 
 const events = actions({ onSubmit: 'submit' })
 
 export const Default = () => (
-  <CommentForm 
+  <MessageForm 
   {...events}
-  ></CommentForm>
+  ></MessageForm>
 )
