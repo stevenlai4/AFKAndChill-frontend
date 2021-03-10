@@ -19,14 +19,14 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-export default function Comment({comment, className}) {
+export default function UserMessage({message, className}) {
   const classes = useStyles()
 
   return (
     <div className={clsx(classes.root, className)}>
-      <Avatar className={classes.avatar}>{comment.user.username[0]}</Avatar>
+      <Avatar className={classes.avatar}>{message.user.username[0]}</Avatar>
       <Typography className={classes.text} variant="body2" color="textPrimary" component="p">
-        <b>{comment.user.username}</b> {comment.text}
+        <b>{message.user.username}</b> {message.text}
       </Typography>
     </div>
   )
