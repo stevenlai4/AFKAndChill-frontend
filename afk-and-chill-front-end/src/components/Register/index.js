@@ -40,6 +40,14 @@ const useStyles = makeStyles((theme) => ({
     inputRoot: {
       color: 'inherit',
     },
+    register: {
+        display: 'flex', 
+        justifyContent: 'space-between' 
+    },
+    registerForm: {
+        flexDirection:'column',
+        display: 'flex'
+    },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
@@ -93,71 +101,70 @@ export default function Register(props){
  return (
     <section className="section auth">
         <form onSubmit={handleSubmit}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <div> 
-            <h1>Register</h1>
-            <p className="control">
-                <TextField
-                    required={true}
-                    type="text"
-                    label="username" 
-                    variant="outlined"
-                    className="input"
-                    id="username"
-                    value={username}
-                    autoComplete="on"
-                    onChange={e => setUserName(e.target.value)}
-                />
-            </p >
-            <p className="control">
-              <TextField
-                required={true}
-                label="email" 
-                variant="outlined"
-                type="email"
-                id="email"
-                className="input"
-                value={email}
-                autoComplete="on"
-                onChange={e => setEmail(e.target.value)}
-              />
-            </p>
-            <p className="control">
-                <TextField
-                    required={true}
-                    label="password" 
-                    variant="outlined"
-                    className="input"
-                    type="password"
-                    id="password"
-                    value={password}
-                    autoComplete="on"
-                    onChange={e => setPassword(e.target.value)}
-                />
-            </p>
-            <p className="control">
-                <TextField
-                    required={true}
-                    label="confirm password" 
-                    variant="outlined"
-                    className="input"
-                    type="password"
-                    id="confirmPassword"
-                    value={confirmPassword}
-                    autoComplete="on"
-                    onChange={e => setConfirmPassword(e.target.value)}
-                />
-            </p>
+            <div className={classes.register}>
+                <div> 
+                    <h1>Register</h1>
+                    <div className={classes.registerForm}>
+                        <TextField 
+                            required={true}
+                            type="text"
+                            label="username" 
+                            variant="outlined"
+                            className="input"
+                            id="username"
+                            value={username}
+                            autoComplete="on"
+                            style={{marginTop: '20px'}}
+                            onChange={e => setUserName(e.target.value)}
+                        />
+                    <TextField
+                        required={true}
+                        label="email"   
+                        variant="outlined"
+                        type="email"
+                        id="email"
+                        className="input"
+                        value={email}
+                        autoComplete="on"
+                        style={{marginTop: '20px'}}
+                        onChange={e => setEmail(e.target.value)}
+                    />
+                        <TextField
+                            required={true}
+                            label="password" 
+                            variant="outlined"
+                            className="input"
+                            type="password"
+                            id="password"
+                            value={password}
+                            autoComplete="on"
+                            style={{marginTop: '20px'}}
+                            onChange={e => setPassword(e.target.value)}
+                        />
+                        <TextField
+                            required={true}
+                            label="confirm password" 
+                            variant="outlined"
+                            className="input"
+                            type="password"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            autoComplete="on"
+                            style={{marginTop: '20px'}}
+                            onChange={e => setConfirmPassword(e.target.value)}
+                        />
+                    </div>
+                </div>
+        
+                <div>
+                <input 
+                        filename={file} 
+                        onChange={e => setFile(e.target.files[0])} 
+                        type="file" 
+                        accept="image/*"/>
+                </div>
             </div>
-            <div>
-            <input 
-                    filename={file} 
-                    onChange={e => setFile(e.target.files[0])} 
-                    type="file" 
-                    accept="image/*"
-            ></input>
-            </div>
-            </div>
+            
             <h1>Preferences</h1>
             <p>What is your gender?</p>
             <FormControl className={classes.formControl}>
