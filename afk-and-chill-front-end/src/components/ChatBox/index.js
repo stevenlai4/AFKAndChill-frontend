@@ -38,7 +38,7 @@ export default function ChatBox({className, message, submitMessage}) {
   const classes = useStyles()
 
   const onMessage = data => {
-    submitMessage({messageId: message._id, text: data.message})
+    submitMessage({chatId: message._id, text: data.message})
   }
 
   return (
