@@ -3,9 +3,15 @@ import React, { useState, useEffect } from "react";
 import Register from "./layouts/RegisterPage";
 import Login from "./layouts/LoginPage";
 import ChatBox from "./layouts/ChatBoxPage";
+import GuardedRoute from './components/GuardedRoute';
+import useLocalStorage from 'react-use-localstorage';
 
 function App() {
-    const [isAuthenticated, setisAuthenticated] = useState(false);
+    const [isAuthenticated, setisAuthenticated] = useLocalStorage(
+        'isAuthorized',
+        false
+    );
+    // const [isAuthenticated, setisAuthenticated] = useState(false);
 
     useEffect(() => {
         console.log(`Authenticated: ${isAuthenticated}`);
@@ -20,9 +26,14 @@ function App() {
                 <Route exact path="/">
                     <Login setisAuthenticated={setisAuthenticated} />
                 </Route>
-                <Route path="/chatBox">
+                <GuardedRoute
+                        component={ChatBox}
+                        path="/chatBox"
+                        isAuthenticated={isAuthenticated}
+                />
+                {/* <Route path="/ChatBox">
                     <ChatBox />
-                </Route>
+                </Route> */}
             </Switch>
         </Router>
     );
