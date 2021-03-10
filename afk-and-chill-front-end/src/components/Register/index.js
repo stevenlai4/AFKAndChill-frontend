@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     inputRoot: {
         color: 'inherit',
     },
+    input: {
+        marginBottom: 20,
+    },
     register: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -117,11 +120,10 @@ export default function Register(props) {
                                 type="text"
                                 label="username"
                                 variant="outlined"
-                                className="input"
+                                className={classes.input}
                                 id="username"
                                 value={username}
                                 autoComplete="on"
-                                style={{ marginTop: '20px' }}
                                 onChange={(e) => setUserName(e.target.value)}
                             />
                             <TextField
@@ -130,34 +132,31 @@ export default function Register(props) {
                                 variant="outlined"
                                 type="email"
                                 id="email"
-                                className="input"
+                                className={classes.input}
                                 value={email}
                                 autoComplete="on"
-                                style={{ marginTop: '20px' }}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
                             <TextField
                                 required={true}
                                 label="password"
                                 variant="outlined"
-                                className="input"
+                                className={classes.input}
                                 type="password"
                                 id="password"
                                 value={password}
                                 autoComplete="on"
-                                style={{ marginTop: '20px' }}
                                 onChange={(e) => setPassword(e.target.value)}
                             />
                             <TextField
                                 required={true}
                                 label="confirm password"
                                 variant="outlined"
-                                className="input"
+                                className={classes.input}
                                 type="password"
                                 id="confirmPassword"
                                 value={confirmPassword}
                                 autoComplete="on"
-                                style={{ marginTop: '20px' }}
                                 onChange={(e) =>
                                     setConfirmPassword(e.target.value)
                                 }
@@ -216,16 +215,14 @@ export default function Register(props) {
                         inputProps={{ 'aria-label': 'search' }}
                     />
                 </div>
-                <p className="control">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        id="Register"
-                    >
-                        Submit
-                    </Button>
-                </p>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    id="Register"
+                >
+                    Submit
+                </Button>
             </form>
         </section>
     );
