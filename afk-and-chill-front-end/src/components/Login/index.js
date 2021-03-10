@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 
@@ -46,7 +46,7 @@ function Login({ authenticate }) {
             <Card className={classes.root}>
                 <h3>Welcome to AFK & Chill</h3>
                 <form onSubmit={onSubmit}>
-                    <p className="control">
+                    <div className="control">
                         <TextField
                             type="text"
                             id="username"
@@ -54,8 +54,8 @@ function Login({ authenticate }) {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
-                    </p>
-                    <p className="control">
+                    </div>
+                    <div className="control">
                         <TextField
                             type="password"
                             id="password"
@@ -63,8 +63,8 @@ function Login({ authenticate }) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                    </p>
-                    <p className="control">
+                    </div>
+                    <div className="control">
                         <Button
                             variant="contained"
                             className="button is-success"
@@ -73,12 +73,12 @@ function Login({ authenticate }) {
                         >
                             Login
                         </Button>
-                    </p>
+                    </div>
 
-                    <p>
+                    <div>
                         Dont have an account?{" "}
                         <Link to="/register">Create an Account</Link>
-                    </p>
+                    </div>
                 </form>
             </Card>
         </section>
