@@ -5,7 +5,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import { Link, NavLink, useHistory } from "react-router-dom";
 
 const Header = () => {
-    const history = useHistory();
+    // Handle when Logout is clicked
     const handleLogOut = async () => {
         try {
             await Auth.signOut();
@@ -15,7 +15,7 @@ const Header = () => {
             console.log(e.message);
         }
     };
-
+    const history = useHistory();
     return (
         <Navbar expand="lg">
             <section>
@@ -29,9 +29,9 @@ const Header = () => {
                         handleLogOut();
                     }}
                 >
-                    LOGOUT
+                    Log Out
                 </NavLink>
-                <PersonIcon />
+                <PersonIcon fontSize="large" />
             </section>
             <Nav className="">
                 <NavLink to="/chillers" className="px-2">
