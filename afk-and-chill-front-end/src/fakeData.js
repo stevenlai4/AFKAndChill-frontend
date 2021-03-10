@@ -5,6 +5,7 @@ const fakeData = [
       user_two:"04806bc8619c30007ca8f13",
       imageUrl: "https://i.imgur.com/JnE2HOP.png",
       username: "Mongo",
+      chiller: "Kitkat",
 
       messages: [
         {

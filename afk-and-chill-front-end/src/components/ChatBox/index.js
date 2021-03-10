@@ -12,8 +12,9 @@ const useStyles = makeStyles({
     display: "flex",
   },
   media: {
-    width: "60%"
+    width: "50%"
   },
+  
   otherData: {
     width: "40%",
     display: "flex",
@@ -42,11 +43,15 @@ export default function ChatBox({className, message, submitMessage}) {
 
   return (
     <Card className={`${classes.root} ${className}`}>
-        <CardMedia className={classes.media}
-          component="img"
-          image={message.imageUrl}
-        />
-
+        <Card className={classes.media}>
+            <CardHeader 
+            avatar={
+            <Avatar className={classes.avatar}>
+                {message.chiller[0]}
+            </Avatar>}
+            title={message.chiller}
+            />
+        </Card>
         <div className={classes.otherData}>
             <CardHeader
             avatar={
