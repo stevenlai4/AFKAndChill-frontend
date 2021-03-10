@@ -1,27 +1,27 @@
 import React from 'react'
 import { actions } from '@storybook/addon-actions'
-import UserComment from './index'
+import UserMessage from './index'
 
 const testMessage = {
       user: {
         _id: "user1",
         username: "Pineapple"
       },
-      text: "Hello World!",
-      _id: "comment1"
+      text: "Hello! How are you?",
+      _id: "message1"
     }
 
 
 export default {
-  title: 'User Comment',
-  component: UserComment,
+  title: 'User Message',
+  component: UserMessage,
 }
 
 const events = actions({ onSubmit: 'submit' })
 
 export const Default = () => (
-  <UserComment 
-  comment={testMessage}
+  <UserMessage 
+  message={testMessage}
   {...events}
-  ></UserComment>
+  ></UserMessage>
 )

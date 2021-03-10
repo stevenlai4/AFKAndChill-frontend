@@ -4,7 +4,7 @@ import { actions } from '@storybook/addon-actions'
 import MessageForm from './index'
 
 export default {
-  title: 'Comment Form',
+  title: 'Message Form',
   component: MessageForm,
 }
 
