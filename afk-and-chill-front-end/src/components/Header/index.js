@@ -24,10 +24,14 @@ const useStyles = makeStyles((theme) => ({
     },
     menuText: {
         color: 'white',
+        fontWeight: 600,
     },
     logoImage: {
         width: 300,
         height: 100,
+    },
+    loginText: {
+        fontWeight: 600,
     },
 }));
 
@@ -75,7 +79,7 @@ export default function Header({
                             >
                                 <AccountCircle
                                     fontSize="large"
-                                    color="action"
+                                    color="primary"
                                 />
                             </IconButton>
 
@@ -107,6 +111,7 @@ export default function Header({
                             variant="body2"
                             color="primary"
                             onClick={login}
+                            className={classes.loginText}
                         >
                             Login
                         </Link>
