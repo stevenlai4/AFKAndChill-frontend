@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import TinderCard from "react-tinder-card";
 import "./index.css";
 import { makeStyles } from "@material-ui/core/styles";
@@ -49,24 +49,53 @@ const useStyles = makeStyles({
 });
 
 const Match = () => {
-    const characters = db;
+    const alreadyRemoved = [];
+    const [characters, setCharacters] = useState(db);
+    let charactersState = db; // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
     const [lastDirection, setLastDirection] = useState();
+
+    const childRefs = useMemo(
+        () =>
+            Array(db.length)
+                .fill(0)
+                .map((i) => React.createRef()),
+        []
+    );
 
     const swiped = (direction, nameToDelete) => {
         console.log("removing: " + nameToDelete);
         setLastDirection(direction);
+        alreadyRemoved.push(nameToDelete);
     };
 
     const outOfFrame = (name) => {
         console.log(name + " left the screen!");
+        charactersState = charactersState.filter(
+            (character) => character.name !== name
+        );
+        setCharacters(charactersState);
     };
+
+    const swipe = (dir) => {
+        const cardsLeft = characters.filter(
+            (person) => !alreadyRemoved.includes(person.name)
+        );
+        if (cardsLeft.length) {
+            const toBeRemoved = cardsLeft[cardsLeft.length - 1].name; // Find the card object to be removed
+            const index = db.map((person) => person.name).indexOf(toBeRemoved); // Find the index of which to make the reference to
+            alreadyRemoved.push(toBeRemoved); // Make sure the next card gets removed next time if this card do not have time to exit the screen
+            childRefs[index].current.swipe(dir); // Swipe the card!
+        }
+    };
+
     return (
         <div style={{ display: "flex" }}>
             {/* ======== CARD SECTION ==== LEFT SIDE */}
             <div className="cardAndButtons" style={{ width: "50%" }}>
                 <div className="cardContainer" style={{ postion: "relative" }}>
-                    {characters.map((character) => (
+                    {characters.map((character, index) => (
                         <TinderCard
+                            ref={childRefs[index]}
                             className="swipe"
                             key={character.name}
                             onSwipe={(dir) => swiped(dir, character.name)}
@@ -74,7 +103,8 @@ const Match = () => {
                         >
                             <div
                                 style={{
-                                    backgroundImage: `url(${character.url})`,
+                                    backgroundImage:
+                                        "url(" + character.url + ")",
                                 }}
                                 className="card"
                             >
@@ -88,14 +118,14 @@ const Match = () => {
                         <CancelIcon
                             className="swipeButtons__cancel"
                             fontSize="large"
-                            onClick={(dir) => swiped(dir, characters.name)}
+                            onClick={() => swipe("left")}
                         />
                     </IconButton>
                     <IconButton>
                         <FavoriteIcon
                             className="swipeButtons_favorite"
                             fontSize="large"
-                            onClick={() => outOfFrame(characters.name)}
+                            onClick={() => swipe("right")}
                         />
                     </IconButton>
                 </div>
