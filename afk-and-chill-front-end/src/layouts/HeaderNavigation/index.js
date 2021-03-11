@@ -27,11 +27,9 @@ export default function HeaderNavigation({
             title="SocialLOL"
             setisAuthenticated={setisAuthenticated}
             isAuthenticated={isAuthenticated}
-            // titleClicked={() => history.push("/")}
-            // // user={{_id: "1"}}
-            // user={user}
-            // newPost={() => history.push("/newPost")}
-            // profile={() => history.push("/profile")}
+            findChillersClicked={() => history.push('/findChillers')}
+            chillersPostClicked={() => history.push('/chillerPost')}
+            AFKChatClicked={() => history.push('/chatBox')}
             login={() => history.push('/')}
             signOut={signOut}
             // // signOut={() => history.push("/signOut")}

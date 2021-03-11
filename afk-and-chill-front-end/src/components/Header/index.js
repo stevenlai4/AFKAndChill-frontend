@@ -62,6 +62,7 @@ import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { Link, MenuItem } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
+import { NavLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,7 +76,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Header({ isAuthenticated, signOut, login }) {
+export default function Header({
+    isAuthenticated,
+    signOut,
+    login,
+    findChillersClicked,
+    chillersPostClicked,
+    AFKChatClicked,
+}) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -90,16 +98,11 @@ export default function Header({ isAuthenticated, signOut, login }) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar
+                position="static"
+                style={{ background: 'transparent', boxShadow: 'none' }}
+            >
                 <Toolbar>
-                    <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="menu"
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         AKF & Chill
                     </Typography>
@@ -112,7 +115,7 @@ export default function Header({ isAuthenticated, signOut, login }) {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <AccountCircle color="primary" />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -139,13 +142,24 @@ export default function Header({ isAuthenticated, signOut, login }) {
                         <Link
                             component="button"
                             variant="body2"
-                            color="inherit"
+                            color="primary"
                             onClick={login}
                         >
                             Login
                         </Link>
                     )}
                     {console.log(`auth is ${isAuthenticated}`)}
+                </Toolbar>
+                <Toolbar style={{ background: '#2E3B55' }}>
+                    <Link onClick={findChillersClicked} component="button">
+                        Find Chillers
+                    </Link>
+                    <Link onClick={chillersPostClicked} component="button">
+                        Chiller's Posts
+                    </Link>
+                    <Link onClick={AFKChatClicked} component="button">
+                        AFK chat
+                    </Link>
                 </Toolbar>
             </AppBar>
         </div>
