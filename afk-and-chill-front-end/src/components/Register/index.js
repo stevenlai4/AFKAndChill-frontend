@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         zIndex: 1000,
     },
+    wrapper: {
+        margin: 30,
+    },
     formControl: {
         minWidth: 100,
     },
@@ -49,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         marginBottom: 20,
+        width: '200%',
     },
     register: {
         display: 'flex',
@@ -67,6 +71,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             width: '20ch',
         },
+    },
+    button: {
+        marginTop: 20,
     },
 }));
 
@@ -109,7 +116,7 @@ export default function Register(props) {
     };
 
     return (
-        <section className="section auth">
+        <section className={classes.wrapper}>
             <form onSubmit={handleSubmit}>
                 <div className={classes.register}>
                     <div>
@@ -220,6 +227,7 @@ export default function Register(props) {
                     color="primary"
                     type="submit"
                     id="Register"
+                    className={classes.button}
                 >
                     Submit
                 </Button>
