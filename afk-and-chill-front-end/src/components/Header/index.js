@@ -7,7 +7,6 @@ import {
     Grid,
     AppBar,
     Toolbar,
-    Typography,
     IconButton,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
@@ -40,6 +39,7 @@ export default function Header({
     chillersPostClicked,
     AFKChatClicked,
     logoClicked,
+    profileClicked,
 }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -59,6 +59,7 @@ export default function Header({
                 <Toolbar>
                     <Link onClick={logoClicked} className={classes.logo}>
                         <img
+                            alt="logo"
                             src="https://i.imgur.com/YFG6nH6.png"
                             className={classes.logoImage}
                         />
@@ -77,6 +78,7 @@ export default function Header({
                                     color="action"
                                 />
                             </IconButton>
+
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorEl}
@@ -93,7 +95,7 @@ export default function Header({
                                 open={open}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={handleClose}>
+                                <MenuItem onClick={profileClicked}>
                                     Profile
                                 </MenuItem>
                                 <MenuItem onClick={signOut}>Sign Out</MenuItem>
@@ -114,7 +116,7 @@ export default function Header({
                     <Grid
                         justify="space-around" // Add it here :)
                         container
-                        spacing={24}
+                        spacing={2}
                     >
                         <Grid item>
                             <Link

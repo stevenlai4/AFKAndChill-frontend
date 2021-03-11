@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
@@ -13,9 +13,9 @@ function App() {
         false
     );
 
-    useEffect(() => {
-        console.log(`Authenticated: ${isAuthenticated}`);
-    }, [isAuthenticated]);
+    // useEffect(() => {
+    //     console.log(`Authenticated: ${isAuthenticated}`);
+    // }, [isAuthenticated]);
 
     return (
         <Router>

@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
     CardHeader,
-    Typography,
     Card,
     CardActions,
     CardContent,
-    CardMedia,
 } from '@material-ui/core';
 
 import MessageForm from '../MessageForm';

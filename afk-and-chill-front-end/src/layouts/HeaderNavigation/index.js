@@ -23,6 +23,7 @@ export default function HeaderNavigation({
             AFKChatClicked={() => history.push('/chatBox')}
             login={() => history.push('/')}
             logoClicked={() => history.push('/findChillers')}
+            profileClicked={() => history.push('/profile')}
             signOut={signOut}
         ></Header>
     );
