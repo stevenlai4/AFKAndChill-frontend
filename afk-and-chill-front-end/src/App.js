@@ -3,7 +3,7 @@ import React from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
-import GuardedRoute from './layouts/GuardedRoute';
+import GuardedRoute from './components/GuardedRoute';
 import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
 
