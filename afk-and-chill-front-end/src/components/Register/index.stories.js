@@ -8,7 +8,11 @@ const register = {
     component: Register,
 };
 
-const events = actions({ onSubmit: 'submit', onClose: 'close' });
+const events = actions({
+    onSubmit: 'submit form',
+    onClose: 'close',
+    onSubmit: 'seach submit',
+});
 
 export const Default = () => <Register {...events}></Register>;
 

@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Register(props) {
+export default function Register({ onSubmitSearch }) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -91,11 +91,10 @@ export default function Register(props) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const onSearch = (event) => {
-        event.preventDefault();
-        props.onSearch({ search });
-    };
-
+    // const onSearch = (event) => {
+    //     event.preventDefault();
+    //     onSearch({ search });
+    // };
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -207,13 +206,18 @@ export default function Register(props) {
                     </Select>
                 </FormControl>
                 <p>Games to chill with:</p>
-                <div className={classes.search} onSubmit={onSearch}>
+                <div className={classes.search}>
                     <div className={classes.searchIcon}>
                         <SearchIcon />
                     </div>
                     <InputBase
                         placeholder="Search…"
                         value={search}
+                        onKeyUp={(event) => {
+                            if (event.keyCode === 13) {
+                                onSubmitSearch = { search: search };
+                            }
+                        }}
                         onChange={(e) => setSearch(e.target.value)}
                         classes={{
                             root: classes.inputRoot,
