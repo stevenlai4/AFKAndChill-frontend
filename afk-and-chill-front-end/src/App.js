@@ -5,6 +5,7 @@ import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
 import GuardedRoute from './layouts/GuardedRoute';
 import useLocalStorage from 'react-use-localstorage';
+import Header from './layouts/HeaderNavigation';
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
@@ -18,6 +19,7 @@ function App() {
 
     return (
         <Router>
+            <Header setisAuthenticated={setisAuthenticated} />
             <Switch>
                 <Route path="/register">
                     <Register />
