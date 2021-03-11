@@ -60,9 +60,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Link, MenuItem } from '@material-ui/core';
+import { Link, MenuItem, Grid } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
-import { NavLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -73,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+    },
+    menuText: {
+        color: 'white',
     },
 }));
 
@@ -103,7 +105,11 @@ export default function Header({
                 style={{ background: 'transparent', boxShadow: 'none' }}
             >
                 <Toolbar>
-                    <Typography variant="h6" className={classes.title}>
+                    <Typography
+                        color="primary"
+                        variant="h6"
+                        className={classes.title}
+                    >
                         AKF & Chill
                     </Typography>
                     {isAuthenticated ? (
@@ -120,14 +126,15 @@ export default function Header({
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorEl}
+                                getContentAnchorEl={null}
                                 anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
                                 }}
                                 keepMounted
                                 transformOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'center',
                                 }}
                                 open={open}
                                 onClose={handleClose}
@@ -151,15 +158,39 @@ export default function Header({
                     {console.log(`auth is ${isAuthenticated}`)}
                 </Toolbar>
                 <Toolbar style={{ background: '#2E3B55' }}>
-                    <Link onClick={findChillersClicked} component="button">
-                        Find Chillers
-                    </Link>
-                    <Link onClick={chillersPostClicked} component="button">
-                        Chiller's Posts
-                    </Link>
-                    <Link onClick={AFKChatClicked} component="button">
-                        AFK chat
-                    </Link>
+                    <Grid
+                        justify="space-around" // Add it here :)
+                        container
+                        spacing={24}
+                    >
+                        <Grid item>
+                            <Link
+                                onClick={findChillersClicked}
+                                className={classes.menuText}
+                                component="button"
+                            >
+                                Find Chillers
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link
+                                onClick={chillersPostClicked}
+                                className={classes.menuText}
+                                component="button"
+                            >
+                                Chiller's Posts
+                            </Link>
+                        </Grid>
+                        <Grid item>
+                            <Link
+                                onClick={AFKChatClicked}
+                                className={classes.menuText}
+                                component="button"
+                            >
+                                AFK chat
+                            </Link>
+                        </Grid>
+                    </Grid>
                 </Toolbar>
             </AppBar>
         </div>
