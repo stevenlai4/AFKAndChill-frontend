@@ -1,15 +1,16 @@
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
-import Register from './layouts/RegisterPage';
-import Login from './layouts/LoginPage';
-import ChatBox from './layouts/ChatBoxPage';
-import GuardedRoute from './layouts/GuardedRoute';
-import useLocalStorage from 'react-use-localstorage';
-import Header from './layouts/HeaderNavigation';
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import React from "react";
+import Register from "./layouts/RegisterPage";
+import Login from "./layouts/LoginPage";
+import ChatBox from "./layouts/ChatBoxPage";
+import GuardedRoute from "./layouts/GuardedRoute";
+import useLocalStorage from "react-use-localstorage";
+import Header from "./layouts/HeaderNavigation";
+import Match from "./layouts/MatchPage";
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
-        'isAuthorized',
+        "isAuthorized",
         false
     );
 
@@ -32,7 +33,7 @@ function App() {
                     isAuthenticated={isAuthenticated}
                 />
                 <GuardedRoute
-                    component={ChatBox}
+                    component={Match}
                     path="/findChillers"
                     isAuthenticated={isAuthenticated}
                 />
