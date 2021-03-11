@@ -13,10 +13,6 @@ function App() {
         false
     );
 
-    // useEffect(() => {
-    //     console.log(`Authenticated: ${isAuthenticated}`);
-    // }, [isAuthenticated]);
-
     return (
         <Router>
             <Header
@@ -33,6 +29,16 @@ function App() {
                 <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={ChatBox}
+                    path="/findChillers"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={ChatBox}
+                    path="/chillerPost"
                     isAuthenticated={isAuthenticated}
                 />
             </Switch>
