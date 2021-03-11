@@ -35,9 +35,6 @@ const db = [
 
 // Card layout
 const useStyles = makeStyles({
-    root: {
-        minWidth: 100,
-    },
     bullet: {
         display: "inline-block",
         margin: "0 2px",
@@ -64,10 +61,10 @@ const Match = () => {
         console.log(name + " left the screen!");
     };
     return (
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ display: "flex" }}>
             {/* ======== CARD SECTION ==== LEFT SIDE */}
-            <div className="">
-                <div className="cardContainer">
+            <div className="cardAndButtons" style={{ width: "50%" }}>
+                <div className="cardContainer" style={{ postion: "relative" }}>
                     {characters.map((character) => (
                         <TinderCard
                             className="swipe"
@@ -86,7 +83,7 @@ const Match = () => {
                         </TinderCard>
                     ))}
                 </div>
-                <section className="swipeButtons">
+                <div className="swipeButtons">
                     <IconButton>
                         <CancelIcon
                             className="swipeButtons__cancel"
@@ -101,10 +98,11 @@ const Match = () => {
                             onClick={() => outOfFrame(characters.name)}
                         />
                     </IconButton>
-                </section>
+                </div>
             </div>
             {/* ====INFORMATION BIO=== **RIGHT SIDE */}
-            <div>
+            {/* <div style={{ display: "block" }}> */}
+            <div style={{ width: "50%" }}>
                 <Card variant="outlined">
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom>
