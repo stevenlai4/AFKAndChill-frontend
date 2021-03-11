@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
-import { Auth } from "aws-amplify";
-import { Link } from "react-router-dom";
-
-import { TextField, Button } from "@material-ui/core";
+import React, { useState } from 'react';
+import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import { Auth } from 'aws-amplify';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { TextField, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -17,8 +17,9 @@ const useStyles = makeStyles({
 
 function Login({ setisAuthenticated }) {
     const classes = useStyles();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const history = useHistory();
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -29,7 +30,8 @@ function Login({ setisAuthenticated }) {
                 password,
             });
             setisAuthenticated(true);
-            console.log("Login Successful");
+            history.push('/chatBox');
+            console.log('Login Successful');
             console.log(user);
         } catch (error) {
             console.error(error.message);
@@ -39,7 +41,7 @@ function Login({ setisAuthenticated }) {
     return (
         <section
             className="Login-form"
-            style={{ flex: "row", flexDirection: "column" }}
+            style={{ flex: 'row', flexDirection: 'column' }}
         >
             <h1>AFK & Chill </h1>
             <Card className={classes.root}>
@@ -75,7 +77,7 @@ function Login({ setisAuthenticated }) {
                     </div>
 
                     <div>
-                        Dont have an account?{" "}
+                        Dont have an account?{' '}
                         <Link to="/register">Create an Account</Link>
                     </div>
                 </form>

@@ -1,11 +1,16 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useState, useEffect } from "react";
-import Register from "./layouts/RegisterPage";
-import Login from "./layouts/LoginPage";
-import Header from "./components/Header";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import Register from './layouts/RegisterPage';
+import Login from './layouts/LoginPage';
+import ChatBox from './layouts/ChatBoxPage';
+import GuardedRoute from './layouts/GuardedRoute';
+import useLocalStorage from 'react-use-localstorage';
 
 function App() {
-    const [isAuthenticated, setisAuthenticated] = useState(false);
+    const [isAuthenticated, setisAuthenticated] = useLocalStorage(
+        'isAuthorized',
+        false
+    );
 
     useEffect(() => {
         console.log(`Authenticated: ${isAuthenticated}`);
@@ -20,9 +25,11 @@ function App() {
                 <Route exact path="/">
                     <Login setisAuthenticated={setisAuthenticated} />
                 </Route>
-                <Route path="/Header">
-                    <Header />
-                </Route>
+                <GuardedRoute
+                    component={ChatBox}
+                    path="/chatBox"
+                    isAuthenticated={isAuthenticated}
+                />
             </Switch>
         </Router>
     );
