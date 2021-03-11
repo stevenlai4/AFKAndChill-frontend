@@ -63,7 +63,6 @@ export default function Header({
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    {/* <Link onClick={logoClicked} className={classes.logo}> */}
                     <div className={classes.logo}>
                         <img
                             alt="logo"
@@ -72,7 +71,6 @@ export default function Header({
                             onClick={logoClicked}
                         />
                     </div>
-                    {/* </Link> */}
                     {isAuthenticated ? (
                         <div>
                             <IconButton
