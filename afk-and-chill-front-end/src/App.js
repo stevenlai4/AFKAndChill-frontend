@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
@@ -12,6 +12,13 @@ function App() {
         'isAuthorized',
         false
     );
+
+    //clear localstorage when close brower
+    useEffect(() => {
+        window.onbeforeunload = () => {
+            localStorage.clear();
+        };
+    });
 
     return (
         <Router>
