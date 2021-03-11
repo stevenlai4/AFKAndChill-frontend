@@ -1,10 +1,11 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
 import GuardedRoute from './layouts/GuardedRoute';
 import useLocalStorage from 'react-use-localstorage';
+import Header from './layouts/HeaderNavigation';
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
@@ -12,12 +13,12 @@ function App() {
         false
     );
 
-    useEffect(() => {
-        console.log(`Authenticated: ${isAuthenticated}`);
-    }, [isAuthenticated]);
-
     return (
         <Router>
+            <Header
+                setisAuthenticated={setisAuthenticated}
+                isAuthenticated={isAuthenticated}
+            />
             <Switch>
                 <Route path="/register">
                     <Register />
@@ -28,6 +29,16 @@ function App() {
                 <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={ChatBox}
+                    path="/findChillers"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={ChatBox}
+                    path="/chillerPost"
                     isAuthenticated={isAuthenticated}
                 />
             </Switch>

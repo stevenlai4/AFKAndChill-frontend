@@ -3,11 +3,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
     CardHeader,
-    Typography,
     Card,
     CardActions,
     CardContent,
-    CardMedia,
 } from '@material-ui/core';
 
 import MessageForm from '../MessageForm';
@@ -18,6 +16,9 @@ const useStyles = makeStyles({
         maxWidth: 1200,
         height: 600,
         display: 'flex',
+        margin: 'auto',
+        marginBottom: 20,
+        marginTop: 20,
     },
     media: {
         width: '50%',
@@ -32,7 +33,7 @@ const useStyles = makeStyles({
         margin: '0 10px',
     },
     messageForm: {
-        width: '100%',
+        margin: 20,
     },
     message: {
         margin: '10px 0',
@@ -79,12 +80,9 @@ export default function ChatBox({ className, message, submitMessage }) {
                         ></UserMessage>
                     ))}
                 </CardContent>
-                <div>
+                <div className={classes.messageForm}>
                     <CardActions></CardActions>
-                    <MessageForm
-                        className={classes.messageForm}
-                        onSubmit={onMessage}
-                    ></MessageForm>
+                    <MessageForm onSubmit={onMessage}></MessageForm>
                 </div>
             </div>
         </Card>

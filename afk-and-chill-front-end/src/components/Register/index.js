@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         zIndex: 1000,
     },
+    wrapper: {
+        margin: 30,
+    },
     formControl: {
         minWidth: 100,
     },
@@ -49,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         marginBottom: 20,
+        width: '200%',
     },
     register: {
         display: 'flex',
@@ -68,9 +72,12 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
+    button: {
+        marginTop: 20,
+    },
 }));
 
-export default function Register(props) {
+export default function Register({ onSubmitSearch }) {
     const classes = useStyles();
     const history = useHistory();
 
@@ -84,11 +91,10 @@ export default function Register(props) {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    const onSearch = (event) => {
-        event.preventDefault();
-        props.onSearch({ search });
-    };
-
+    // const onSearch = (event) => {
+    //     event.preventDefault();
+    //     onSearch({ search });
+    // };
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
@@ -109,7 +115,7 @@ export default function Register(props) {
     };
 
     return (
-        <section className="section auth">
+        <section className={classes.wrapper}>
             <form onSubmit={handleSubmit}>
                 <div className={classes.register}>
                     <div>
@@ -200,13 +206,18 @@ export default function Register(props) {
                     </Select>
                 </FormControl>
                 <p>Games to chill with:</p>
-                <div className={classes.search} onSubmit={onSearch}>
+                <div className={classes.search}>
                     <div className={classes.searchIcon}>
                         <SearchIcon />
                     </div>
                     <InputBase
                         placeholder="Search…"
                         value={search}
+                        onKeyUp={(event) => {
+                            if (event.keyCode === 13) {
+                                onSubmitSearch = { search: search };
+                            }
+                        }}
                         onChange={(e) => setSearch(e.target.value)}
                         classes={{
                             root: classes.inputRoot,
@@ -220,6 +231,7 @@ export default function Register(props) {
                     color="primary"
                     type="submit"
                     id="Register"
+                    className={classes.button}
                 >
                     Submit
                 </Button>
