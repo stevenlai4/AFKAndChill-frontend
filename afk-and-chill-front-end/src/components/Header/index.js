@@ -1,80 +1,34 @@
-// import React from 'react';
-// import PersonIcon from '@material-ui/icons/Person';
-// import { Auth } from 'aws-amplify';
-// import { Navbar, Nav } from 'react-bootstrap';
-// import { Link, NavLink, useHistory } from 'react-router-dom';
-
-// // const Header = () => {
-//     // Handle when Logout is clicked
-//     const handleLogOut = async () => {
-//         try {
-//             await Auth.signOut();
-//             console.log("Log Out successful");
-//             history.push("/");
-//         } catch (e) {
-//             console.log(e.message);
-//         }
-//     };
-//     const history = useHistory();
-//     return (
-//         <Navbar expand="lg">
-//             <section>
-//                 <Navbar.Brand>
-//                     <h1>AFK & CHILL</h1>
-//                 </Navbar.Brand>
-//                 <NavLink
-//                     to="/"
-//                     className=""
-//                     onClick={() => {
-//                         handleLogOut();
-//                     }}
-//                 >
-//                     Log Out
-//                 </NavLink>
-//                 <PersonIcon fontSize="large" />
-//             </section>
-//             <Nav className="">
-//                 <NavLink to="/chillers" className="px-2">
-//                     Find Chillers
-//                 </NavLink>
-//                 <NavLink to="/posts" className="px-2">
-//                     Chiller's Posts
-//                 </NavLink>
-//                 <NavLink to="/chat" className="px-2">
-//                     AFK chat
-//                 </NavLink>
-//             </Nav>
-//         </Navbar>
-//     );
-// };
-
-// export default Header;
-
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { Link, MenuItem, Grid } from '@material-ui/core';
+import {
+    Link,
+    MenuItem,
+    Grid,
+    AppBar,
+    Toolbar,
+    Typography,
+    IconButton,
+} from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
-    menuButton: {
-        marginRight: theme.spacing(2),
+    appBar: {
+        background: 'transparent',
+        boxShadow: 'none',
     },
-    title: {
+    logo: {
         flexGrow: 1,
     },
     menuText: {
         color: 'white',
+    },
+    logoImage: {
+        width: 300,
+        height: 100,
     },
 }));
 
@@ -85,6 +39,7 @@ export default function Header({
     findChillersClicked,
     chillersPostClicked,
     AFKChatClicked,
+    logoClicked,
 }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -100,18 +55,21 @@ export default function Header({
 
     return (
         <div className={classes.root}>
-            <AppBar
-                position="static"
-                style={{ background: 'transparent', boxShadow: 'none' }}
-            >
+            <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    <Typography
+                    <Link onClick={logoClicked} className={classes.logo}>
+                        <img
+                            src="https://i.imgur.com/YFG6nH6.png"
+                            className={classes.logoImage}
+                        />
+                    </Link>
+                    {/* <Typography
                         color="primary"
                         variant="h6"
                         className={classes.title}
                     >
                         AKF & Chill
-                    </Typography>
+                    </Typography> */}
                     {isAuthenticated ? (
                         <div>
                             <IconButton
@@ -121,7 +79,10 @@ export default function Header({
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle color="primary" />
+                                <AccountCircle
+                                    fontSize="large"
+                                    color="action"
+                                />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"

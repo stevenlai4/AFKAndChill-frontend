@@ -31,6 +31,7 @@ export default function HeaderNavigation({
             chillersPostClicked={() => history.push('/chillerPost')}
             AFKChatClicked={() => history.push('/chatBox')}
             login={() => history.push('/')}
+            logoClicked={() => history.push('/findChillers')}
             signOut={signOut}
             // // signOut={() => history.push("/signOut")}
         ></Header>
