@@ -21,6 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
     logo: {
         flexGrow: 1,
+        // width: 300,
+        // height: 100,
     },
     menuText: {
         color: 'white',
@@ -61,13 +63,16 @@ export default function Header({
         <div className={classes.root}>
             <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
-                    <Link onClick={logoClicked} className={classes.logo}>
+                    {/* <Link onClick={logoClicked} className={classes.logo}> */}
+                    <div className={classes.logo}>
                         <img
                             alt="logo"
                             src="https://i.imgur.com/YFG6nH6.png"
                             className={classes.logoImage}
+                            onClick={logoClicked}
                         />
-                    </Link>
+                    </div>
+                    {/* </Link> */}
                     {isAuthenticated ? (
                         <div>
                             <IconButton
