@@ -33,7 +33,7 @@ const useStyles = makeStyles({
         margin: '0 10px',
     },
     messageForm: {
-        width: '100%',
+        margin: 20,
     },
     message: {
         margin: '10px 0',
@@ -80,12 +80,9 @@ export default function ChatBox({ className, message, submitMessage }) {
                         ></UserMessage>
                     ))}
                 </CardContent>
-                <div>
+                <div className={classes.messageForm}>
                     <CardActions></CardActions>
-                    <MessageForm
-                        className={classes.messageForm}
-                        onSubmit={onMessage}
-                    ></MessageForm>
+                    <MessageForm onSubmit={onMessage}></MessageForm>
                 </div>
             </div>
         </Card>
