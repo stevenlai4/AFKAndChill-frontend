@@ -109,7 +109,6 @@ export default function Header({
                             Login
                         </Link>
                     )}
-                    {console.log(`auth is ${isAuthenticated}`)}
                 </Toolbar>
                 <Toolbar style={{ background: '#2E3B55' }}>
                     <Grid
