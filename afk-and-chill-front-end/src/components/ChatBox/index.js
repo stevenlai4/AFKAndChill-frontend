@@ -12,25 +12,30 @@ import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
 
 const useStyles = makeStyles({
-    root: {
-        maxWidth: 1200,
-        height: 600,
+    wrapper: {
         display: 'flex',
-        margin: 'auto',
-        marginBottom: 20,
-        marginTop: 20,
+        margin: 30,
     },
-    media: {
+    chatBox: {
+        // maxWidth: 1200,
         width: '50%',
+        height: 650,
+        display: 'flex',
+        margin: 10,
+        // marginBottom: 20,
+        // marginTop: 20,
     },
-
+    chillerItem: {
+        width: '50%',
+        margin: 10,
+    },
     otherData: {
-        width: '40%',
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
         justifyContent: 'space-between',
-        margin: '0 10px',
+        // margin: '0 10px',
+        width: '100%',
     },
     messageForm: {
         margin: 20,
@@ -43,7 +48,7 @@ const useStyles = makeStyles({
     },
 });
 
-export default function ChatBox({ className, message, submitMessage }) {
+export default function ChatBox({ message, submitMessage }) {
     const classes = useStyles();
 
     const onMessage = (data) => {
@@ -51,40 +56,44 @@ export default function ChatBox({ className, message, submitMessage }) {
     };
 
     return (
-        <Card className={`${classes.root} ${className}`}>
-            <Card className={classes.media}>
-                <CardHeader
-                    avatar={
-                        <Avatar className={classes.avatar}>
-                            {message.chiller[0]}
-                        </Avatar>
-                    }
-                    title={message.chiller}
-                />
-            </Card>
-            <div className={classes.otherData}>
-                <CardHeader
-                    avatar={
-                        <Avatar className={classes.avatar}>
-                            {message.username[0]}
-                        </Avatar>
-                    }
-                    title={message.username}
-                />
-                <CardContent className={classes.message}>
-                    {message.messages.map((message) => (
-                        <UserMessage
-                            key={message._id}
-                            className={classes.message}
-                            message={message}
-                        ></UserMessage>
-                    ))}
-                </CardContent>
-                <div className={classes.messageForm}>
-                    <CardActions></CardActions>
-                    <MessageForm onSubmit={onMessage}></MessageForm>
-                </div>
+        <section className={classes.wrapper}>
+            <div className={classes.chillerItem}>
+                <Card>
+                    <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}>
+                                {message.chiller[0]}
+                            </Avatar>
+                        }
+                        title={message.chiller}
+                    />
+                </Card>
             </div>
-        </Card>
+            <Card className={classes.chatBox}>
+                <div className={classes.otherData}>
+                    <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}>
+                                {message.username[0]}
+                            </Avatar>
+                        }
+                        title={message.username}
+                    />
+                    <CardContent className={classes.message}>
+                        {message.messages.map((message) => (
+                            <UserMessage
+                                key={message._id}
+                                className={classes.message}
+                                message={message}
+                            ></UserMessage>
+                        ))}
+                    </CardContent>
+                    <div className={classes.messageForm}>
+                        <CardActions></CardActions>
+                        <MessageForm onSubmit={onMessage}></MessageForm>
+                    </div>
+                </div>
+            </Card>
+        </section>
     );
 }
