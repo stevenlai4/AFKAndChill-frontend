@@ -19,7 +19,10 @@ function App() {
 
     return (
         <Router>
-            <Header setisAuthenticated={setisAuthenticated} />
+            <Header
+                setisAuthenticated={setisAuthenticated}
+                isAuthenticated={isAuthenticated}
+            />
             <Switch>
                 <Route path="/register">
                     <Register />
