@@ -63,13 +63,6 @@ export default function Header({
                             className={classes.logoImage}
                         />
                     </Link>
-                    {/* <Typography
-                        color="primary"
-                        variant="h6"
-                        className={classes.title}
-                    >
-                        AKF & Chill
-                    </Typography> */}
                     {isAuthenticated ? (
                         <div>
                             <IconButton
