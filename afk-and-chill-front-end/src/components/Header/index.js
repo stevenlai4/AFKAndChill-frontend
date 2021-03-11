@@ -112,41 +112,43 @@ export default function Header({
                         </Link>
                     )}
                 </Toolbar>
-                <Toolbar style={{ background: '#2E3B55' }}>
-                    <Grid
-                        justify="space-around" // Add it here :)
-                        container
-                        spacing={2}
-                    >
-                        <Grid item>
-                            <Link
-                                onClick={findChillersClicked}
-                                className={classes.menuText}
-                                component="button"
-                            >
-                                Find Chillers
-                            </Link>
+                {isAuthenticated ? (
+                    <Toolbar style={{ background: '#2E3B55' }}>
+                        <Grid
+                            justify="space-around" // Add it here :)
+                            container
+                            spacing={2}
+                        >
+                            <Grid item>
+                                <Link
+                                    onClick={findChillersClicked}
+                                    className={classes.menuText}
+                                    component="button"
+                                >
+                                    Find Chillers
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link
+                                    onClick={chillersPostClicked}
+                                    className={classes.menuText}
+                                    component="button"
+                                >
+                                    Chiller's Posts
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link
+                                    onClick={AFKChatClicked}
+                                    className={classes.menuText}
+                                    component="button"
+                                >
+                                    AFK chat
+                                </Link>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <Link
-                                onClick={chillersPostClicked}
-                                className={classes.menuText}
-                                component="button"
-                            >
-                                Chiller's Posts
-                            </Link>
-                        </Grid>
-                        <Grid item>
-                            <Link
-                                onClick={AFKChatClicked}
-                                className={classes.menuText}
-                                component="button"
-                            >
-                                AFK chat
-                            </Link>
-                        </Grid>
-                    </Grid>
-                </Toolbar>
+                    </Toolbar>
+                ) : null}
             </AppBar>
         </div>
     );
