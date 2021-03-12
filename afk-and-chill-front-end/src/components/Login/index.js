@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Carousel from "react-bootstrap/Carousel";
 import { Avatar } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
         position: "fixed",
@@ -20,23 +20,33 @@ const useStyles = makeStyles({
     formControl: {
         minWidth: 100,
     },
+    formTitle: {
+        marginTop: 10,
+        paddingBottom: 10,
+    },
     login: {
         display: "flex",
         justifyContent: "space-between",
     },
+    sizeAvatar: {
+        height: theme.spacing(8),
+        width: theme.spacing(8),
+    },
+
     title: {
         fontSize: 14,
     },
 
     input: {
+        marginTop: 10,
         marginBottom: 20,
-        width: "200%",
+        width: "75%",
     },
 
     wrapper: {
         margin: 30,
     },
-});
+}));
 
 function Login({ setisAuthenticated }) {
     const classes = useStyles();
@@ -62,55 +72,65 @@ function Login({ setisAuthenticated }) {
     };
 
     return (
-        <section
-            className={classes.wrapper}
-            className="Login-form"
-            style={{ display: "flex", flexDirection: "row" }}
-        >
-            <h1>AFK & Chill </h1>
-            <div>
-                <img src="https://i.imgur.com/x7EZzDz.jpg" alt="AFK home" />
+        <section className={classes.wrapper}>
+            <div className={classes.login}>
+                <h1>AFK & Chill</h1>
+
+                <img
+                    src="https://i.imgur.com/x7EZzDz.jpg"
+                    alt="AFK home"
+                    width={600}
+                />
+
+                <Card className={classes.root}>
+                    <h3 className={classes.formTitle}>
+                        Welcome to AFK & Chill
+                    </h3>
+                    <Avatar
+                        src="/broken-image.jpg"
+                        className={classes.sizeAvatar}
+                    />
+                    <form onSubmit={onSubmit}>
+                        <div className="control">
+                            <TextField
+                                type="text"
+                                className={classes.input}
+                                variant="outlined"
+                                id="email"
+                                placeholder="email*"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className="control">
+                            <TextField
+                                type="password"
+                                className={classes.input}
+                                variant="outlined"
+                                id="password"
+                                placeholder="password*"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <div className="control">
+                            <Button
+                                variant="contained"
+                                className="button is-success"
+                                type="submit"
+                                name="Login"
+                            >
+                                Login
+                            </Button>
+                        </div>
+
+                        <div>
+                            Dont have an account?{" "}
+                            <Link to="/register">Create an Account</Link>
+                        </div>
+                    </form>
+                </Card>
             </div>
-
-            <Card className={classes.root}>
-                <h3>Welcome to AFK & Chill</h3>
-                <Avatar src="/broken-image.jpg" />
-                <form onSubmit={onSubmit}>
-                    <div className="control">
-                        <TextField
-                            type="text"
-                            id="email"
-                            placeholder="email*"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                    </div>
-                    <div className="control">
-                        <TextField
-                            type="password"
-                            id="password"
-                            placeholder="password*"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                    </div>
-                    <div className="control">
-                        <Button
-                            variant="contained"
-                            className="button is-success"
-                            type="submit"
-                            name="Login"
-                        >
-                            Login
-                        </Button>
-                    </div>
-
-                    <div>
-                        Dont have an account?{" "}
-                        <Link to="/register">Create an Account</Link>
-                    </div>
-                </form>
-            </Card>
         </section>
     );
 }
