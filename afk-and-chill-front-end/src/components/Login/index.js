@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Card from "@material-ui/core/Card";
 import { makeStyles } from "@material-ui/core/styles";
-import { Auth } from "aws-amplify";
+import { Auth, autoShowTooltip } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
         width: "25%",
         // zIndex: 100,
     },
+    button: {
+        marginBottom: 20,
+    },
     formControl: {
         minWidth: 100,
     },
@@ -28,9 +31,14 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "space-between",
     },
+    loginForm: {
+        justifyContent: "center",
+        alignItems: "center",
+        paddingLeft: 30,
+    },
     sizeAvatar: {
-        height: theme.spacing(12),
-        width: theme.spacing(12),
+        height: theme.spacing(13),
+        width: theme.spacing(13),
     },
 
     title: {
@@ -83,52 +91,57 @@ function Login({ setisAuthenticated }) {
                 />
 
                 <Card className={classes.root}>
-                    <h3 className={classes.formTitle}>
-                        Welcome to AFK & Chill
-                    </h3>
-                    <Avatar
-                        src="https://i.imgur.com/c5ET53T.gif"
-                        className={classes.sizeAvatar}
-                    />
-                    <form onSubmit={onSubmit}>
-                        <div className="control">
-                            <TextField
-                                type="text"
-                                className={classes.input}
-                                variant="outlined"
-                                id="email"
-                                placeholder="email*"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="control">
-                            <TextField
-                                type="password"
-                                className={classes.input}
-                                variant="outlined"
-                                id="password"
-                                placeholder="password*"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                        <div className="control">
-                            <Button
-                                variant="contained"
-                                className="button is-success"
-                                type="submit"
-                                name="Login"
-                            >
-                                Login
-                            </Button>
-                        </div>
+                    <div className={classes.loginForm}>
+                        <h3 className={classes.formTitle}>
+                            Welcome to AFK & Chill
+                        </h3>
+                        <Avatar
+                            src="https://i.imgur.com/c5ET53T.gif"
+                            className={classes.sizeAvatar}
+                        />
+                        <form onSubmit={onSubmit}>
+                            <div className="control">
+                                <TextField
+                                    type="text"
+                                    className={classes.input}
+                                    variant="outlined"
+                                    id="email"
+                                    placeholder="email*"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                            </div>
+                            <div className="control">
+                                <TextField
+                                    type="password"
+                                    className={classes.input}
+                                    variant="outlined"
+                                    id="password"
+                                    placeholder="password*"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className="control">
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                    type="submit"
+                                    name="Login"
+                                >
+                                    Login
+                                </Button>
+                            </div>
 
-                        <div>
-                            Dont have an account?{" "}
-                            <Link to="/register">Create an Account</Link>
-                        </div>
-                    </form>
+                            <div style={{ paddingBottom: 20 }}>
+                                Dont have an account?{" "}
+                                <Link to="/register">Create an Account</Link>
+                            </div>
+                        </form>
+                    </div>
                 </Card>
             </div>
         </section>
