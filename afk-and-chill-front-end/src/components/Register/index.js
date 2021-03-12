@@ -173,6 +173,7 @@ export default function Register({ onSubmitSearch }) {
                         <FormControl className={classes.formControl}>
                             <Select
                                 defaultValue="other"
+                                variant="outlined"
                                 required={true}
                                 onChange={(e) => setGender(e.target.value)}
                             >
@@ -185,6 +186,7 @@ export default function Register({ onSubmitSearch }) {
                         <FormControl className={classes.formControl}>
                             <Select
                                 defaultValue="other"
+                                variant="outlined"
                                 required={true}
                                 onChange={(e) => setGenderPref(e.target.value)}
                             >
