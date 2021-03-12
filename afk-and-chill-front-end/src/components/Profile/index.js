@@ -72,15 +72,19 @@ const useStyles = makeStyles((theme) => ({
             width: '20ch',
         },
     },
-    button: {
-        marginTop: 20,
+    submitButtonSection: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    submitButton: {
+        width: '30%',
+        margin: '5%',
     },
 }));
 
 export default function Register({ onSubmitSearch }) {
     const classes = useStyles();
-    const history = useHistory();
-
     const [search, setSearch] = useState('');
     const [genderPref, setGenderPref] = useState('');
     const [gender, setGender] = useState('');
@@ -175,7 +179,7 @@ export default function Register({ onSubmitSearch }) {
                                 inputProps={{ 'aria-label': 'search' }}
                             />
                         </div>
-                        <Button
+                        {/* <Button
                             variant="contained"
                             color="primary"
                             type="submit"
@@ -183,7 +187,7 @@ export default function Register({ onSubmitSearch }) {
                             className={classes.button}
                         >
                             Submit
-                        </Button>
+                        </Button> */}
                     </div>
                     {/* profile image */}
                     <div>
@@ -208,6 +212,17 @@ export default function Register({ onSubmitSearch }) {
                             <p>League of Legends</p>
                         </div>
                     </div>
+                </div>
+                <div className={classes.submitButtonSection}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        id="Register"
+                        className={classes.submitButton}
+                    >
+                        Submit
+                    </Button>
                 </div>
             </form>
         </section>
