@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Carousel from "react-bootstrap/Carousel";
 import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginBottom: 20,
     },
+    // loginButton: {
+    //     display: "flex",
+    //     justifyContent: "center",
+    //     paddingBottom: 10,
+    // },
     formControl: {
         minWidth: 100,
     },
@@ -34,7 +38,11 @@ const useStyles = makeStyles((theme) => ({
     loginForm: {
         justifyContent: "center",
         alignItems: "center",
-        paddingLeft: 30,
+        // paddingLeft: 30,
+        width: "90%",
+        margin: "auto",
+        display: "flex",
+        flexDirection: "column",
     },
     sizeAvatar: {
         height: theme.spacing(13),
@@ -48,7 +56,8 @@ const useStyles = makeStyles((theme) => ({
     input: {
         marginTop: 10,
         marginBottom: 20,
-        width: "75%",
+        width: "100%",
+        // display: "block",
     },
 
     wrapper: {
@@ -95,28 +104,36 @@ function Login({ setisAuthenticated }) {
                         <h3 className={classes.formTitle}>
                             Welcome to AFK & Chill
                         </h3>
-                        <Avatar
-                            src="https://i.imgur.com/c5ET53T.gif"
-                            className={classes.sizeAvatar}
-                        />
+                        <div>
+                            <Avatar
+                                src="https://i.imgur.com/c5ET53T.gif"
+                                className={classes.sizeAvatar}
+                            />
+                        </div>
                         <form onSubmit={onSubmit}>
                             <div className="control">
                                 <TextField
                                     type="text"
                                     className={classes.input}
                                     variant="outlined"
+                                    helperText={onSubmit.error}
                                     id="email"
                                     placeholder="email*"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
                             </div>
-                            <div className="control">
+                            <div
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                }}
+                            >
                                 <TextField
                                     type="password"
                                     className={classes.input}
                                     variant="outlined"
-                                    helperText={onSubmit.error}
+                                    helperText={""}
                                     id="password"
                                     placeholder="password*"
                                     value={password}
@@ -125,17 +142,19 @@ function Login({ setisAuthenticated }) {
                                     }
                                 />
                             </div>
-                            <div className="control">
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    className={classes.button}
-                                    type="submit"
-                                    name="Login"
-                                >
-                                    Login
-                                </Button>
-                            </div>
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                type="submit"
+                                name="Login"
+                                style={{
+                                    width: "100%",
+                                    marginBottom: "5%",
+                                }}
+                            >
+                                Login
+                            </Button>
 
                             <div style={{ paddingBottom: 20 }}>
                                 Dont have an account?{" "}
