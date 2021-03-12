@@ -6,6 +6,7 @@ import ChatBox from './layouts/ChatBoxPage';
 import GuardedRoute from './components/GuardedRoute';
 import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
+import Profile from './layouts/ProfilePage';
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
@@ -36,6 +37,11 @@ function App() {
                 <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={Profile}
+                    path="/profile"
                     isAuthenticated={isAuthenticated}
                 />
                 <GuardedRoute

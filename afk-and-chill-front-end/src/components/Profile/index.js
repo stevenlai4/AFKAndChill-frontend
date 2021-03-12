@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         marginBottom: 20,
-        width: '200%',
+        width: '100%',
     },
     register: {
         display: 'flex',
@@ -84,95 +84,46 @@ export default function Register({ onSubmitSearch }) {
     const [search, setSearch] = useState('');
     const [genderPref, setGenderPref] = useState('');
     const [gender, setGender] = useState('');
-    const [file, setFile] = useState();
-
+    const [file, setFile] = useState('');
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [about, setAbout] = useState('');
 
-    // const onSearch = (event) => {
-    //     event.preventDefault();
-    //     onSearch({ search });
-    // };
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            // cognito register api
-            await Auth.signUp({
-                username: email,
-                password,
-                attributes: {
-                    email: email,
-                    name: username,
-                },
-            });
-            console.log('Successfully Register');
-            history.push('/');
-        } catch (error) {
-            console.error(error.message);
-        }
     };
 
     return (
         <section className={classes.wrapper}>
             <form onSubmit={handleSubmit}>
                 <div className={classes.register}>
-                    <div>
-                        <h1>Register</h1>
-                        <div className={classes.registerForm}>
-                            <TextField
-                                required={true}
-                                type="text"
-                                label="username"
-                                variant="outlined"
-                                className={classes.input}
-                                id="username"
-                                value={username}
-                                autoComplete="on"
-                                onChange={(e) => setUserName(e.target.value)}
-                            />
-                            <TextField
-                                required={true}
-                                label="email"
-                                variant="outlined"
-                                type="email"
-                                id="email"
-                                className={classes.input}
-                                value={email}
-                                autoComplete="on"
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <TextField
-                                required={true}
-                                label="password"
-                                variant="outlined"
-                                className={classes.input}
-                                type="password"
-                                id="password"
-                                value={password}
-                                autoComplete="on"
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                            <TextField
-                                required={true}
-                                label="confirm password"
-                                variant="outlined"
-                                className={classes.input}
-                                type="password"
-                                id="confirmPassword"
-                                value={confirmPassword}
-                                autoComplete="on"
-                                onChange={(e) =>
-                                    setConfirmPassword(e.target.value)
-                                }
-                            />
-                        </div>
-                        <h1>Preferences</h1>
-                        <p>What is your gender?</p>
+                    {/* Profile form */}
+                    <div className={classes.registerForm}>
+                        <h3>Chiller Name</h3>
+                        <TextField
+                            type="text"
+                            variant="outlined"
+                            className={classes.input}
+                            id="username"
+                            value={username}
+                            autoComplete="on"
+                            onChange={(e) => setUserName(e.target.value)}
+                        />
+                        <h3>Email</h3>
+                        <TextField
+                            variant="outlined"
+                            type="email"
+                            id="email"
+                            className={classes.input}
+                            value={email}
+                            autoComplete="on"
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <h3>What is your gender?</h3>
                         <FormControl className={classes.formControl}>
                             <Select
                                 defaultValue="other"
+                                variant="outlined"
                                 required={true}
                                 onChange={(e) => setGender(e.target.value)}
                             >
@@ -181,10 +132,11 @@ export default function Register({ onSubmitSearch }) {
                                 <MenuItem value="other">Other</MenuItem>
                             </Select>
                         </FormControl>
-                        <p>What gender do you want to chill with?</p>
+                        <h3>What gender do you want to chill with?</h3>
                         <FormControl className={classes.formControl}>
                             <Select
                                 defaultValue="other"
+                                variant="outlined"
                                 required={true}
                                 onChange={(e) => setGenderPref(e.target.value)}
                             >
@@ -193,7 +145,16 @@ export default function Register({ onSubmitSearch }) {
                                 <MenuItem value="other">Other</MenuItem>
                             </Select>
                         </FormControl>
-                        <p>Games to chill with:</p>
+                        <h3>About you</h3>
+                        <TextField
+                            multiline
+                            rowsMax="4"
+                            margin="normal"
+                            variant="outlined"
+                            value={about}
+                            onChange={(e) => setAbout(e.target.value)}
+                        />
+                        <h3>Games to chill with:</h3>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -224,14 +185,28 @@ export default function Register({ onSubmitSearch }) {
                             Submit
                         </Button>
                     </div>
-
+                    {/* profile image */}
                     <div>
-                        <input
-                            filename={file}
-                            onChange={(e) => setFile(e.target.files[0])}
-                            type="file"
-                            accept="image/*"
-                        />
+                        <img
+                            src="https://images.unsplash.com/photo-1615396662271-e313de4da9ff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
+                            alt="raining"
+                            width="400"
+                            height="400"
+                        ></img>
+                        <div>
+                            <input
+                                filename={file}
+                                onChange={(e) => setFile(e.target.files[0])}
+                                type="file"
+                                accept="image/*"
+                            />
+                        </div>
+                        <h3>Game(s) you have selected</h3>
+                        <div>
+                            <p>PUBG</p>
+                            <p>Aminal Crossing</p>
+                            <p>League of Legends</p>
+                        </div>
                     </div>
                 </div>
             </form>
