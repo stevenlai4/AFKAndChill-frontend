@@ -7,6 +7,8 @@ import {
     CardActions,
     CardContent,
 } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
@@ -50,6 +52,8 @@ const useStyles = makeStyles({
 
 export default function ChatBox({ message, submitMessage }) {
     const classes = useStyles();
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('sx'));
 
     const onMessage = (data) => {
         submitMessage({ chatId: message._id, text: data.message });
