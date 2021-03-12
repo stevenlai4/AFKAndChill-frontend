@@ -116,6 +116,7 @@ function Login({ setisAuthenticated }) {
                                     type="password"
                                     className={classes.input}
                                     variant="outlined"
+                                    helperText={onSubmit.error}
                                     id="password"
                                     placeholder="password*"
                                     value={password}
