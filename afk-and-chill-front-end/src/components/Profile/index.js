@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Auth } from 'aws-amplify';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import {
@@ -10,7 +9,6 @@ import {
     FormControl,
     Button,
 } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     root: {
