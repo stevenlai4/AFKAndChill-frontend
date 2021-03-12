@@ -1,17 +1,25 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
-import GuardedRoute from './layouts/GuardedRoute';
+import GuardedRoute from './components/GuardedRoute';
 import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
+import Profile from './layouts/ProfilePage';
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
         'isAuthorized',
         false
     );
+
+    //clear localstorage when close brower
+    useEffect(() => {
+        window.onbeforeunload = () => {
+            localStorage.clear();
+        };
+    });
 
     return (
         <Router>
@@ -29,6 +37,11 @@ function App() {
                 <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
+                    isAuthenticated={isAuthenticated}
+                />
+                <GuardedRoute
+                    component={Profile}
+                    path="/profile"
                     isAuthenticated={isAuthenticated}
                 />
                 <GuardedRoute
