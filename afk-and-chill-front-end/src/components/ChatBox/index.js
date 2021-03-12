@@ -7,36 +7,41 @@ import {
     CardActions,
     CardContent,
 } from '@material-ui/core';
-import { useTheme } from '@material-ui/core/styles';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     wrapper: {
         display: 'flex',
         margin: 30,
+        flexDirection: 'row',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
     },
     chatBox: {
-        // maxWidth: 1200,
         width: '50%',
         height: 650,
         display: 'flex',
         margin: 10,
-        // marginBottom: 20,
-        // marginTop: 20,
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     chillerItem: {
         width: '50%',
         margin: 10,
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     otherData: {
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
         justifyContent: 'space-between',
-        // margin: '0 10px',
         width: '100%',
     },
     messageForm: {
@@ -48,12 +53,10 @@ const useStyles = makeStyles({
     messages: {
         overflowY: 'scroll',
     },
-});
+}));
 
 export default function ChatBox({ message, submitMessage }) {
     const classes = useStyles();
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('sx'));
 
     const onMessage = (data) => {
         submitMessage({ chatId: message._id, text: data.message });
