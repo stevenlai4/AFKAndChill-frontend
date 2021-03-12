@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
     },
     sizeAvatar: {
-        height: theme.spacing(8),
-        width: theme.spacing(8),
+        height: theme.spacing(12),
+        width: theme.spacing(12),
     },
 
     title: {
@@ -87,7 +87,7 @@ function Login({ setisAuthenticated }) {
                         Welcome to AFK & Chill
                     </h3>
                     <Avatar
-                        src="/broken-image.jpg"
+                        src="https://i.imgur.com/c5ET53T.gif"
                         className={classes.sizeAvatar}
                     />
                     <form onSubmit={onSubmit}>
