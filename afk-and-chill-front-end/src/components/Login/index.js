@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
-import { Auth, autoShowTooltip } from "aws-amplify";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { TextField, Button } from "@material-ui/core";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Avatar } from "@material-ui/core";
+import React, { useState } from 'react';
+import Card from '@material-ui/core/Card';
+import { makeStyles } from '@material-ui/core/styles';
+import { Auth } from 'aws-amplify';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { TextField, Button } from '@material-ui/core';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        position: "fixed",
+        position: 'fixed',
         // top: 0,
-        width: "25%",
+        width: '25%',
         // zIndex: 100,
     },
     button: {
@@ -32,17 +32,17 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: 10,
     },
     login: {
-        display: "flex",
-        justifyContent: "space-between",
+        display: 'flex',
+        justifyContent: 'space-between',
     },
     loginForm: {
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
         // paddingLeft: 30,
-        width: "90%",
-        margin: "auto",
-        display: "flex",
-        flexDirection: "column",
+        width: '90%',
+        margin: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
     },
     sizeAvatar: {
         height: theme.spacing(13),
@@ -56,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     input: {
         marginTop: 10,
         marginBottom: 20,
-        width: "100%",
+        width: '100%',
         // display: "block",
     },
 
@@ -67,8 +67,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Login({ setisAuthenticated }) {
     const classes = useStyles();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const history = useHistory();
 
     const onSubmit = async (e) => {
@@ -80,8 +80,8 @@ function Login({ setisAuthenticated }) {
                 password,
             });
             setisAuthenticated(true);
-            history.push("/chatBox");
-            console.log("Login Successful");
+            history.push('/chatBox');
+            console.log('Login Successful');
             console.log(user);
         } catch (error) {
             console.error(error.message);
@@ -125,15 +125,15 @@ function Login({ setisAuthenticated }) {
                             </div>
                             <div
                                 style={{
-                                    display: "flex",
-                                    justifyContent: "center",
+                                    display: 'flex',
+                                    justifyContent: 'center',
                                 }}
                             >
                                 <TextField
                                     type="password"
                                     className={classes.input}
                                     variant="outlined"
-                                    helperText={""}
+                                    helperText={''}
                                     id="password"
                                     placeholder="password*"
                                     value={password}
@@ -149,15 +149,15 @@ function Login({ setisAuthenticated }) {
                                 type="submit"
                                 name="Login"
                                 style={{
-                                    width: "100%",
-                                    marginBottom: "5%",
+                                    width: '100%',
+                                    marginBottom: '5%',
                                 }}
                             >
                                 Login
                             </Button>
 
                             <div style={{ paddingBottom: 20 }}>
-                                Dont have an account?{" "}
+                                Dont have an account?{' '}
                                 <Link to="/register">Create an Account</Link>
                             </div>
                         </form>
