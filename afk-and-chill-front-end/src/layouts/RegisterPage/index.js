@@ -4,7 +4,8 @@ import Preferences from '../../components/Register/Preferences';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
-import { Auth } from 'aws-amplify';
+import { registerUser } from '../../network';
+import { register } from '../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +22,14 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const history = useHistory();
-    const [userInfo, setUserInfo] = useState({});
+    const [userInfo, setUserInfo] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        about: '',
+        photoUrl: '',
+    });
     const [gameSearch, setGameSearch] = useState('');
     const [genderPref, setGenderPref] = useState('');
     const [gender, setGender] = useState('');
@@ -32,14 +40,22 @@ export default function RegisterPage() {
         event.preventDefault();
         try {
             // cognito register api
-            await Auth.signUp({
-                username: userInfo.email,
+            const userSub = await register({
+                name: userInfo.name,
+                email: userInfo.email,
                 password: userInfo.password,
-                attributes: {
-                    email: userInfo.email,
-                    name: userInfo.username,
-                },
             });
+
+            await registerUser({
+                userId: userSub,
+                name: userInfo.name,
+                about: userInfo.about,
+                gender,
+                genderPref,
+                photoUrl: userInfo.photoUrl,
+                games,
+            });
+
             console.log('Successfully Register');
             history.push('/');
         } catch (error) {
@@ -73,7 +89,9 @@ export default function RegisterPage() {
                     type="submit"
                     id="Register"
                     className={classes.button}
-                ></Button>
+                >
+                    Register
+                </Button>
             </form>
         </div>
     );

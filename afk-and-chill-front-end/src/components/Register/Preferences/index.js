@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     formControl: {
-        margin: theme.spacing(1),
+        marginBottom: 20,
     },
     genderFormControl: {
-        width: 120,
+        maxWidth: 120,
     },
     genderPrefFormControl: {
-        width: 200,
+        maxWidth: 200,
     },
     search: {
         position: 'relative',
@@ -73,44 +73,44 @@ export default function Preferences({
             <div className={classes.formControlContainer}>
                 <FormControl
                     required
-                    className={(classes.formControl, classes.genderFormControl)}
+                    variant="outlined"
+                    className={`${classes.formControl} ${classes.genderFormControl}`}
                 >
                     <InputLabel htmlFor="gender">Gender</InputLabel>
                     <Select
-                        native
+                        id="gender"
                         value={gender}
                         onChange={(e) => setGender(e.target.value)}
-                        name="gender"
-                        inputProps={{
-                            id: 'gender',
-                        }}
+                        label="Gender"
                     >
-                        <option aria-label="None" value=""></option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="male">Male</MenuItem>
+                        <MenuItem value="female">Female</MenuItem>
+                        <MenuItem value="other">Other</MenuItem>
                     </Select>
                 </FormControl>
                 <FormControl
                     required
-                    className={
-                        (classes.formControl, classes.genderPrefFormControl)
-                    }
+                    variant="outlined"
+                    className={`${classes.formControl} ${classes.genderPrefFormControl}`}
                 >
-                    <InputLabel htmlFor="gender">Gender Preferences</InputLabel>
+                    <InputLabel htmlFor="genderPref">
+                        Gender Preference
+                    </InputLabel>
                     <Select
-                        native
+                        id="genderPref"
                         value={genderPref}
                         onChange={(e) => setGenderPref(e.target.value)}
-                        name="genderPref"
-                        inputProps={{
-                            id: 'genderPref',
-                        }}
+                        label="Gender Preference"
                     >
-                        <option aria-label="None" value=""></option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="male">Male</MenuItem>
+                        <MenuItem value="female">Female</MenuItem>
+                        <MenuItem value="other">Other</MenuItem>
                     </Select>
                 </FormControl>
             </div>
