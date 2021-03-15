@@ -1,17 +1,17 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useEffect } from "react";
-import Register from "./layouts/RegisterPage";
-import Login from "./layouts/LoginPage";
-import ChatBox from "./layouts/ChatBoxPage";
-import GuardedRoute from "./components/GuardedRoute";
-import useLocalStorage from "react-use-localstorage";
-import Header from "./layouts/HeaderNavigation";
-import Match from "./layouts/MatchPage";
-import Profile from "./layouts/ProfilePage";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import Register from './layouts/RegisterPage';
+import Login from './layouts/LoginPage';
+import ChatBox from './layouts/ChatBoxPage';
+import GuardedRoute from './components/GuardedRoute';
+import useLocalStorage from 'react-use-localstorage';
+import Header from './layouts/HeaderNavigation';
+import Match from './layouts/MatchPage';
+import Profile from './layouts/ProfilePage';
 
 function App() {
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
-        "isAuthorized",
+        'isAuthorized',
         false
     );
 
