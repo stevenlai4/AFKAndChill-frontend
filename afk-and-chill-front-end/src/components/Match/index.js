@@ -1,44 +1,43 @@
-import React, { useState, useMemo } from "react";
-import TinderCard from "react-tinder-card";
-import "./index.css";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CancelIcon from "@material-ui/icons/Cancel";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import IconButton from "@material-ui/core/IconButton";
-
+import React, { useState, useMemo } from 'react';
+import TinderCard from 'react-tinder-card';
+import './index.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CancelIcon from '@material-ui/icons/Cancel';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import IconButton from '@material-ui/core/IconButton';
 //fake data
 const db = [
     {
-        name: "Monica Hall",
-        url: "https://i.imgur.com/DcybzAX.png",
+        name: 'Monica Hall',
+        url: 'https://i.imgur.com/DcybzAX.png',
     },
     {
-        name: "Erlich Bachman",
-        url: "https://i.imgur.com/wEMTKJL.jpg",
+        name: 'Erlich Bachman',
+        url: 'https://i.imgur.com/wEMTKJL.jpg',
     },
     {
-        name: "Steven",
-        url: "https://i.imgur.com/PjvFnSY.png",
+        name: 'CTO Steven',
+        url: 'https://i.imgur.com/PjvFnSY.png',
     },
     {
-        name: "Karen The Boss)",
-        url: "https://i.imgur.com/5Ok6BaP.png",
+        name: 'Karen The Boss)',
+        url: 'https://i.imgur.com/5Ok6BaP.png',
     },
     {
-        name: "Caitlin Chu",
-        url: "https://i.imgur.com/PUBX51W.png",
+        name: 'Peter pan',
+        url:
+            'https://images.wallpapersden.com/image/download/peter-pan-1953_bGhpameUmZqaraWkpJRnamtlrWZpaWU.jpg',
     },
 ];
-
 // Card layout
 const useStyles = makeStyles({
     bullet: {
-        display: "inline-block",
-        margin: "0 2px",
-        transform: "scale(0.8)",
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
     },
     title: {
         fontSize: 14,
@@ -47,13 +46,11 @@ const useStyles = makeStyles({
         marginBottom: 12,
     },
 });
-
 const Match = () => {
     const alreadyRemoved = [];
     const [characters, setCharacters] = useState(db);
     let charactersState = db; // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
     const [lastDirection, setLastDirection] = useState();
-
     const childRefs = useMemo(
         () =>
             Array(db.length)
@@ -61,21 +58,18 @@ const Match = () => {
                 .map((i) => React.createRef()),
         []
     );
-
     const swiped = (direction, nameToDelete) => {
-        console.log("removing: " + nameToDelete);
+        console.log('removing: ' + nameToDelete);
         setLastDirection(direction);
         alreadyRemoved.push(nameToDelete);
     };
-
     const outOfFrame = (name) => {
-        console.log(name + " left the screen!");
+        console.log(name + ' left the screen!');
         charactersState = charactersState.filter(
             (character) => character.name !== name
         );
         setCharacters(charactersState);
     };
-
     const swipe = (dir) => {
         const cardsLeft = characters.filter(
             (person) => !alreadyRemoved.includes(person.name)
@@ -87,72 +81,57 @@ const Match = () => {
             childRefs[index].current.swipe(dir); // Swipe the card!
         }
     };
-
     return (
-        <div style={{ display: "flex" }}>
+        <div>
             {/* ======== CARD SECTION ==== LEFT SIDE */}
-            <div className="cardAndButtons" style={{ width: "50%" }}>
-                <div className="cardContainer" style={{ postion: "relative" }}>
-                    {characters.map((character, index) => (
-                        <TinderCard
-                            ref={childRefs[index]}
-                            className="swipe"
-                            key={character.name}
-                            onSwipe={(dir) => swiped(dir, character.name)}
-                            onCardLeftScreen={() => outOfFrame(character.name)}
+            <div className="tinderCards__cardContainer">
+                {characters.map((character, index) => (
+                    <TinderCard
+                        ref={childRefs[index]}
+                        className="swipe"
+                        key={character.name}
+                        onSwipe={(dir) => swiped(dir, character.name)}
+                        onCardLeftScreen={() => outOfFrame(character.name)}
+                    >
+                        <div
+                            className="wholeCard"
+                            style={{
+                                display: 'flex',
+                            }}
                         >
                             <div
                                 style={{
                                     backgroundImage:
-                                        "url(" + character.url + ")",
+                                        'url(' + character.url + ')',
                                 }}
                                 className="card"
                             >
                                 <h3 className="card_name">{character.name}</h3>
                             </div>
-                        </TinderCard>
-                    ))}
-                </div>
-                <div className="swipeButtons">
-                    <IconButton>
-                        <CancelIcon
-                            className="swipeButtons__cancel"
-                            fontSize="large"
-                            onClick={() => swipe("left")}
-                        />
-                    </IconButton>
-                    <IconButton>
-                        <FavoriteIcon
-                            className="swipeButtons_favorite"
-                            fontSize="large"
-                            onClick={() => swipe("right")}
-                        />
-                    </IconButton>
-                </div>
+                            <div className="cardD">
+                                <h1>name:{character.name}</h1>
+                            </div>
+                        </div>
+                    </TinderCard>
+                ))}
             </div>
-            {/* ====INFORMATION BIO=== **RIGHT SIDE */}
-            {/* <div style={{ display: "block" }}> */}
-            <div style={{ width: "50%" }}>
-                <Card variant="outlined">
-                    <CardContent>
-                        <Typography color="textSecondary" gutterBottom>
-                            Chiller name:
-                        </Typography>
-                        <Typography variant="h5" component="h2"></Typography>
-
-                        <Typography color="textSecondary" gutterBottom>
-                            Description:
-                        </Typography>
-                        <Typography color="textSecondary" gutterBottom>
-                            Games I like:
-                        </Typography>
-
-                        {/* CHILLER GAMES */}
-                    </CardContent>
-                </Card>
+            <div className="swipeButtons">
+                <IconButton>
+                    <CancelIcon
+                        className="swipeButtons__cancel"
+                        fontSize="large"
+                        onClick={() => swipe('left')}
+                    />
+                </IconButton>
+                <IconButton>
+                    <FavoriteIcon
+                        className="swipeButtons_favorite"
+                        fontSize="large"
+                        onClick={() => swipe('right')}
+                    />
+                </IconButton>
             </div>
         </div>
     );
 };
-
 export default Match;
