@@ -51,7 +51,7 @@ function App() {
                     isAuthenticated={isAuthenticated}
                 />
                 <GuardedRoute
-                    component={ChatBox}
+                    component={Match}
                     path="/chillerPost"
                     isAuthenticated={isAuthenticated}
                 />
