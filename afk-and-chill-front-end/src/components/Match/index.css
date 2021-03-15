@@ -1,13 +1,15 @@
 /* ======CARD Styling */
+.wholeCard {
+    display: flex;
+}
 .card {
     background-color: #fff;
-    width: 330px;
-    padding: 20px;
+    width: 400px;
     max-width: 100vw;
     height: 60vh;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
     border-radius: 10px 0 0 10px;
-    border-color: rgb(238, 131, 220);
+    border-color: grey;
     border-style: solid;
     border-width: 1px 0 1px 1px;
     background-size: cover;
@@ -16,7 +18,7 @@
 .cardD {
     background-color: #fff;
     display: flex;
-    width: 330px;
+    width: 400px;
     padding: 20px;
     max-width: 100vw;
     height: 60vh;
@@ -33,11 +35,6 @@
     justify-content: center;
     margin-top: 10vh;
 }
-/* .cardContent {
-    position: relative;
-    width: 100%;
-    height: 100%;
-} */
 .swipe {
     position: absolute;
 }
@@ -56,10 +53,10 @@
 }
 .swipeButtons {
     position: fixed;
-    bottom: 8%;
-    padding-left: 20%;
+    display: flex;
+    margin-top: 62vh;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 .swipeButtons_favorite {
     padding: 0.4vw;
@@ -68,4 +65,87 @@
 .swipeButtons__cancel {
     padding: 0.4vw;
     color: #ec5e6f;
+}
+
+/* -------------------------tablet size---------------------------- */
+@media only screen and (max-width: 960px) {
+    .wholeCard {
+        display: flex;
+        flex-direction: column;
+    }
+    .card {
+        background-color: #fff;
+        width: 400px;
+        padding: 20px;
+        max-width: 100vw;
+        height: 400px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        border-radius: 10px 10px 0 0;
+        border-color: grey;
+        border-style: solid;
+        border-width: 1px 0 1px 1px;
+    }
+    .cardD {
+        background-color: #fff;
+        display: flex;
+        width: 400px;
+        padding: 20px;
+        max-width: 100vw;
+        height: 250px;
+        border-color: grey;
+        border-radius: 0 0 10px 10px;
+        border-style: solid;
+        border-width: 1px 1px 1px 0;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        background-size: cover;
+        background-position: center;
+    }
+    /* .swipeButtons {
+        position: fixed;
+        display: flex;
+        margin-top: 10vh;
+        width: 100%;
+    } */
+}
+
+/* -------------------------mobile size---------------------------- */
+@media only screen and (max-width: 600px) {
+    .wholeCard {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20%;
+    }
+    .card {
+        background-color: #fff;
+        width: 300px;
+        padding: 20px;
+        max-width: 100vw;
+        height: 300px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        border-radius: 10px 10px 0 0;
+        border-color: grey;
+        border-style: solid;
+        border-width: 1px 0 1px 1px;
+    }
+    .cardD {
+        background-color: #fff;
+        display: flex;
+        width: 300px;
+        padding: 20px;
+        max-width: 100vw;
+        height: 250px;
+        border-color: grey;
+        border-radius: 0 0 10px 10px;
+        border-style: solid;
+        border-width: 1px 1px 1px 0;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+        background-size: cover;
+        background-position: center;
+    }
+    /* .swipeButtons {
+        position: fixed;
+        display: flex;
+        margin-top: 70vh;
+        width: 100%;
+    } */
 }

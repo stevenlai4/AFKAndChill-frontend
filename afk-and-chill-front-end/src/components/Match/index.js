@@ -90,46 +90,44 @@ const Match = () => {
                         ref={childRefs[index]}
                         className="swipe"
                         key={character.name}
+                        preventSwipe={['up', 'down']}
                         onSwipe={(dir) => swiped(dir, character.name)}
                         onCardLeftScreen={() => outOfFrame(character.name)}
                     >
-                        <div
-                            className="wholeCard"
-                            style={{
-                                display: 'flex',
-                            }}
-                        >
+                        <div className="wholeCard">
                             <div
                                 style={{
                                     backgroundImage:
                                         'url(' + character.url + ')',
                                 }}
                                 className="card"
-                            >
-                                <h3 className="card_name">{character.name}</h3>
-                            </div>
+                            ></div>
                             <div className="cardD">
-                                <h1>name:{character.name}</h1>
+                                <p>name:{character.name}</p>
                             </div>
                         </div>
                     </TinderCard>
                 ))}
             </div>
             <div className="swipeButtons">
-                <IconButton>
-                    <CancelIcon
-                        className="swipeButtons__cancel"
-                        fontSize="large"
-                        onClick={() => swipe('left')}
-                    />
-                </IconButton>
-                <IconButton>
-                    <FavoriteIcon
-                        className="swipeButtons_favorite"
-                        fontSize="large"
-                        onClick={() => swipe('right')}
-                    />
-                </IconButton>
+                <div className="buttons">
+                    <IconButton>
+                        <CancelIcon
+                            className="swipeButtons__cancel"
+                            fontSize="large"
+                            onClick={() => swipe('left')}
+                        />
+                    </IconButton>
+                </div>
+                <div style={{ marginLeft: '5%' }}>
+                    <IconButton>
+                        <FavoriteIcon
+                            className="swipeButtons_favorite"
+                            fontSize="large"
+                            onClick={() => swipe('right')}
+                        />
+                    </IconButton>
+                </div>
             </div>
         </div>
     );
