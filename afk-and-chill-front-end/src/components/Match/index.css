@@ -1,4 +1,4 @@
-/* ======CARD Styling */
+/* -------------------CARD Styling------------------- */
 .wholeCard {
     display: flex;
 }
@@ -42,10 +42,9 @@
     position: absolute;
     color: white;
     font-size: 30px;
-    /* margin: 11px; */
     bottom: 0;
 }
-/* ======BUTTONS======== */
+/* -------------------BUTTONS------------------- */
 .swipeButtons .MuiIconButton-root {
     background-color: white;
     border: 0.5px inset grey;
