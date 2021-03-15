@@ -114,13 +114,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-    Avatar,
-    CardHeader,
-    Card,
-    CardActions,
-    CardContent,
-} from '@material-ui/core';
+import { Avatar, CardHeader, Card, CardContent } from '@material-ui/core';
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
 
@@ -184,7 +178,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ChatBox({ message, submitMessage }) {
+export default function ChatBox({ message, submitMessage, onClickChatItem }) {
     const classes = useStyles();
 
     //----------------------------Drawer---------------------------------------//
@@ -252,10 +246,10 @@ export default function ChatBox({ message, submitMessage }) {
                     </React.Fragment>
                 ))}
             </section>
-            {/*----------------------------message box---------------------------------------*/}
+            {/*----------------------------chiller Item---------------------------------------*/}
             <section className={classes.AFKChat}>
                 <div className={classes.chillerItem}>
-                    <Card>
+                    <Card onClick={onClickChatItem}>
                         <CardHeader
                             avatar={
                                 <Avatar className={classes.avatar}>
@@ -266,6 +260,7 @@ export default function ChatBox({ message, submitMessage }) {
                         />
                     </Card>
                 </div>
+                {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
                         <CardHeader
@@ -286,7 +281,6 @@ export default function ChatBox({ message, submitMessage }) {
                             ))}
                         </CardContent>
                         <div className={classes.messageForm}>
-                            <CardActions></CardActions>
                             <MessageForm onSubmit={onMessage}></MessageForm>
                         </div>
                     </div>
