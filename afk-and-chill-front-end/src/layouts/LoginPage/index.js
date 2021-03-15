@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     image: {
         width: 550,
         display: 'block',
-        // margin: '10px auto 0 auto',
     },
 }));
 

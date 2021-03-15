@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         width: '60%',
         paddingTop: 60,
         paddingBottom: 60,
-        // margin: '50px auto 0 auto',
     },
     LoginForm: {
         display: 'flex',
