@@ -210,7 +210,11 @@ export default function ChatBox({ message, submitMessage, onClickChatItem }) {
         >
             <List>
                 {/* {chillerList.map((text, index) => ( */}
-                <ListItem button key={message.chiller}>
+                <ListItem
+                    button
+                    key={message.chiller}
+                    onClick={onClickChatItem}
+                >
                     {/* <ListItemText primary={text} /> */}
                     <CardHeader
                         avatar={
