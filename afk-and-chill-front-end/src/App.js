@@ -10,22 +10,19 @@ import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
 
 function App() {
+<<<<<<< HEAD
     const [isAuthenticated, setisAuthenticated] = useLocalStorage(
+=======
+    const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
+>>>>>>> main
         'isAuthorized',
         false
     );
 
-    //clear localstorage when close brower
-    useEffect(() => {
-        window.onbeforeunload = () => {
-            localStorage.clear();
-        };
-    });
-
     return (
         <Router>
             <Header
-                setisAuthenticated={setisAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
                 isAuthenticated={isAuthenticated}
             />
             <Switch>
@@ -33,7 +30,7 @@ function App() {
                     <Register />
                 </Route>
                 <Route exact path="/">
-                    <Login setisAuthenticated={setisAuthenticated} />
+                    <Login setIsAuthenticated={setIsAuthenticated} />
                 </Route>
                 <GuardedRoute
                     component={ChatBox}
