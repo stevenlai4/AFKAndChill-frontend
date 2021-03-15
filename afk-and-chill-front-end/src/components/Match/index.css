@@ -19,10 +19,11 @@
     background-color: #fff;
     display: flex;
     flex-direction: column;
+    overflow: auto;
     padding: 5%;
     width: 400px;
     max-width: 100vw;
-    height: auto;
+    height: 60vh;
     border-color: grey;
     border-radius: 0 10px 10px 0;
     border-style: solid;
@@ -84,6 +85,7 @@
     }
     .descriptionCard {
         width: 400px;
+        height: 35vh;
         border-radius: 0 0 10px 10px;
         border-width: 0 1px 1px 1px;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
@@ -111,6 +113,7 @@
     }
     .descriptionCard {
         width: 300px;
+        height: 35vh;
         border-radius: 0 0 10px 10px;
         border-width: 0 1px 1px 1px;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
