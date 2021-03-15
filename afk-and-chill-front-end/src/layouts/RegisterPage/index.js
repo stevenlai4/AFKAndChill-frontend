@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     errorMsg: {
         color: "red",
-        fontWeight: 20,
+        fontWeight: 400,
     },
 }));
 
