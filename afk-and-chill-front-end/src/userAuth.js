@@ -1,11 +1,11 @@
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
 
 // Get user idToken (JWT)
 export async function userToken() {
     try {
         const currentUser = await Auth.currentAuthenticatedUser();
         if (!currentUser) {
-            throw Error('User not logged in');
+            throw Error("User not logged in");
         }
 
         const session = await Auth.currentSession();
@@ -28,6 +28,6 @@ export async function register({ email, password, name }) {
 
         return userSub;
     } catch (error) {
-        console.error(error.message);
+        throw error;
     }
 }
