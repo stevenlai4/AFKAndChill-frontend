@@ -10,11 +10,7 @@ import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
 
 function App() {
-<<<<<<< HEAD
-    const [isAuthenticated, setisAuthenticated] = useLocalStorage(
-=======
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
->>>>>>> main
         'isAuthorized',
         false
     );
