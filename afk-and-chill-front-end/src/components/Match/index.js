@@ -12,40 +12,50 @@ import IconButton from '@material-ui/core/IconButton';
 const db = [
     {
         name: 'Monica Hall',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
         url: 'https://i.imgur.com/DcybzAX.png',
     },
     {
         name: 'Erlich Bachman',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
         url: 'https://i.imgur.com/wEMTKJL.jpg',
     },
     {
         name: 'CTO Steven',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi utLorem ipsum dolor sit amet, consectetur adipisciLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ng elit, sed do eiusmod temporua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi  aliquip ex ea',
         url: 'https://i.imgur.com/PjvFnSY.png',
     },
     {
-        name: 'Karen The Boss)',
+        name: 'Karen The Boss',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
         url: 'https://i.imgur.com/5Ok6BaP.png',
     },
     {
         name: 'Peter pan',
+        description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor  nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
         url:
             'https://images.wallpapersden.com/image/download/peter-pan-1953_bGhpameUmZqaraWkpJRnamtlrWZpaWU.jpg',
     },
 ];
 // Card layout
-const useStyles = makeStyles({
-    bullet: {
-        display: 'inline-block',
-        margin: '0 2px',
-        transform: 'scale(0.8)',
-    },
-    title: {
-        fontSize: 14,
-    },
-    pos: {
-        marginBottom: 12,
-    },
-});
+// const useStyles = makeStyles({
+//     bullet: {
+//         display: 'inline-block',
+//         margin: '0 2px',
+//         transform: 'scale(0.8)',
+//     },
+//     title: {
+//         fontSize: 14,
+//     },
+//     pos: {
+//         marginBottom: 12,
+//     },
+// });
 const Match = () => {
     const alreadyRemoved = [];
     const [characters, setCharacters] = useState(db);
@@ -102,15 +112,16 @@ const Match = () => {
                                 }}
                                 className="card"
                             ></div>
-                            <div className="cardD">
-                                <p>name:{character.name}</p>
+                            <div className="descriptionCard">
+                                <h3>{character.name}</h3>
+                                <h5>{character.description}</h5>
                             </div>
                         </div>
                     </TinderCard>
                 ))}
             </div>
             <div className="swipeButtons">
-                <div className="buttons">
+                <div className="likeAndDislikeButtons">
                     <IconButton>
                         <CancelIcon
                             className="swipeButtons__cancel"
@@ -119,7 +130,7 @@ const Match = () => {
                         />
                     </IconButton>
                 </div>
-                <div style={{ marginLeft: '5%' }}>
+                <div className="likeAndDislikeButtons">
                     <IconButton>
                         <FavoriteIcon
                             className="swipeButtons_favorite"
