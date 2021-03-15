@@ -3,12 +3,12 @@ import Header from '../../components/Header';
 import { useHistory } from 'react-router-dom';
 
 export default function HeaderNavigation({
-    setisAuthenticated,
+    setIsAuthenticated,
     isAuthenticated,
 }) {
     const history = useHistory();
     const signOut = () => {
-        setisAuthenticated(false);
+        setIsAuthenticated(false);
         localStorage.clear();
         history.push('/');
     };
@@ -16,7 +16,7 @@ export default function HeaderNavigation({
     return (
         <Header
             title="SocialLOL"
-            setisAuthenticated={setisAuthenticated}
+            setIsAuthenticated={setIsAuthenticated}
             isAuthenticated={isAuthenticated}
             findChillersClicked={() => history.push('/findChillers')}
             chillersPostClicked={() => history.push('/chillerPost')}

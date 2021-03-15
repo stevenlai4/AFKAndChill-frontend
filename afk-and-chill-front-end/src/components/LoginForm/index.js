@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { TextField, Button, Card, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { login } from '../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -30,12 +31,26 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Form() {
+export default function Form({ setIsAuthenticated }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const classes = useStyles();
+    const history = useHistory();
 
-    const onSubmit = () => {};
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            await login(email, password);
+            setIsAuthenticated(true);
+
+            history.push('/findChillers');
+        } catch (error) {
+            console.error(error.message);
+            setError(error.message);
+        }
+    };
 
     return (
         <div className={classes.root}>
@@ -43,15 +58,15 @@ export default function Form() {
                 <Typography className={classes.cardText} variant="h4">
                     Welcom to AFK & Chill
                 </Typography>
-                <form onSubmit={onSubmit} className={classes.LoginForm}>
+                <form onSubmit={handleSubmit} className={classes.LoginForm}>
                     <TextField
                         required
                         type="text"
                         className={classes.input}
                         variant="outlined"
-                        helperText={onSubmit.error}
+                        helperText={error}
                         id="email"
-                        placeholder="email*"
+                        placeholder="Email*"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
@@ -59,9 +74,9 @@ export default function Form() {
                         type="password"
                         className={classes.input}
                         variant="outlined"
-                        helperText={''}
+                        helperText={error}
                         id="password"
-                        placeholder="password*"
+                        placeholder="Password*"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
