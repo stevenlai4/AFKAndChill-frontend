@@ -197,7 +197,7 @@ export default function ChatBox({ message, submitMessage, onClickChatItem }) {
         setState({ ...state, [anchor]: open });
     };
 
-    const chillerList = ['Mongo', 'Steven', 'Kalvin'];
+    const chillerList = ['Mongo', 'Bob'];
 
     const list = (anchor) => (
         <div
@@ -209,11 +209,19 @@ export default function ChatBox({ message, submitMessage, onClickChatItem }) {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {chillerList.map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                {/* {chillerList.map((text, index) => ( */}
+                <ListItem button key={message.chiller}>
+                    {/* <ListItemText primary={text} /> */}
+                    <CardHeader
+                        avatar={
+                            <Avatar className={classes.avatar}>
+                                {message.chiller[0]}
+                            </Avatar>
+                        }
+                        title={message.chiller}
+                    />
+                </ListItem>
+                {/* // ))} */}
             </List>
         </div>
     );
