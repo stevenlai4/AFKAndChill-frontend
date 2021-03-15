@@ -39,6 +39,6 @@ export async function login(email, password) {
             password: password,
         });
     } catch (error) {
-        console.error(error.message);
+        throw error;
     }
 }

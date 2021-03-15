@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Form({ setIsAuthenticated }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
     const classes = useStyles();
     const history = useHistory();
 
@@ -44,11 +43,9 @@ export default function Form({ setIsAuthenticated }) {
         try {
             await login(email, password);
             setIsAuthenticated(true);
-
             history.push('/findChillers');
         } catch (error) {
             console.error(error.message);
-            setError(error.message);
         }
     };
 
@@ -64,7 +61,7 @@ export default function Form({ setIsAuthenticated }) {
                         type="text"
                         className={classes.input}
                         variant="outlined"
-                        helperText={error}
+                        helperText={''}
                         id="email"
                         placeholder="Email*"
                         value={email}
@@ -74,7 +71,7 @@ export default function Form({ setIsAuthenticated }) {
                         type="password"
                         className={classes.input}
                         variant="outlined"
-                        helperText={error}
+                        helperText={''}
                         id="password"
                         placeholder="Password*"
                         value={password}
