@@ -1,21 +1,23 @@
 import axios from 'axios';
 import { userToken } from './userAuth';
 
-var idToken = {};
+// Setup user token
+const getToken = async () => {
+    try {
+        const token = await userToken();
 
-// Setup token header
-(async () => {
-    const token = await userToken();
-    if (token) {
-        idToken = { Authorization: `${token}` };
+        if (token) {
+            return token;
+        }
+    } catch (error) {
+        throw error;
     }
-})();
+};
 
 // Config axios
 const api = axios.create({
     baseURL: 'https://4yvcbwlong.execute-api.us-east-2.amazonaws.com/prod',
     headers: {
-        ...idToken,
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
@@ -27,7 +29,7 @@ export async function registerUser({
     about,
     gender,
     genderPref,
-    photo,
+    photoUrl,
     games,
 }) {
     try {
@@ -37,7 +39,7 @@ export async function registerUser({
             about,
             gender,
             genderPref,
-            photo,
+            photoUrl,
             games,
         });
 
@@ -48,15 +50,18 @@ export async function registerUser({
 }
 
 // Save user photo to S3 bucket
-export async function savePostFile({ file, description }) {
-    // Get secure token from lambda
-    let signedURLResult = await http({ method: 'get', path: '/securetoken' });
-    const { uploadURL, Key } = signedURLResult;
-    console.log({ uploadURL, Key });
-    // Upload to s3
-    await axios.put(uploadURL, file);
-    const imageUrl = uploadURL.split('?')[0];
-    console.log(imageUrl);
-    // Save post details to database through lambda
-    return await savePostUrl({ imageUrl, description });
+export async function savePhotoFile(file) {
+    try {
+        // Get secure token from lambda
+        const signedURLResult = await api.get('/user/uploadphoto');
+        const { uploadURL } = signedURLResult.data;
+
+        // Upload to s3
+        await axios.put(uploadURL, file);
+        const imageUrl = uploadURL.split('?')[0];
+
+        return imageUrl;
+    } catch (error) {
+        throw error;
+    }
 }
