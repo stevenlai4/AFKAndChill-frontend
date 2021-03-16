@@ -58,7 +58,7 @@ export default function Form({ setIsAuthenticated }) {
         <div className={classes.root}>
             <Card className={classes.loginCard}>
                 <Typography className={classes.cardText} variant="h4">
-                    Welcom to AFK & Chill
+                    Welcome to AFK & Chill
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.LoginForm}>
                     <TextField
