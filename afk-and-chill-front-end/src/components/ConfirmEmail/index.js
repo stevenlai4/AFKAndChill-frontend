@@ -8,18 +8,12 @@ const useStyles = makeStyles((theme) => ({
         height: '90vh',
         overflow: 'hidden',
     },
-    confirmEmailPage: {
-        marginTop: '10%',
-        marginRight: '30%',
-        marginLeft: '30%',
-    },
-    confirmEmail: {
-        justifyContent: 'center',
-    },
-    image: {
-        flex: 1,
+    confirmEmailContainer: {
+        display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        width: '100%',
     },
 }));
 
@@ -41,13 +35,11 @@ const ConfirmEmail = () => {
                     d="M0,32L60,48C120,64,240,96,360,90.7C480,85,600,43,720,48C840,53,960,107,1080,133.3C1200,160,1320,160,1380,160L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
                 ></path>
             </svg>
-            <div className={classes.confirmEmailPage}>
-                <div className={classes.classNameconfirmEmail}>
-                    <div className={classes.image}>
-                        <img src="https://i.imgur.com/w3X06On.png" />
-                    </div>
-                    <h2>Please confirm your email address </h2>
+            <div className={classes.confirmEmailContainer}>
+                <div className={classes.image}>
+                    <img src="https://i.imgur.com/w3X06On.png" />
                 </div>
+                <h2>Please confirm your email address </h2>
                 <div>
                     <p>
                         Please take a second to make sure we have your correct
