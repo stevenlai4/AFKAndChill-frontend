@@ -44,6 +44,7 @@ export default function RegisterPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        //Password length validation
         let passLength = new RegExp(/^(?=.*[{8}])/);
         if (!passLength.test(userInfo.password)) {
             setErrorMsg("Password needs an to be at least 8 characters");
