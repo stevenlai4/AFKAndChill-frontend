@@ -79,6 +79,9 @@ const useStyles = makeStyles((theme) => ({
         width: '30%',
         margin: '5%',
     },
+    helperText: {
+        color: 'red',
+    },
 }));
 
 export default function Register({ onSubmitSearch }) {
@@ -90,9 +93,16 @@ export default function Register({ onSubmitSearch }) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [about, setAbout] = useState('');
+    // Error Handling
+    const [userNameError, setUserNameError] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (username === null || username === '') {
+            setUserNameError('Username can not be blank');
+            return;
+        }
     };
 
     return (
@@ -106,6 +116,10 @@ export default function Register({ onSubmitSearch }) {
                             type="text"
                             variant="outlined"
                             className={classes.input}
+                            FormHelperTextProps={{
+                                className: classes.helperText,
+                            }}
+                            helperText={userNameError}
                             id="username"
                             value={username}
                             autoComplete="on"
@@ -113,6 +127,7 @@ export default function Register({ onSubmitSearch }) {
                         />
                         <h3>Email</h3>
                         <TextField
+                            required={true}
                             variant="outlined"
                             type="email"
                             id="email"
