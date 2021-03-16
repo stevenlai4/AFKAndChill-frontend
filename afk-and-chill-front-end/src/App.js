@@ -1,31 +1,24 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import React, { useEffect } from "react";
-import Register from "./layouts/RegisterPage";
-import Login from "./layouts/LoginPage";
-import ChatBox from "./layouts/ChatBoxPage";
-import GuardedRoute from "./components/GuardedRoute";
-import useLocalStorage from "react-use-localstorage";
-import Header from "./layouts/HeaderNavigation";
-import Match from "./layouts/MatchPage";
-import Profile from "./layouts/ProfilePage";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import Register from './layouts/RegisterPage';
+import Login from './layouts/LoginPage';
+import ChatBox from './layouts/ChatBoxPage';
+import GuardedRoute from './components/GuardedRoute';
+import useLocalStorage from 'react-use-localstorage';
+import Header from './layouts/HeaderNavigation';
+import Match from './layouts/MatchPage';
+import Profile from './layouts/ProfilePage';
 
 function App() {
-    const [isAuthenticated, setisAuthenticated] = useLocalStorage(
-        "isAuthorized",
+    const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
+        'isAuthorized',
         false
     );
-
-    //clear localstorage when close brower
-    useEffect(() => {
-        window.onbeforeunload = () => {
-            localStorage.clear();
-        };
-    });
 
     return (
         <Router>
             <Header
-                setisAuthenticated={setisAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
                 isAuthenticated={isAuthenticated}
             />
             <Switch>
@@ -33,7 +26,7 @@ function App() {
                     <Register />
                 </Route>
                 <Route exact path="/">
-                    <Login setisAuthenticated={setisAuthenticated} />
+                    <Login setIsAuthenticated={setIsAuthenticated} />
                 </Route>
                 <GuardedRoute
                     component={ChatBox}
