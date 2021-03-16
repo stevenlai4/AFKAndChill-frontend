@@ -1,26 +1,29 @@
 import axios from 'axios';
 import { userToken } from './userAuth';
 
-var idToken = {};
+// Setup user token
+const getToken = async () => {
+    try {
+        const token = await userToken();
 
-// Setup token header
-(async () => {
-    const token = await userToken();
-    if (token) {
-        idToken = { Authorization: `${token}` };
+        if (token) {
+            return token;
+        }
+    } catch (error) {
+        throw error;
     }
-})();
+};
 
 // Config axios
 const api = axios.create({
     baseURL: 'https://4yvcbwlong.execute-api.us-east-2.amazonaws.com/prod',
     headers: {
-        ...idToken,
         Accept: 'application/json',
         'Content-Type': 'application/json',
     },
 });
 
+// Register a new user
 export async function registerUser({
     userId,
     name,
@@ -43,6 +46,23 @@ export async function registerUser({
 
         return response.data;
     } catch (error) {
-        throw error.message;
+        throw error;
+    }
+}
+
+// Get matchable chillers
+export async function getMatchableChillers() {
+    try {
+        const token = await getToken();
+
+        const response = await api.get('/chillers', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await JSON.parse(response.data.body);
+
+        return data.chillers;
+    } catch (error) {
+        throw error;
     }
 }
