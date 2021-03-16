@@ -44,10 +44,9 @@ export default function RegisterPage() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        //Password length validation
-        let passLength = new RegExp(/^(?=.*[{8}])/);
-        if (!passLength.test(userInfo.password)) {
-            setErrorMsg("Password needs an to be at least 8 characters");
+        //Password length validation;
+        if (userInfo.password.length < 8) {
+            setErrorMsg("Password needs to be a minimum of 8 characters");
             return;
         }
 
@@ -71,7 +70,7 @@ export default function RegisterPage() {
             return;
         }
         //Special character validaton
-        let special = new RegExp(/^(?=.*[*.!@$%^&(){}[]:;<>,.?\/~_+-=|])/);
+        let special = new RegExp(/^(?=.*?[#?!@$%^&*-])/);
         if (!special.test(userInfo.password)) {
             setErrorMsg("Password needs to include a special character");
             return;
