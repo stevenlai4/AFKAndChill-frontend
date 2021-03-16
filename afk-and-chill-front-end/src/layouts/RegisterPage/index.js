@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Form from "../../components/Register/Form";
-import Preferences from "../../components/Register/Preferences";
-import { Button, Typography } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router-dom";
-import { registerUser } from "../../network";
-import { register } from "../../userAuth";
+import React, { useState } from 'react';
+import Form from '../../components/Register/Form';
+import Preferences from '../../components/Register/Preferences';
+import { Button, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+import { registerUser } from '../../network';
+import { register } from '../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        margin: "0 5% ",
+        margin: '0 5%',
     },
     heading: {
         marginBottom: 20,
@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: 20,
     },
     errorMsg: {
-        color: "red",
+        color: 'red',
         fontWeight: 400,
     },
 }));
@@ -26,19 +26,18 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const history = useHistory();
+    const [gameSearch, setGameSearch] = useState('');
     const [userInfo, setUserInfo] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-        about: "",
-        photoUrl: "",
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        about: '',
+        photoUrl: '',
+        gender: '',
+        genderPref: '',
+        games: [],
     });
-    const [gameSearch, setGameSearch] = useState("");
-    const [genderPref, setGenderPref] = useState("");
-    const [gender, setGender] = useState("");
-    const [games, setGames] = useState([]);
-    const [errorMsg, setErrorMsg] = useState("");
 
     // Handle register form submit
     const handleSubmit = async (event) => {
@@ -46,39 +45,39 @@ export default function RegisterPage() {
 
         //Password length validation;
         if (userInfo.password.length < 8) {
-            setErrorMsg("Password needs to be a minimum of 8 characters");
+            setErrorMsg('Password needs to be a minimum of 8 characters');
             return;
         }
 
         // Uppercase validation
         let upperCase = new RegExp(/^(?=.*[A-Z])/);
         if (!upperCase.test(userInfo.password)) {
-            setErrorMsg("Password needs an UPPERCASE letter");
+            setErrorMsg('Password needs an UPPERCASE letter');
             return;
         }
 
         //Lowercase validation
         let lowerCase = new RegExp(/^(?=.*[a-z])/);
         if (!lowerCase.test(userInfo.password)) {
-            setErrorMsg("Password needs an lowercase letter");
+            setErrorMsg('Password needs an lowercase letter');
             return;
         }
         //Number validation
         let digits = new RegExp(/^(?=.*[0-9])/);
         if (!digits.test(userInfo.password)) {
-            setErrorMsg("Password needs to include a number");
+            setErrorMsg('Password needs to include a number');
             return;
         }
         //Special character validaton
         let special = new RegExp(/^(?=.*?[#?!@$%^&*-])/);
         if (!special.test(userInfo.password)) {
-            setErrorMsg("Password needs to include a special character");
+            setErrorMsg('Password needs to include a special character');
             return;
         }
 
         //Password match validation
         if (userInfo.password !== userInfo.confirmPassword) {
-            setErrorMsg("Password & Confirm Password does not match");
+            setErrorMsg('Password & Confirm Password does not match');
             return;
         }
 
@@ -94,15 +93,15 @@ export default function RegisterPage() {
                 userId: userSub,
                 name: userInfo.name,
                 about: userInfo.about,
-                gender,
-                genderPref,
+                gender: userInfo.gender,
+                genderPref: userInfo.genderPref,
                 photoUrl: userInfo.photoUrl,
-                games,
+                games: userInfo.games,
             });
 
             if (userSub) {
-                console.log("Successfully Register");
-                history.push("/");
+                console.log('Successfully Register');
+                history.push('/');
             }
         } catch (error) {
             setErrorMsg(error.message);
@@ -124,12 +123,8 @@ export default function RegisterPage() {
                 <Preferences
                     gameSearch={gameSearch}
                     setGameSearch={setGameSearch}
-                    genderPref={genderPref}
-                    setGenderPref={setGenderPref}
-                    gender={gender}
-                    setGender={setGender}
-                    games={games}
-                    setGames={setGames}
+                    userInfo={userInfo}
+                    setUserInfo={setUserInfo}
                 />
                 <Button
                     variant="contained"

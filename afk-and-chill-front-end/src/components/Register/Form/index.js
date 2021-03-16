@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { TextField, IconButton, Avatar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { PhotoCamera, Close } from "@material-ui/icons";
