@@ -38,6 +38,7 @@ export default function RegisterPage() {
         genderPref: '',
         games: [],
     });
+    const [errorMsg, setErrorMsg] = useState('');
 
     // Handle register form submit
     const handleSubmit = async (event) => {
@@ -78,6 +79,12 @@ export default function RegisterPage() {
         //Password match validation
         if (userInfo.password !== userInfo.confirmPassword) {
             setErrorMsg('Password & Confirm Password does not match');
+            return;
+        }
+
+        //Array length
+        if (userInfo.games.length <= 0) {
+            setErrorMsg('Please select at least 1 game!');
             return;
         }
 
