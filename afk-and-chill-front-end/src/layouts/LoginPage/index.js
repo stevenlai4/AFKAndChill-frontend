@@ -47,6 +47,7 @@ export default function LoginPage({ setIsAuthenticated }) {
                 <img
                     src="https://i.imgur.com/1ow85f8.png"
                     title="Play game image"
+                    alt="Play game"
                     className={classes.image}
                 />
             </div>

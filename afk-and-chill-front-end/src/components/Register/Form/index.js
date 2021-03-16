@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
-import {
-    TextField,
-    IconButton,
-    Avatar,
-    Card,
-    CardHeader,
-    CardMedia,
-} from '@material-ui/core';
+import { TextField, IconButton, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PhotoCamera, Close } from '@material-ui/icons';
+import { savePhotoFile } from '../../../network';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,9 +53,20 @@ export default function Form({ userInfo, setUserInfo }) {
         setFilePreview(null);
     };
 
-    const fileSelected = (evt) => {
+    const fileSelected = async (evt) => {
         const photo = evt.target.files[0];
         setFile(photo);
+
+        try {
+            const url = await savePhotoFile(photo);
+
+            if (url) {
+                setUserInfo({ ...userInfo, photoUrl: url });
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+
         const reader = new FileReader();
         reader.onload = (e) => setFilePreview(e.target.result);
         reader.readAsDataURL(photo);
@@ -80,7 +85,10 @@ export default function Form({ userInfo, setUserInfo }) {
                     value={userInfo.name}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({ ...userInfo, name: e.target.value })
+                        setUserInfo({
+                            ...userInfo,
+                            name: e.target.value,
+                        })
                     }
                 />
                 <TextField
@@ -93,11 +101,15 @@ export default function Form({ userInfo, setUserInfo }) {
                     value={userInfo.email}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({ ...userInfo, email: e.target.value })
+                        setUserInfo({
+                            ...userInfo,
+                            email: e.target.value,
+                        })
                     }
                 />
                 <TextField
                     required={true}
+                    helperText={''}
                     label="Password"
                     variant="outlined"
                     className={classes.input}
@@ -106,11 +118,15 @@ export default function Form({ userInfo, setUserInfo }) {
                     value={userInfo.password}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({ ...userInfo, password: e.target.value })
+                        setUserInfo({
+                            ...userInfo,
+                            password: e.target.value,
+                        })
                     }
                 />
                 <TextField
                     required={true}
+                    helperText={''}
                     label="Confirm Password"
                     variant="outlined"
                     className={classes.input}
@@ -127,12 +143,16 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
                 <TextField
                     className={classes.input}
+                    helperText={''}
                     multiline={true}
                     id="about"
                     variant="outlined"
                     value={userInfo.about}
                     onChange={(e) =>
-                        setUserInfo({ ...userInfo, about: e.target.value })
+                        setUserInfo({
+                            ...userInfo,
+                            about: e.target.value,
+                        })
                     }
                     type="text"
                     label="About me..."
