@@ -49,6 +49,7 @@ export default function Form({ setIsAuthenticated }) {
             setIsAuthenticated(true);
             history.push('/findChillers');
         } catch (error) {
+            // setConfirmReg(error.message);
             setErrorMsg(error.message);
             console.error(error.message);
         }
@@ -77,6 +78,7 @@ export default function Form({ setIsAuthenticated }) {
                         variant="outlined"
                         FormHelperTextProps={{ className: classes.helperText }}
                         helperText={errorMsg}
+                        // helperText={confirmReg}
                         id="password"
                         placeholder="Password*"
                         value={password}

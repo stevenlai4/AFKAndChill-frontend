@@ -89,8 +89,6 @@ export default function RegisterPage() {
             return;
         }
 
-        //Validation if email already exists in Cognito
-
         try {
             // cognito register api
             const userSub = await register({
