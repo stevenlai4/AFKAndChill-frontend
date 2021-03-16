@@ -3,6 +3,8 @@ import { TextField, Button, Card, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
 import { login } from '../../userAuth';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -10,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     loginCard: {
         width: '60%',
@@ -32,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ setIsAuthenticated }) {
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.down('md'));
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const classes = useStyles();
@@ -52,7 +60,10 @@ export default function Form({ setIsAuthenticated }) {
     return (
         <div className={classes.root}>
             <Card className={classes.loginCard}>
-                <Typography className={classes.cardText} variant="h4">
+                <Typography
+                    className={classes.cardText}
+                    variant={matches ? 'h5' : 'h4'}
+                >
                     Welcom to AFK & Chill
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.LoginForm}>
