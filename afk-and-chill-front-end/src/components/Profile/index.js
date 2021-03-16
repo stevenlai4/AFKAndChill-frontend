@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
+import React, { useState } from "react";
+import { fade, makeStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
 import {
     Select,
     InputBase,
@@ -8,14 +8,14 @@ import {
     TextField,
     FormControl,
     Button,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        position: 'fixed',
+        position: "fixed",
         top: 0,
-        width: '100%',
+        width: "100%",
         zIndex: 1000,
     },
     wrapper: {
@@ -25,74 +25,81 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 100,
     },
     search: {
-        position: 'relative',
+        position: "relative",
         borderRadius: theme.shape.borderRadius,
         backgroundColor: fade(theme.palette.text.secondary, 0.05),
         marginRight: theme.spacing(2),
         marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
+        width: "100%",
+        [theme.breakpoints.up("sm")]: {
             marginLeft: theme.spacing(0),
-            width: 'auto',
+            width: "auto",
         },
     },
     searchIcon: {
         padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: "100%",
+        position: "absolute",
+        pointerEvents: "none",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
     },
     inputRoot: {
-        color: 'inherit',
+        color: "inherit",
     },
     input: {
         marginBottom: 20,
-        width: '100%',
+        width: "100%",
     },
     register: {
-        display: 'flex',
-        justifyContent: 'space-around',
+        display: "flex",
+        justifyContent: "space-around",
     },
     registerForm: {
-        flexDirection: 'column',
-        display: 'flex',
+        flexDirection: "column",
+        display: "flex",
     },
     searchInput: {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
+        transition: theme.transitions.create("width"),
+        width: "100%",
+        [theme.breakpoints.up("md")]: {
+            width: "20ch",
         },
     },
     submitButtonSection: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'center',
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
     },
     submitButton: {
-        width: '30%',
-        margin: '5%',
+        width: "30%",
+        margin: "5%",
     },
 }));
 
 export default function Register({ onSubmitSearch }) {
     const classes = useStyles();
-    const [search, setSearch] = useState('');
-    const [genderPref, setGenderPref] = useState('');
-    const [gender, setGender] = useState('');
-    const [file, setFile] = useState('');
-    const [username, setUserName] = useState('');
-    const [email, setEmail] = useState('');
-    const [about, setAbout] = useState('');
+    const [search, setSearch] = useState("");
+    const [genderPref, setGenderPref] = useState("");
+    const [gender, setGender] = useState("");
+    const [file, setFile] = useState("");
+    const [username, setUserName] = useState("");
+    const [email, setEmail] = useState("");
+    const [about, setAbout] = useState("");
+    // Error Handling
+    const [userNameError, setUserNameError] = useState("");
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (username === null || username === "") {
+            setUserNameError("Username can not be blank");
+            return;
+        }
     };
 
     return (
@@ -106,6 +113,7 @@ export default function Register({ onSubmitSearch }) {
                             type="text"
                             variant="outlined"
                             className={classes.input}
+                            helperText={userNameError}
                             id="username"
                             value={username}
                             autoComplete="on"
@@ -113,6 +121,7 @@ export default function Register({ onSubmitSearch }) {
                         />
                         <h3>Email</h3>
                         <TextField
+                            required={true}
                             variant="outlined"
                             type="email"
                             id="email"
@@ -174,7 +183,7 @@ export default function Register({ onSubmitSearch }) {
                                     root: classes.inputRoot,
                                     input: classes.searchInput,
                                 }}
-                                inputProps={{ 'aria-label': 'search' }}
+                                inputProps={{ "aria-label": "search" }}
                             />
                         </div>
                         {/* <Button
