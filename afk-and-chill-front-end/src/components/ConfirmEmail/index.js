@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         position: 'relative',
-        height: '90vh',
+        height: '100vh',
         overflow: 'hidden',
     },
     confirmEmailContainer: {
@@ -14,6 +14,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
+    },
+    text: {
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 13,
+        },
     },
 }));
 
@@ -41,7 +46,7 @@ const ConfirmEmail = () => {
                 </div>
                 <h2>Please confirm your email address </h2>
                 <div>
-                    <p>
+                    <p className={classes.text}>
                         Please take a second to make sure we have your correct
                         email address
                     </p>
