@@ -31,3 +31,14 @@ export async function register({ email, password, name }) {
         throw error;
     }
 }
+
+export async function login(email, password) {
+    try {
+        await Auth.signIn({
+            username: email,
+            password: password,
+        });
+    } catch (error) {
+        throw error;
+    }
+}
