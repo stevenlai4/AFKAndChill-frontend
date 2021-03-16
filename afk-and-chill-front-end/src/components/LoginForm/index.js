@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         width: '70%',
         marginBottom: 20,
     },
+    helperText: {
+        color: 'red',
+    },
 }));
 
 export default function Form({ setIsAuthenticated }) {
@@ -72,6 +75,7 @@ export default function Form({ setIsAuthenticated }) {
                         type="password"
                         className={classes.input}
                         variant="outlined"
+                        FormHelperTextProps={{ className: classes.helperText }}
                         helperText={errorMsg}
                         id="password"
                         placeholder="Password*"
