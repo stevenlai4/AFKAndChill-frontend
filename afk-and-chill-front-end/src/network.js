@@ -30,7 +30,7 @@ export async function registerUser({
     about,
     gender,
     genderPref,
-    photo,
+    photoUrl,
     games,
 }) {
     try {
@@ -40,7 +40,7 @@ export async function registerUser({
             about,
             gender,
             genderPref,
-            photo,
+            photoUrl,
             games,
         });
 
@@ -62,6 +62,23 @@ export async function getMatchableChillers() {
         const data = await JSON.parse(response.data.body);
 
         return data.chillers;
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Save user photo to S3 bucket
+export async function savePhotoFile(file) {
+    try {
+        // Get secure token from lambda
+        const signedURLResult = await api.get('/user/uploadphoto');
+        const { uploadURL } = signedURLResult.data;
+
+        // Upload to s3
+        await axios.put(uploadURL, file);
+        const imageUrl = uploadURL.split('?')[0];
+
+        return imageUrl;
     } catch (error) {
         throw error;
     }
