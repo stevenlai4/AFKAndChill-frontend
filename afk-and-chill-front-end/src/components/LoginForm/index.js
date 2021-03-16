@@ -3,8 +3,6 @@ import { TextField, Button, Card, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link, useHistory } from 'react-router-dom';
 import { login } from '../../userAuth';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,6 +27,17 @@ const useStyles = makeStyles((theme) => ({
     cardText: {
         textAlign: 'center',
         marginBottom: 20,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 12,
+        },
+    },
+    cardTitle: {
+        textAlign: 'center',
+        marginBottom: 20,
+        fontSize: 25,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 20,
+        },
     },
     input: {
         width: '70%',
@@ -37,9 +46,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ setIsAuthenticated }) {
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('md'));
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const classes = useStyles();
@@ -60,10 +66,7 @@ export default function Form({ setIsAuthenticated }) {
     return (
         <div className={classes.root}>
             <Card className={classes.loginCard}>
-                <Typography
-                    className={classes.cardText}
-                    variant={matches ? 'h5' : 'h4'}
-                >
+                <Typography className={classes.cardTitle}>
                     Welcom to AFK & Chill
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.LoginForm}>
