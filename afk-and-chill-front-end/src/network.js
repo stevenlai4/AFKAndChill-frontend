@@ -46,3 +46,17 @@ export async function registerUser({
         throw error.message;
     }
 }
+
+// Save user photo to S3 bucket
+export async function savePostFile({ file, description }) {
+    // Get secure token from lambda
+    let signedURLResult = await http({ method: 'get', path: '/securetoken' });
+    const { uploadURL, Key } = signedURLResult;
+    console.log({ uploadURL, Key });
+    // Upload to s3
+    await axios.put(uploadURL, file);
+    const imageUrl = uploadURL.split('?')[0];
+    console.log(imageUrl);
+    // Save post details to database through lambda
+    return await savePostUrl({ imageUrl, description });
+}
