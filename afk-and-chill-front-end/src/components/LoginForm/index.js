@@ -36,6 +36,7 @@ export default function Form({ setIsAuthenticated }) {
     const [password, setPassword] = useState('');
     const classes = useStyles();
     const history = useHistory();
+    const [errorMsg, setErrorMsg] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -45,6 +46,7 @@ export default function Form({ setIsAuthenticated }) {
             setIsAuthenticated(true);
             history.push('/findChillers');
         } catch (error) {
+            setErrorMsg(error.message);
             console.error(error.message);
         }
     };
@@ -61,7 +63,6 @@ export default function Form({ setIsAuthenticated }) {
                         type="text"
                         className={classes.input}
                         variant="outlined"
-                        helperText={''}
                         id="email"
                         placeholder="Email*"
                         value={email}
@@ -71,7 +72,7 @@ export default function Form({ setIsAuthenticated }) {
                         type="password"
                         className={classes.input}
                         variant="outlined"
-                        helperText={''}
+                        helperText={errorMsg}
                         id="password"
                         placeholder="Password*"
                         value={password}

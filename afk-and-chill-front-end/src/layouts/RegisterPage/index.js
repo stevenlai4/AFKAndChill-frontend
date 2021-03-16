@@ -82,7 +82,7 @@ export default function RegisterPage() {
             return;
         }
 
-        //Array length
+        //Game minimum selection validation
         if (userInfo.games.length <= 0) {
             setErrorMsg('Please select at least 1 game!');
             return;
