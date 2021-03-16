@@ -9,7 +9,7 @@ import { register } from '../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        margin: '0 5% ',
+        margin: '0 5%',
     },
     heading: {
         marginBottom: 20,
@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const history = useHistory();
+    const [gameSearch, setGameSearch] = useState('');
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
@@ -29,11 +30,10 @@ export default function RegisterPage() {
         confirmPassword: '',
         about: '',
         photoUrl: '',
+        gender: '',
+        genderPref: '',
+        games: [],
     });
-    const [gameSearch, setGameSearch] = useState('');
-    const [genderPref, setGenderPref] = useState('');
-    const [gender, setGender] = useState('');
-    const [games, setGames] = useState([]);
 
     // Handle register form submit
     const handleSubmit = async (event) => {
@@ -50,10 +50,10 @@ export default function RegisterPage() {
                 userId: userSub,
                 name: userInfo.name,
                 about: userInfo.about,
-                gender,
-                genderPref,
+                gender: userInfo.gender,
+                genderPref: userInfo.genderPref,
                 photoUrl: userInfo.photoUrl,
-                games,
+                games: userInfo.games,
             });
 
             console.log('Successfully Register');
@@ -76,12 +76,8 @@ export default function RegisterPage() {
                 <Preferences
                     gameSearch={gameSearch}
                     setGameSearch={setGameSearch}
-                    genderPref={genderPref}
-                    setGenderPref={setGenderPref}
-                    gender={gender}
-                    setGender={setGender}
-                    games={games}
-                    setGames={setGames}
+                    userInfo={userInfo}
+                    setUserInfo={setUserInfo}
                 />
                 <Button
                     variant="contained"
