@@ -48,7 +48,6 @@ const ConfirmEmail = () => {
                     </div>
                     <h2>Please confirm your email address </h2>
                 </div>
-                <br></br>
                 <div>
                     <p>
                         Please take a second to make sure we have your correct
