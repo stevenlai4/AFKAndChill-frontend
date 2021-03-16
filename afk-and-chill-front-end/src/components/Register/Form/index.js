@@ -109,6 +109,7 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
                 <TextField
                     required={true}
+                    helperText={''}
                     label="Password"
                     variant="outlined"
                     className={classes.input}
@@ -125,6 +126,7 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
                 <TextField
                     required={true}
+                    helperText={''}
                     label="Confirm Password"
                     variant="outlined"
                     className={classes.input}
@@ -141,6 +143,7 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
                 <TextField
                     className={classes.input}
+                    helperText={''}
                     multiline={true}
                     id="about"
                     variant="outlined"
