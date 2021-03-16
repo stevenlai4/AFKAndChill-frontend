@@ -39,7 +39,6 @@ export default function RegisterPage() {
         games: [],
     });
     const [errorMsg, setErrorMsg] = useState('');
-    const [userExists, setUserExists] = useState('');
 
     // Handle register form submit
     const handleSubmit = async (event) => {
@@ -112,7 +111,6 @@ export default function RegisterPage() {
                 history.push('/');
             }
         } catch (error) {
-            setUserExists(error.message);
             setErrorMsg(error.message);
             console.error(error.message);
         }
