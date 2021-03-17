@@ -9,22 +9,35 @@ import Header from './layouts/HeaderNavigation';
 import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
 import { Redirect } from 'react-router-dom';
+import { userToken } from './userAuth';
+import jwtDecode from 'jwt-decode';
+import { useHistory } from 'react-router-dom';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
         'isAuthorized',
         false
     );
+    let history = useHistory();
 
-    // const signOut = () => {
-    //     setIsAuthenticated(false);
-    //     localStorage.clear();
-    //     history.push('/');
-    // };
+    async function asyncCall() {
+        let token = await userToken();
+        try {
+            const { exp } = jwtDecode(token);
+            const expirationTime = exp * 1000 - 60000;
+            console.log(expirationTime);
+            console.log('now' + Date.now());
+            if (Date.now() >= expirationTime) {
+                setIsAuthenticated(false);
+                localStorage.clear();
+                history.push('/');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-    // setTimeout(()=> {
-    //     signOut();
-    //   }, token.expirationTime);
+    asyncCall();
 
     return (
         <Router>
