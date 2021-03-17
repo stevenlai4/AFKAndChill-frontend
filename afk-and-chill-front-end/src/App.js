@@ -8,6 +8,7 @@ import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
 import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
+import ConfirmEmail from './layouts/ConfirmEmail';
 import { Redirect } from 'react-router-dom';
 import { refreshAuthToken } from './userAuth';
 
@@ -44,7 +45,8 @@ function App() {
                         <Login setIsAuthenticated={setIsAuthenticated} />
                     )}
                 </Route>
-                <GuardedRoute
+                <Route component={ConfirmEmail} path="/confirmEmail" />
+                <Route
                     component={ChatBox}
                     path="/chatBox"
                     isAuthenticated={isAuthenticated}

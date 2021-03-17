@@ -116,7 +116,7 @@ export default function RegisterPage() {
 
             if (userSub) {
                 console.log('Successfully Register');
-                history.push('/');
+                history.push('/confirmEmail');
             }
         } catch (error) {
             setErrorMsgs([error.message]);
