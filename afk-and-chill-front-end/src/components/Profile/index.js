@@ -9,7 +9,7 @@ import {
     FormControl,
     Button,
 } from '@material-ui/core';
-import { Modal } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -83,6 +83,15 @@ const useStyles = makeStyles((theme) => ({
     helperText: {
         color: 'red',
     },
+
+    //===================
+    //== Modal styles ==
+    //===================
+
+    modalSection: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
 }));
 
 export default function Register({ onSubmitSearch }) {
@@ -94,15 +103,16 @@ export default function Register({ onSubmitSearch }) {
     const [username, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [about, setAbout] = useState('');
+
     // Error Handling
     const [userNameError, setUserNameError] = useState('');
 
     // Modal handling
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //Button handlers
     const handleSubmit = async (event) => {
         event.preventDefault();
     };
@@ -195,12 +205,15 @@ export default function Register({ onSubmitSearch }) {
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
+                className={classes.modalSection}
             >
                 <Modal.Header
                     closeButton
-                    style={{ backgroundColor: '#3D3D3D' }}
+                    style={{ backgroundColor: '#2E3B55' }}
                 >
-                    <Modal.Title>Edit Chiller Profile</Modal.Title>
+                    <Modal.Title style={{ color: 'white' }}>
+                        Edit Profile
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <h3>Chiller Name:</h3>
