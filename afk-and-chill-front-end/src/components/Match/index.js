@@ -35,8 +35,7 @@ const db = [
         name: 'Peter pan',
         description:
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor  nostrud exercitation ullamco laboris nisi ut aliquip ex ea',
-        url:
-            'https://images.wallpapersden.com/image/download/peter-pan-1953_bGhpameUmZqaraWkpJRnamtlrWZpaWU.jpg',
+        url: 'https://i.imgur.com/v7Yoomm.jpg',
     },
 ];
 const Match = () => {
