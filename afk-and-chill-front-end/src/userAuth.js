@@ -1,11 +1,12 @@
-import { Auth } from "aws-amplify";
+import { Auth } from 'aws-amplify';
+import { Redirect } from 'react-router-dom';
 
 // Get user idToken (JWT)
 export async function userToken() {
     try {
         const currentUser = await Auth.currentAuthenticatedUser();
         if (!currentUser) {
-            throw Error("User not logged in");
+            throw Error('User not logged in');
         }
 
         const session = await Auth.currentSession();
@@ -40,5 +41,27 @@ export async function login(email, password) {
         });
     } catch (error) {
         throw error;
+    }
+}
+
+export async function refreshAuthToken(setIsAuthenticated) {
+    try {
+        const cognitoUser = await Auth.currentAuthenticatedUser();
+        const currentSession = await Auth.currentSession();
+        if (cognitoUser && currentSession) {
+            cognitoUser.refreshSession(
+                currentSession.refreshToken,
+                (err, session) => {
+                    if (err) {
+                        console.error(err);
+                    }
+                    console.log('session', session);
+                    setIsAuthenticated(true);
+                }
+            );
+        }
+    } catch (e) {
+        setIsAuthenticated(false);
+        throw e;
     }
 }
