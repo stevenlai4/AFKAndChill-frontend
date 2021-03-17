@@ -1,5 +1,4 @@
 import { Auth } from 'aws-amplify';
-import { Redirect } from 'react-router-dom';
 
 // Get user idToken (JWT)
 export async function userToken() {
