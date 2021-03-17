@@ -9,6 +9,7 @@ import {
     FormControl,
     Button,
 } from '@material-ui/core';
+import { Modal } from 'react-bootstrap';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -95,6 +96,12 @@ export default function Register({ onSubmitSearch }) {
     const [about, setAbout] = useState('');
     // Error Handling
     const [userNameError, setUserNameError] = useState('');
+
+    // Modal handling
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -229,6 +236,16 @@ export default function Register({ onSubmitSearch }) {
                 <div className={classes.submitButtonSection}>
                     <Button
                         variant="contained"
+                        color="secondary"
+                        type="submit"
+                        id="Register"
+                        className={classes.submitButton}
+                        onClick={handleShow}
+                    >
+                        Edit profile
+                    </Button>
+                    <Button
+                        variant="contained"
                         color="primary"
                         type="submit"
                         id="Register"
@@ -238,6 +255,29 @@ export default function Register({ onSubmitSearch }) {
                     </Button>
                 </div>
             </form>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header
+                    closeButton
+                    // style={{ backgroundColor: '#3D3D3D' }}
+                >
+                    <Modal.Title>Edit Chiller Profile</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    I will not close if you click outside me. Don't even try to
+                    press escape key.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary">Save Changes</Button>
+                </Modal.Footer>
+            </Modal>
         </section>
     );
 }
