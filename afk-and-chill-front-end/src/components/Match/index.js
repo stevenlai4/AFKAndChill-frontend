@@ -7,17 +7,7 @@ import { IconButton } from '@material-ui/core';
 import { getMatchableChillers } from '../../network';
 
 export default function Match() {
-    const alreadyRemoved = [];
     const [chillers, setChillers] = useState([]);
-    // let charactersState = chillers; // This fixes issues with updating characters state forcing it to use the current state and not the state that was active when the card was created.
-    const [lastDirection, setLastDirection] = useState();
-    const childRefs = useMemo(
-        () =>
-            Array(chillers.length)
-                .fill(0)
-                .map((i) => React.createRef()),
-        []
-    );
 
     // CDM
     useEffect(() => {
@@ -35,11 +25,9 @@ export default function Match() {
         })();
     }, []);
 
-    // const swiped = (direction, nameToDelete) => {
-    //     console.log('removing: ' + nameToDelete);
-    //     setLastDirection(direction);
-    //     alreadyRemoved.push(nameToDelete);
-    // };
+    const swiped = (direction, nameToDelete) => {
+        console.log(`removing: ${nameToDelete} in ${direction} direction`);
+    };
     const outOfFrame = (matchableChiller) => {
         console.log(matchableChiller.name + ' left the screen!');
         const tempChillersArr = chillers.filter(
@@ -47,33 +35,33 @@ export default function Match() {
         );
         setChillers(tempChillersArr);
     };
-    const swipe = (dir) => {
-        // const cardsLeft = chillers.filter(
-        //     (chiller) => !alreadyRemoved.includes(chiller.name)
-        // );
-        if (chillers.length) {
-            const toBeRemoved = chillers[chillers.length - 1].cognito_id; // Find the card object to be removed
-            const index = chillers
-                .map((chiller) => chiller.cognito_id)
-                .indexOf(toBeRemoved); // Find the index of which to make the reference to
-            // alreadyRemoved.push(toBeRemoved); // Make sure the next card gets removed next time if this card do not have time to exit the screen
-            childRefs[index].current.swipe(dir); // Swipe the card!
-        }
-    };
+    // const swipe = (dir) => {
+    //     // const cardsLeft = chillers.filter(
+    //     //     (chiller) => !alreadyRemoved.includes(chiller.name)
+    //     // );
+    //     if (chillers.length) {
+    //         const toBeRemoved = chillers[chillers.length - 1].cognito_id; // Find the card object to be removed
+    //         const index = chillers
+    //             .map((chiller) => chiller.cognito_id)
+    //             .indexOf(toBeRemoved); // Find the index of which to make the reference to
+    //         // alreadyRemoved.push(toBeRemoved); // Make sure the next card gets removed next time if this card do not have time to exit the screen
+    //         childRefs[index].current.swipe(dir); // Swipe the card!
+    //     }
+    // };
     return (
         <div>
             {/* ======== CARD SECTION ==== LEFT SIDE */}
             <div className="tinderCards__cardContainer">
-                {chillers.map((chiller, index) => (
+                {chillers.map((chiller) => (
                     <TinderCard
-                        ref={childRefs[index]}
                         className="swipe"
                         key={chiller.cognito_id}
                         preventSwipe={['up', 'down']}
-                        // onSwipe={(dir) => swiped(dir, chiller.name)}
+                        onSwipe={(dir) => swiped(dir, chiller.name)}
                         onCardLeftScreen={() => outOfFrame(chiller)}
                     >
                         <div className="wholeCard">
+                            {console.log(chiller.photo_url)}
                             <div
                                 style={{
                                     backgroundImage:
@@ -89,7 +77,7 @@ export default function Match() {
                     </TinderCard>
                 ))}
             </div>
-            <div className="swipeButtons">
+            {/* <div className="swipeButtons">
                 <div className="likeAndDislikeButtons">
                     <IconButton onClick={() => swipe('left')}>
                         <Cancel
@@ -106,7 +94,7 @@ export default function Match() {
                         />
                     </IconButton>
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 }
