@@ -105,6 +105,10 @@ export default function Register({ onSubmitSearch }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+    };
+
+    const handleEdit = async (event) => {
+        event.preventDefault();
 
         if (username === null || username === '') {
             setUserNameError('Username can not be blank');
@@ -113,93 +117,23 @@ export default function Register({ onSubmitSearch }) {
     };
 
     return (
-        <section className={classes.wrapper}>
-            <form onSubmit={handleSubmit}>
-                <div className={classes.register}>
-                    {/* Profile form */}
-                    <div className={classes.registerForm}>
-                        <h3>Chiller Name</h3>
-                        <TextField
-                            type="text"
-                            variant="outlined"
-                            className={classes.input}
-                            FormHelperTextProps={{
-                                className: classes.helperText,
-                            }}
-                            helperText={userNameError}
-                            id="username"
-                            value={username}
-                            autoComplete="on"
-                            onChange={(e) => setUserName(e.target.value)}
-                        />
-                        <h3>Email</h3>
-                        <TextField
-                            required={true}
-                            variant="outlined"
-                            type="email"
-                            id="email"
-                            className={classes.input}
-                            value={email}
-                            autoComplete="on"
-                            onChange={(e) => setEmail(e.target.value)}
-                        />
-                        <h3>What is your gender?</h3>
-                        <FormControl className={classes.formControl}>
-                            <Select
-                                defaultValue="other"
-                                variant="outlined"
-                                required={true}
-                                onChange={(e) => setGender(e.target.value)}
-                            >
-                                <MenuItem value="male">Male</MenuItem>
-                                <MenuItem value="female">Female</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <h3>What gender do you want to chill with?</h3>
-                        <FormControl className={classes.formControl}>
-                            <Select
-                                defaultValue="other"
-                                variant="outlined"
-                                required={true}
-                                onChange={(e) => setGenderPref(e.target.value)}
-                            >
-                                <MenuItem value="male">Male</MenuItem>
-                                <MenuItem value="female">Female</MenuItem>
-                                <MenuItem value="other">Other</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <h3>About you</h3>
-                        <TextField
-                            multiline
-                            rowsMax="4"
-                            margin="normal"
-                            variant="outlined"
-                            value={about}
-                            onChange={(e) => setAbout(e.target.value)}
-                        />
-                        <h3>Games to chill with:</h3>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                value={search}
-                                onKeyUp={(event) => {
-                                    if (event.keyCode === 13) {
-                                        onSubmitSearch = { search: search };
-                                    }
-                                }}
-                                onChange={(e) => setSearch(e.target.value)}
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.searchInput,
-                                }}
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                        </div>
-                        {/* <Button
+        <div>
+            <div className={classes.wrapper}>
+                <form onSubmit={handleSubmit}>
+                    <div className={classes.register}>
+                        {/* Profile form */}
+                        <div className={classes.registerForm}>
+                            <h3>Chiller Name:</h3>
+
+                            <h3>Email:</h3>
+
+                            <h3>Gender:</h3>
+
+                            <h3>Gender you want to chill with:</h3>
+
+                            <h3>About you:</h3>
+
+                            {/* <Button
                             variant="contained"
                             color="primary"
                             type="submit"
@@ -208,53 +142,54 @@ export default function Register({ onSubmitSearch }) {
                         >
                             Submit
                         </Button> */}
-                    </div>
-                    {/* profile image */}
-                    <div>
-                        <img
-                            src="https://images.unsplash.com/photo-1615396662271-e313de4da9ff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
-                            alt="raining"
-                            width="400"
-                            height="400"
-                        ></img>
-                        <div>
-                            <input
-                                filename={file}
-                                onChange={(e) => setFile(e.target.files[0])}
-                                type="file"
-                                accept="image/*"
-                            />
                         </div>
-                        <h3>Game(s) you have selected</h3>
+                        {/* profile image */}
                         <div>
-                            <p>PUBG</p>
-                            <p>Aminal Crossing</p>
-                            <p>League of Legends</p>
+                            <img
+                                src="https://images.unsplash.com/photo-1615396662271-e313de4da9ff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
+                                alt="raining"
+                                width="400"
+                                height="400"
+                            ></img>
+                            <div>
+                                <input
+                                    filename={file}
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                    type="file"
+                                    accept="image/*"
+                                />
+                            </div>
+                            <h3>Game(s) you have selected</h3>
+                            <div>
+                                <p>PUBG</p>
+                                <p>Aminal Crossing</p>
+                                <p>League of Legends</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className={classes.submitButtonSection}>
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        type="submit"
-                        id="Register"
-                        className={classes.submitButton}
-                        onClick={handleShow}
-                    >
-                        Edit profile
-                    </Button>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                        id="Register"
-                        className={classes.submitButton}
-                    >
-                        Submit
-                    </Button>
-                </div>
-            </form>
+                    <div className={classes.submitButtonSection}>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            type="submit"
+                            id="Register"
+                            className={classes.submitButton}
+                            onClick={handleShow}
+                        >
+                            Edit profile
+                        </Button>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                            id="Register"
+                            className={classes.submitButton}
+                        >
+                            Submit
+                        </Button>
+                    </div>
+                </form>
+            </div>
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -263,21 +198,102 @@ export default function Register({ onSubmitSearch }) {
             >
                 <Modal.Header
                     closeButton
-                    // style={{ backgroundColor: '#3D3D3D' }}
+                    style={{ backgroundColor: '#3D3D3D' }}
                 >
                     <Modal.Title>Edit Chiller Profile</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    I will not close if you click outside me. Don't even try to
-                    press escape key.
+                    <h3>Chiller Name:</h3>
+                    <TextField
+                        type="text"
+                        variant="outlined"
+                        className={classes.input}
+                        FormHelperTextProps={{
+                            className: classes.helperText,
+                        }}
+                        helperText={userNameError}
+                        id="username"
+                        value={username}
+                        autoComplete="on"
+                        onChange={(e) => setUserName(e.target.value)}
+                    />
+                    <h3>Email:</h3>
+                    <TextField
+                        required={true}
+                        variant="outlined"
+                        type="email"
+                        id="email"
+                        className={classes.input}
+                        value={email}
+                        autoComplete="on"
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                    <h3>What is your gender?</h3>
+                    <FormControl className={classes.formControl}>
+                        <Select
+                            defaultValue="other"
+                            variant="outlined"
+                            required={true}
+                            onChange={(e) => setGender(e.target.value)}
+                        >
+                            <MenuItem value="male">Male</MenuItem>
+                            <MenuItem value="female">Female</MenuItem>
+                            <MenuItem value="other">Other</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <h3>What gender do you want to chill with?</h3>
+                    <FormControl className={classes.formControl}>
+                        <Select
+                            defaultValue="other"
+                            variant="outlined"
+                            required={true}
+                            onChange={(e) => setGenderPref(e.target.value)}
+                        >
+                            <MenuItem value="male">Male</MenuItem>
+                            <MenuItem value="female">Female</MenuItem>
+                            <MenuItem value="other">Other</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <h3>About you:</h3>
+                    <TextField
+                        multiline
+                        rowsMax="4"
+                        margin="normal"
+                        variant="outlined"
+                        value={about}
+                        onChange={(e) => setAbout(e.target.value)}
+                    />
+                    <h3>Games to chill with:</h3>
+                    <div className={classes.search}>
+                        <div className={classes.searchIcon}>
+                            <SearchIcon />
+                        </div>
+                        <InputBase
+                            placeholder="Search…"
+                            value={search}
+                            onKeyUp={(event) => {
+                                if (event.keyCode === 13) {
+                                    onSubmitSearch = { search: search };
+                                }
+                            }}
+                            onChange={(e) => setSearch(e.target.value)}
+                            classes={{
+                                root: classes.inputRoot,
+                                input: classes.searchInput,
+                            }}
+                            inputProps={{ 'aria-label': 'search' }}
+                        />
+                    </div>
                 </Modal.Body>
                 <Modal.Footer>
+                    <Button variant="primary" onClick={handleEdit}>
+                        Save Changes
+                    </Button>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Save Changes</Button>
                 </Modal.Footer>
             </Modal>
-        </section>
+        </div>
     );
 }
