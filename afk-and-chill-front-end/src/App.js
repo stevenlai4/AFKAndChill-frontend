@@ -8,6 +8,7 @@ import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
 import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
+import ConfirmEmail from './layouts/ConfirmEmail';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
@@ -28,7 +29,12 @@ function App() {
                 <Route exact path="/">
                     <Login setIsAuthenticated={setIsAuthenticated} />
                 </Route>
-                <GuardedRoute
+                <Route
+                    component={ConfirmEmail}
+                    path="/confirmEmail"
+                    //isAuthenticated={isAuthenticated}
+                />
+                <Route
                     component={ChatBox}
                     path="/chatBox"
                     isAuthenticated={isAuthenticated}
