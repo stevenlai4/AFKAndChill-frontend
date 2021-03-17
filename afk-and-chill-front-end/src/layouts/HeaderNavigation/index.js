@@ -15,7 +15,6 @@ export default function HeaderNavigation({
 
     return (
         <Header
-            title="SocialLOL"
             setIsAuthenticated={setIsAuthenticated}
             isAuthenticated={isAuthenticated}
             findChillersClicked={() => history.push('/findChillers')}

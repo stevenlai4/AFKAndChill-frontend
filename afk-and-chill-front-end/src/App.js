@@ -8,12 +8,23 @@ import useLocalStorage from 'react-use-localstorage';
 import Header from './layouts/HeaderNavigation';
 import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
+import { Redirect } from 'react-router-dom';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
         'isAuthorized',
         false
     );
+
+    // const signOut = () => {
+    //     setIsAuthenticated(false);
+    //     localStorage.clear();
+    //     history.push('/');
+    // };
+
+    // setTimeout(()=> {
+    //     signOut();
+    //   }, token.expirationTime);
 
     return (
         <Router>
@@ -28,6 +39,7 @@ function App() {
                 <Route exact path="/">
                     <Login setIsAuthenticated={setIsAuthenticated} />
                 </Route>
+
                 <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
@@ -49,6 +61,12 @@ function App() {
                     isAuthenticated={isAuthenticated}
                 />
             </Switch>
+            {/* Redirect user when user has already logged in */}
+            {localStorage.getItem('isAuthorized') ? (
+                <Redirect from="/" to="/findChillers" />
+            ) : (
+                ''
+            )}
         </Router>
     );
 }
