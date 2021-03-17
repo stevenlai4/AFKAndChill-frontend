@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Register from './layouts/RegisterPage';
 import Login from './layouts/LoginPage';
 import ChatBox from './layouts/ChatBoxPage';
@@ -9,12 +9,24 @@ import Header from './layouts/HeaderNavigation';
 import Match from './layouts/MatchPage';
 import Profile from './layouts/ProfilePage';
 import ConfirmEmail from './layouts/ConfirmEmail';
+import { Redirect } from 'react-router-dom';
+import { refreshAuthToken } from './userAuth';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
         'isAuthorized',
         false
     );
+
+    useEffect(() => {
+        (async () => {
+            try {
+                await refreshAuthToken(setIsAuthenticated);
+            } catch (error) {
+                console.error(error);
+            }
+        })();
+    }, []);
 
     return (
         <Router>
@@ -27,13 +39,13 @@ function App() {
                     <Register />
                 </Route>
                 <Route exact path="/">
-                    <Login setIsAuthenticated={setIsAuthenticated} />
+                    {localStorage.getItem('isAuthorized') ? (
+                        <Redirect from="/" to="/findChillers" />
+                    ) : (
+                        <Login setIsAuthenticated={setIsAuthenticated} />
+                    )}
                 </Route>
-                <Route
-                    component={ConfirmEmail}
-                    path="/confirmEmail"
-                    //isAuthenticated={isAuthenticated}
-                />
+                <Route component={ConfirmEmail} path="/confirmEmail" />
                 <Route
                     component={ChatBox}
                     path="/chatBox"
@@ -50,7 +62,7 @@ function App() {
                     isAuthenticated={isAuthenticated}
                 />
                 <GuardedRoute
-                    component={Match}
+                    component={ChatBox}
                     path="/chillerPost"
                     isAuthenticated={isAuthenticated}
                 />
