@@ -4,14 +4,14 @@ import { getUser } from '../../network';
 
 export default function ProfilePage({ setisAuthenticated }) {
     const [user, setUser] = useState([]);
-    // const [games, setGames] = useState([]);
+    const [games, setGames] = useState([]);
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await getUser();
                 setUser(response.user);
-                // setGames(response.user.games);
+                setGames(response.user.games);
                 console.log(response);
             } catch (error) {
                 console.error(error);
@@ -22,7 +22,7 @@ export default function ProfilePage({ setisAuthenticated }) {
     return (
         <Profile
             user={user}
-            // games={games}
+            games={games}
             setisAuthenticated={setisAuthenticated}
         />
     );

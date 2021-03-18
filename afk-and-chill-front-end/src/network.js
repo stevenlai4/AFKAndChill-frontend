@@ -76,7 +76,7 @@ export async function getUser() {
 
         if (response) {
             const data = await JSON.parse(response.data.body);
-            return data.user;
+            return data;
         }
     } catch (error) {
         throw error;

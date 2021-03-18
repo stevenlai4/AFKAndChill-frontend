@@ -133,13 +133,13 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
-                            {/* <h3>Chiller Name: {user.name}</h3>
+                            <h3>Chiller Name: {user.name}</h3>
                             <h3>Gender: {user.gender}</h3>
                             <h3>
                                 Gender you want to chill with:{' '}
                                 {user.gender_pref}
                             </h3>
-                            <h3>About you:{user.about}</h3> */}
+                            <h3>About you:{user.about}</h3>
                             {/* <Button
                             variant="contained"
                             color="primary"
@@ -167,10 +167,9 @@ export default function Profile({ onSubmitSearch, user, games }) {
                                 />
                             </div>
                             <h3>Games you have selected</h3>
-                            {/* {games.map((game) => (
+                            {games.map((game) => (
                                 <p key={game.id}>{game.name}</p>
-                            ))} */}
-                            {/* {console.log(user.games)} */}
+                            ))}
                         </div>
                     </div>
                     <div className={classes.submitButtonSection}>
