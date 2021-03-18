@@ -222,6 +222,7 @@ export default function ChatBox({
                             )}
                         </Card>
                     ))}
+                    
                 </div>
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
