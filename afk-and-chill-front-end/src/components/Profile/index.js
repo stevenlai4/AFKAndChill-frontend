@@ -133,13 +133,12 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
-                            <h3>Chiller Name: {user.name}</h3>
-                            <h3>Gender: {user.gender}</h3>
-                            <h3>
-                                Gender you want to chill with:{' '}
-                                {user.gender_pref}
-                            </h3>
-                            <h3>About you:{user.about}</h3>
+                            <h3>Chiller Name:</h3> {user.name}
+                            <h3>Gender:</h3> {user.gender}
+                            <h3>Gender you want to chill with: </h3>{' '}
+                            {user.gender_pref}
+                            <h3>About you:</h3>
+                            {user.about}
                             {/* <Button
                             variant="contained"
                             color="primary"
@@ -195,6 +194,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     </div>
                 </form>
             </div>
+            {/* ===== MODAL ========= */}
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -221,20 +221,9 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         }}
                         helperText={userNameError}
                         id="username"
-                        value={username}
+                        value={user.name}
                         autoComplete="on"
                         onChange={(e) => setUserName(e.target.value)}
-                    />
-                    <h3>Email:</h3>
-                    <TextField
-                        required={true}
-                        variant="outlined"
-                        type="email"
-                        id="email"
-                        className={classes.input}
-                        value={email}
-                        autoComplete="on"
-                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <h3>What is your gender?</h3>
                     <FormControl className={classes.formControl}>
@@ -242,6 +231,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                             defaultValue="other"
                             variant="outlined"
                             required={true}
+                            value={user.gender}
                             onChange={(e) => setGender(e.target.value)}
                         >
                             <MenuItem value="male">Male</MenuItem>
@@ -254,6 +244,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         <Select
                             defaultValue="other"
                             variant="outlined"
+                            value={user.gender_pref}
                             required={true}
                             onChange={(e) => setGenderPref(e.target.value)}
                         >
@@ -268,7 +259,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         rowsMax="4"
                         margin="normal"
                         variant="outlined"
-                        value={about}
+                        value={user.about}
                         onChange={(e) => setAbout(e.target.value)}
                     />
                     <h3>Games to chill with:</h3>
@@ -294,12 +285,8 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleEdit}>
-                        Save Changes
-                    </Button>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
+                    <Button onClick={handleEdit}>Save Changes</Button>
+                    <Button onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>
