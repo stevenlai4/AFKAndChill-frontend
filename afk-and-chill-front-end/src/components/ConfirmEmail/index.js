@@ -1,6 +1,5 @@
+import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import LoginForm from '../../components/LoginForm';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -9,24 +8,22 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'hidden',
     },
-    imgContainer: {
-        width: '50%',
+    confirmEmailContainer: {
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
+        width: '100%',
     },
-    image: {
-        width: 550,
-        display: 'block',
+    text: {
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 13,
+        },
     },
 }));
 
-export default function LoginPage({ setIsAuthenticated }) {
+const ConfirmEmail = () => {
     const classes = useStyles();
-
     return (
         <div className={classes.root}>
             <svg
@@ -43,15 +40,18 @@ export default function LoginPage({ setIsAuthenticated }) {
                     d="M0,32L60,48C120,64,240,96,360,90.7C480,85,600,43,720,48C840,53,960,107,1080,133.3C1200,160,1320,160,1380,160L1440,160L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z"
                 ></path>
             </svg>
-            <div className={classes.imgContainer}>
-                <img
-                    src="https://i.imgur.com/1ow85f8.png"
-                    title="Play game image"
-                    alt="Play game"
-                    className={classes.image}
-                />
+            <div className={classes.confirmEmailContainer}>
+                <div className={classes.image}>
+                    <img src="https://i.imgur.com/w3X06On.png" />
+                </div>
+                <h2>Please confirm your email address </h2>
+                <div>
+                    <p className={classes.text}>
+                        Please take a second to make sure we have your correct
+                        email address
+                    </p>
+                </div>
             </div>
-            <LoginForm setIsAuthenticated={setIsAuthenticated} />
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 1440 320"
@@ -68,4 +68,6 @@ export default function LoginPage({ setIsAuthenticated }) {
             </svg>
         </div>
     );
-}
+};
+
+export default ConfirmEmail;
