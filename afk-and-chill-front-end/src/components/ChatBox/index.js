@@ -45,8 +45,15 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     chillerItemCard: {
-        marginTop: '5%',
+        // marginTop: '5%',
+        display: 'flex',
+        alignItems: 'center',
+        cursor: 'pointer',
     },
+    avatar: {
+        margin: '3%',
+    },
+    chillerCard: { marginBottom: '5%' },
     chat: {
         display: 'flex',
         flexDirection: 'column',
@@ -79,7 +86,7 @@ export default function ChatBox({
     submitMessage,
     onClickChatItem,
     chatboxes,
-    userInfo,
+    cognitoId,
 }) {
     const classes = useStyles();
 
@@ -110,6 +117,33 @@ export default function ChatBox({
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
         >
+            {/* {chatboxes.map((chatItem) => (
+                <Card
+                    className={classes.chillerCard}
+                    onClick={() => onChatItem(chatItem._id)}
+                    key={chatItem._id}
+                >
+                    {cognitoId == chatItem.user_one.cognito_id ? (
+                        <div className={classes.chillerItemCard}>
+                            <Avatar
+                                alt="userIcon"
+                                src={chatItem.user_two.photo_url}
+                                className={classes.avatar}
+                            />
+                            <p>{chatItem.user_two.name}</p>
+                        </div>
+                    ) : (
+                        <div className={classes.chillerItemCard}>
+                            <Avatar
+                                alt="userIcon"
+                                src={chatItem.user_one.photo_url}
+                                className={classes.avatar}
+                            />
+                            <p>{chatItem.user_one.name}</p>
+                        </div>
+                    )}
+                </Card>
+            ))} */}
             <List>
                 {chatboxes.map((chatItem) => (
                     <ListItem
@@ -117,12 +151,25 @@ export default function ChatBox({
                         key={chatItem._id}
                         onClick={onClickChatItem}
                     >
-                        <CardHeader
-                            avatar={
-                                <Avatar className={classes.avatar}></Avatar>
-                            }
-                        />
-                        <ListItemText primary={chatItem.user_two} />
+                        {cognitoId == chatItem.user_one.cognito_id ? (
+                            <div className={classes.chillerItemCard}>
+                                <Avatar
+                                    alt="userIcon"
+                                    src={chatItem.user_two.photo_url}
+                                    className={classes.avatar}
+                                />
+                                <p>{chatItem.user_two.name}</p>
+                            </div>
+                        ) : (
+                            <div className={classes.chillerItemCard}>
+                                <Avatar
+                                    alt="userIcon"
+                                    src={chatItem.user_one.photo_url}
+                                    className={classes.avatar}
+                                />
+                                <p>{chatItem.user_one.name}</p>
+                            </div>
+                        )}
                     </ListItem>
                 ))}
             </List>
@@ -170,51 +217,33 @@ export default function ChatBox({
             {/*----------------------------chiller Item---------------------------------------*/}
             <section className={classes.AFKChat}>
                 <div className={classes.chillerItem}>
-                    {/* <Card onClick={onClickChatItem}>
-                        <CardHeader
-                            avatar={
-                                <Avatar className={classes.avatar}></Avatar>
-                            }
-                            title={message.chiller}
-                        />
-                    </Card>
-                    {console.log(chatboxes)} */}
-
-                    {console.log(chatboxes)}
-
                     {chatboxes.map((chatItem) => (
                         <Card
-                            className={classes.chillerItemCard}
+                            className={classes.chillerCard}
                             onClick={() => onChatItem(chatItem._id)}
                             key={chatItem._id}
                         >
-                            <CardHeader
-                                avatar={
-                                    <Avatar className={classes.avatar}></Avatar>
-                                }
-                                title={chatItem.user_two}
-                            />
+                            {cognitoId == chatItem.user_one.cognito_id ? (
+                                <div className={classes.chillerItemCard}>
+                                    <Avatar
+                                        alt="userIcon"
+                                        src={chatItem.user_two.photo_url}
+                                        className={classes.avatar}
+                                    />
+                                    <p>{chatItem.user_two.name}</p>
+                                </div>
+                            ) : (
+                                <div className={classes.chillerItemCard}>
+                                    <Avatar
+                                        alt="userIcon"
+                                        src={chatItem.user_one.photo_url}
+                                        className={classes.avatar}
+                                    />
+                                    <p>{chatItem.user_one.name}</p>
+                                </div>
+                            )}
                         </Card>
                     ))}
-
-                    {/* {console.log(userInfo.attributes.sub)} */}
-                    {/* {console.log(chatboxes)} */}
-
-                    {/* {chatboxes.map((chatItem) => (
-                        <div
-                            className={classes.chillerItemCard}
-                            onClick={() => onChatItem(chatItem._id)}
-                            key={chatItem._id}
-                        >
-                            {console.log(chatItem.user_one)}
-
-                            {userInfo.attributes.sub == chatItem.user_two ? (
-                                <p>{chatItem.user_one}</p>
-                            ) : (
-                                <p>{chatItem.user_two}</p>
-                            )}
-                        </div>
-                    ))} */}
                 </div>
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>

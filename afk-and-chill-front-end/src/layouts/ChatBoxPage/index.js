@@ -6,7 +6,7 @@ import { getUserInfo } from '../../userAuth';
 
 export default function ChatBoxPage() {
     const [chatboxes, setChatboxes] = useState([]);
-    const [userInfo, setUserInfo] = useState([]);
+    const [cognitoId, setCognitoId] = useState([]);
 
     const submitMessage = async (data) => {
         console.log('Submit Message', data);
@@ -21,15 +21,14 @@ export default function ChatBoxPage() {
             const tempChatBox = await getChatBoxes();
             const tempUserInfo = await getUserInfo();
             setChatboxes(tempChatBox.chatboxes);
-            console.log(tempChatBox);
-            // console.log(tempUserInfo.attributes.sub);
+            setCognitoId(tempUserInfo.attributes.sub);
         })();
     }, []);
 
     return (
         <ChatBox
             message={data[0]}
-            userInfo={userInfo}
+            cognitoId={cognitoId}
             chatboxes={chatboxes}
             submitMessage={submitMessage}
             onClickChatItem={onClickChatItem}
