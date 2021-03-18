@@ -11,7 +11,7 @@ export default function ChatBoxPage() {
     };
 
     const onClickChatItem = async (data) => {
-        console.log('chat Item clicked', data);
+        console.log('ChatBoxId', data);
     };
 
     useEffect(() => {
