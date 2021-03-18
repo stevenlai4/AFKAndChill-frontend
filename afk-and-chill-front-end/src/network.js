@@ -65,3 +65,20 @@ export async function savePhotoFile(file) {
         throw error;
     }
 }
+
+//GET INDIVIDUAL USER
+export async function getUser() {
+    try {
+        const token = await getToken();
+        const response = await api.get('/user', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response) {
+            const data = await JSON.parse(response.data.body);
+            return data.user;
+        }
+    } catch (error) {
+        throw error;
+    }
+}

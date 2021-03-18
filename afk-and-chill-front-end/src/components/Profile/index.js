@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Register({ onSubmitSearch }) {
+export default function Profile({ onSubmitSearch, user, games }) {
     const classes = useStyles();
     const [search, setSearch] = useState('');
     const [genderPref, setGenderPref] = useState('');
@@ -133,16 +133,13 @@ export default function Register({ onSubmitSearch }) {
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
-                            <h3>Chiller Name:</h3>
-
-                            <h3>Email:</h3>
-
-                            <h3>Gender:</h3>
-
-                            <h3>Gender you want to chill with:</h3>
-
-                            <h3>About you:</h3>
-
+                            {/* <h3>Chiller Name: {user.name}</h3>
+                            <h3>Gender: {user.gender}</h3>
+                            <h3>
+                                Gender you want to chill with:{' '}
+                                {user.gender_pref}
+                            </h3>
+                            <h3>About you:{user.about}</h3> */}
                             {/* <Button
                             variant="contained"
                             color="primary"
@@ -169,12 +166,11 @@ export default function Register({ onSubmitSearch }) {
                                     accept="image/*"
                                 />
                             </div>
-                            <h3>Game(s) you have selected</h3>
-                            <div>
-                                <p>PUBG</p>
-                                <p>Aminal Crossing</p>
-                                <p>League of Legends</p>
-                            </div>
+                            <h3>Games you have selected</h3>
+                            {/* {games.map((game) => (
+                                <p key={game.id}>{game.name}</p>
+                            ))} */}
+                            {/* {console.log(user.games)} */}
                         </div>
                     </div>
                     <div className={classes.submitButtonSection}>
