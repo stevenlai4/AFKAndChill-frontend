@@ -79,6 +79,7 @@ export default function ChatBox({
     submitMessage,
     onClickChatItem,
     chatboxes,
+    userInfo,
 }) {
     const classes = useStyles();
 
@@ -177,7 +178,10 @@ export default function ChatBox({
                             title={message.chiller}
                         />
                     </Card>
-                    // {console.log(chatboxes)} */}
+                    {console.log(chatboxes)} */}
+
+                    {console.log(chatboxes)}
+
                     {chatboxes.map((chatItem) => (
                         <Card
                             className={classes.chillerItemCard}
@@ -192,6 +196,25 @@ export default function ChatBox({
                             />
                         </Card>
                     ))}
+
+                    {/* {console.log(userInfo.attributes.sub)} */}
+                    {/* {console.log(chatboxes)} */}
+
+                    {/* {chatboxes.map((chatItem) => (
+                        <div
+                            className={classes.chillerItemCard}
+                            onClick={() => onChatItem(chatItem._id)}
+                            key={chatItem._id}
+                        >
+                            {console.log(chatItem.user_one)}
+
+                            {userInfo.attributes.sub == chatItem.user_two ? (
+                                <p>{chatItem.user_one}</p>
+                            ) : (
+                                <p>{chatItem.user_two}</p>
+                            )}
+                        </div>
+                    ))} */}
                 </div>
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>

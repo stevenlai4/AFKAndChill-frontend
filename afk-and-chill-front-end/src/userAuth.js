@@ -15,6 +15,15 @@ export async function userToken() {
     }
 }
 
+export async function getUserInfo() {
+    try {
+        const userInfo = await Auth.currentUserInfo();
+        return userInfo;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 export async function register({ email, password, name }) {
     try {
         const { userSub } = await Auth.signUp({
