@@ -139,8 +139,8 @@ export default function ChatBox({
     //     onClickChatItem(id);
     // };
 
-    const onChatItem = (event) => {
-        onClickChatItem(event);
+    const onChatItem = (data) => {
+        onClickChatItem(data);
     };
 
     return (
