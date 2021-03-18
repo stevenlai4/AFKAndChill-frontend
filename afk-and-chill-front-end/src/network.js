@@ -59,9 +59,62 @@ export async function getMatchableChillers() {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        const data = await JSON.parse(response.data.body);
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
 
-        return data.chillers;
+            return data.chillers;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Dislike a chiller
+export async function dislike(userTwoId) {
+    try {
+        const token = await getToken();
+
+        const response = await api.patch(
+            '/dislike',
+            { userTwoId },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (response) {
+            const data = await JSON.parse(response.data?.body);
+
+            return data.successMsg;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// Like a chiller
+export async function like(userTwoId) {
+    try {
+        const token = await getToken();
+
+        const response = await api.patch(
+            '/like',
+            { userTwoId },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        if (response) {
+            const data = await JSON.parse(response.data?.body);
+
+            return data.successMsg;
+        }
     } catch (error) {
         throw error;
     }

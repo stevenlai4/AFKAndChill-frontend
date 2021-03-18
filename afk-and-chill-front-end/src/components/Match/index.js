@@ -1,16 +1,26 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import './index.css';
-import { makeStyles } from '@material-ui/core/styles';
+//import { makeStyles } from '@material-ui/core/styles';
+import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
 import { Cancel, Favorite } from '@material-ui/icons';
-import { IconButton } from '@material-ui/core';
-import { getMatchableChillers } from '../../network';
+import { IconButton, Avatar, Typography } from '@material-ui/core';
+import { getMatchableChillers, dislike, like } from '../../network';
 
 export default function Match() {
     const [chillers, setChillers] = useState([]);
+    let chillersState = chillers;
+    const [isLoading, setIsLoading] = useState(true);
+    const childRefs = useMemo(
+        () =>
+            Array(chillers.length)
+                .fill(0)
+                .map((i) => React.createRef()),
+        [chillers.length]
+    );
 
     // CDM
-    useEffect(() => {
+    useEffect(async () => {
         // Fetch matchable chillers
         (async () => {
             try {
@@ -18,83 +28,112 @@ export default function Match() {
 
                 if (tempChillers) {
                     setChillers(tempChillers);
+                    setIsLoading(false);
                 }
             } catch (error) {
-                console.error(error.message);
+                throw error;
             }
         })();
     }, []);
 
-    const swiped = (direction, nameToDelete) => {
-        console.log(`removing: ${nameToDelete} in ${direction} direction`);
+    const swiped = async (direction, chiller) => {
+        try {
+            if (direction === 'left') {
+                // Dislike the chiller
+                const successMsg = await dislike(chiller.cognito_id);
+                console.log(successMsg);
+            } else if (direction === 'right') {
+                // Like the chiller
+                const successMsg = await like(chiller.cognito_id);
+                console.log(successMsg);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
-    const outOfFrame = (matchableChiller) => {
-        console.log(matchableChiller.name + ' left the screen!');
-        const tempChillersArr = chillers.filter(
-            (chiller) => chiller.name !== matchableChiller.name
+
+    const outOfFrame = (chiller) => {
+        chillersState = chillersState.filter(
+            (c) => c.cognito_id !== chiller.cognito_id
         );
-        setChillers(tempChillersArr);
+        setChillers(chillersState);
     };
+
     // const swipe = (dir) => {
-    //     // const cardsLeft = chillers.filter(
-    //     //     (chiller) => !alreadyRemoved.includes(chiller.name)
-    //     // );
-    //     if (chillers.length) {
+    //     if (chillers.length > 0) {
     //         const toBeRemoved = chillers[chillers.length - 1].cognito_id; // Find the card object to be removed
     //         const index = chillers
     //             .map((chiller) => chiller.cognito_id)
     //             .indexOf(toBeRemoved); // Find the index of which to make the reference to
-    //         // alreadyRemoved.push(toBeRemoved); // Make sure the next card gets removed next time if this card do not have time to exit the screen
     //         childRefs[index].current.swipe(dir); // Swipe the card!
     //     }
     // };
     return (
         <div>
-            {/* ======== CARD SECTION ==== LEFT SIDE */}
-            <div className="tinderCards__cardContainer">
-                {chillers.map((chiller) => (
-                    <TinderCard
-                        className="swipe"
-                        key={chiller.cognito_id}
-                        preventSwipe={['up', 'down']}
-                        onSwipe={(dir) => swiped(dir, chiller.name)}
-                        onCardLeftScreen={() => outOfFrame(chiller)}
-                    >
-                        <div className="wholeCard">
-                            {console.log(chiller.photo_url)}
-                            <div
-                                style={{
-                                    backgroundImage:
-                                        'url(' + chiller.photo_url + ')',
-                                }}
-                                className="card"
-                            ></div>
-                            <div className="descriptionCard">
-                                <h3>{chiller.name}</h3>
-                                <h5>{chiller.about}</h5>
-                            </div>
+            {isLoading ? (
+                <LoadingHeart />
+            ) : chillers.length > 0 ? (
+                <>
+                    <div className="tinderCards__cardContainer">
+                        {chillers.map((chiller, index) => (
+                            <TinderCard
+                                className="swipe"
+                                key={chiller.cognito_id}
+                                ref={childRefs[index]}
+                                preventSwipe={['up', 'down']}
+                                onSwipe={(dir) => swiped(dir, chiller)}
+                                onCardLeftScreen={() => outOfFrame(chiller)}
+                            >
+                                {/* <div className="wholeCard">
+                                    <div
+                                        style={{
+                                            backgroundImage: `url(
+                                                chiller.photo_url 
+                                                )`,
+                                        }}
+                                        className="card"
+                                    ></div>
+                                    <div className="descriptionCard">
+                                        <h3>{chiller.name}</h3>
+                                        <h5>{chiller.about}</h5>
+                                    </div>
+                                </div> */}
+                                <div className="wholeCard card">
+                                    <Avatar
+                                        alt={chiller.name}
+                                        src={chiller.photo_url}
+                                    />
+                                    <div>
+                                        <Typography variant="h4">
+                                            {chiller.name}
+                                        </Typography>
+                                    </div>
+                                </div>
+                            </TinderCard>
+                        ))}
+                    </div>
+                    {/* <div className="swipeButtons">
+                        <div className="likeAndDislikeButtons">
+                            <IconButton onClick={() => swipe('left')}>
+                                <Cancel
+                                    className="swipeButtons__cancel"
+                                    fontSize="large"
+                                />
+                            </IconButton>
                         </div>
-                    </TinderCard>
-                ))}
-            </div>
-            {/* <div className="swipeButtons">
-                <div className="likeAndDislikeButtons">
-                    <IconButton onClick={() => swipe('left')}>
-                        <Cancel
-                            className="swipeButtons__cancel"
-                            fontSize="large"
-                        />
-                    </IconButton>
-                </div>
-                <div className="likeAndDislikeButtons">
-                    <IconButton onClick={() => swipe('right')}>
-                        <Favorite
-                            className="swipeButtons_favorite"
-                            fontSize="large"
-                        />
-                    </IconButton>
-                </div>
-            </div> */}
+                        <div className="likeAndDislikeButtons">
+                            <IconButton onClick={() => swipe('right')}>
+                                <Favorite
+                                    className="swipeButtons_favorite"
+                                    fontSize="large"
+                                />
+                            </IconButton>
+                        </div>
+                    </div> */}
+                </>
+            ) : (
+                <p>No More Matchable Chillers</p>
+            )}
         </div>
     );
 }
