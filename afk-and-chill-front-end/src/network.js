@@ -65,3 +65,19 @@ export async function savePhotoFile(file) {
         throw error;
     }
 }
+
+export async function getChatBoxes() {
+    try {
+        const token = await getToken();
+
+        const response = await api.get('/chatboxes', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await JSON.parse(response.data.body);
+
+        return data;
+    } catch (error) {
+        throw error;
+    }
+}

@@ -151,6 +151,9 @@ const useStyles = makeStyles((theme) => ({
             display: 'none',
         },
     },
+    chillerItemCard: {
+        marginTop: '5%',
+    },
     chat: {
         display: 'flex',
         flexDirection: 'column',
@@ -178,7 +181,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ChatBox({ message, submitMessage, onClickChatItem }) {
+export default function ChatBox({
+    message,
+    submitMessage,
+    onClickChatItem,
+    chatboxes,
+}) {
     const classes = useStyles();
 
     //----------------------------Drawer---------------------------------------//
@@ -209,23 +217,20 @@ export default function ChatBox({ message, submitMessage, onClickChatItem }) {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {/* {chillerList.map((text, index) => ( */}
-                <ListItem
-                    button
-                    key={message.chiller}
-                    onClick={onClickChatItem}
-                >
-                    {/* <ListItemText primary={text} /> */}
-                    <CardHeader
-                        avatar={
-                            <Avatar className={classes.avatar}>
-                                {message.chiller[0]}
-                            </Avatar>
-                        }
-                        title={message.chiller}
-                    />
-                </ListItem>
-                {/* // ))} */}
+                {chatboxes.map((chatItem) => (
+                    <ListItem
+                        button
+                        key={chatItem._id}
+                        onClick={onClickChatItem}
+                    >
+                        <CardHeader
+                            avatar={
+                                <Avatar className={classes.avatar}></Avatar>
+                            }
+                        />
+                        <ListItemText primary={chatItem.user_two} />
+                    </ListItem>
+                ))}
             </List>
         </div>
     );
@@ -261,16 +266,30 @@ export default function ChatBox({ message, submitMessage, onClickChatItem }) {
             {/*----------------------------chiller Item---------------------------------------*/}
             <section className={classes.AFKChat}>
                 <div className={classes.chillerItem}>
-                    <Card onClick={onClickChatItem}>
+                    {/* <Card onClick={onClickChatItem}>
                         <CardHeader
                             avatar={
-                                <Avatar className={classes.avatar}>
-                                    {message.chiller[0]}
-                                </Avatar>
+                                <Avatar className={classes.avatar}></Avatar>
                             }
                             title={message.chiller}
                         />
                     </Card>
+                    // {console.log(chatboxes)} */}
+
+                    {chatboxes.map((chatItem) => (
+                        <Card
+                            className={classes.chillerItemCard}
+                            onClick={onClickChatItem}
+                            key={chatItem._id}
+                        >
+                            <CardHeader
+                                avatar={
+                                    <Avatar className={classes.avatar}></Avatar>
+                                }
+                                title={chatItem.user_two}
+                            />
+                        </Card>
+                    ))}
                 </div>
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
