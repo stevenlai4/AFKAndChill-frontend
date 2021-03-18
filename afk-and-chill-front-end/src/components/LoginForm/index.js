@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            width: '100%',
+        },
     },
     loginCard: {
         width: '60%',
@@ -24,6 +27,17 @@ const useStyles = makeStyles((theme) => ({
     cardText: {
         textAlign: 'center',
         marginBottom: 20,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 12,
+        },
+    },
+    cardTitle: {
+        textAlign: 'center',
+        marginBottom: 20,
+        fontSize: 25,
+        [theme.breakpoints.down('sm')]: {
+            fontSize: 20,
+        },
     },
     input: {
         width: '70%',
@@ -57,8 +71,8 @@ export default function Form({ setIsAuthenticated }) {
     return (
         <div className={classes.root}>
             <Card className={classes.loginCard}>
-                <Typography className={classes.cardText} variant="h4">
-                    Welcome to AFK & Chill
+                <Typography className={classes.cardTitle}>
+                    Welcom to AFK & Chill
                 </Typography>
                 <form onSubmit={handleSubmit} className={classes.LoginForm}>
                     <TextField

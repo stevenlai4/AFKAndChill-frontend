@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         background: 'transparent',
         boxShadow: 'none',
+        // zIndex: theme.zIndex.drawer + 1,
     },
     logo: {
         flexGrow: 1,
@@ -61,7 +62,7 @@ export default function Header({
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" className={classes.appBar}>
+            <AppBar position="relative" className={classes.appBar}>
                 <Toolbar>
                     <div className={classes.logo}>
                         <img
