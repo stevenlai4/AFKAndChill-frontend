@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import './index.css';
 //import { makeStyles } from '@material-ui/core/styles';
 import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
-import { Cancel, Favorite } from '@material-ui/icons';
 import { IconButton, Avatar, Typography } from '@material-ui/core';
 import { getMatchableChillers, dislike, like } from '../../network';
 
@@ -11,13 +10,6 @@ export default function Match() {
     const [chillers, setChillers] = useState([]);
     let chillersState = chillers;
     const [isLoading, setIsLoading] = useState(true);
-    const childRefs = useMemo(
-        () =>
-            Array(chillers.length)
-                .fill(0)
-                .map((i) => React.createRef()),
-        [chillers.length]
-    );
 
     // CDM
     useEffect(async () => {
@@ -59,15 +51,6 @@ export default function Match() {
         setChillers(chillersState);
     };
 
-    // const swipe = (dir) => {
-    //     if (chillers.length > 0) {
-    //         const toBeRemoved = chillers[chillers.length - 1].cognito_id; // Find the card object to be removed
-    //         const index = chillers
-    //             .map((chiller) => chiller.cognito_id)
-    //             .indexOf(toBeRemoved); // Find the index of which to make the reference to
-    //         childRefs[index].current.swipe(dir); // Swipe the card!
-    //     }
-    // };
     return (
         <div>
             {isLoading ? (
@@ -79,7 +62,7 @@ export default function Match() {
                             <TinderCard
                                 className="swipe"
                                 key={chiller.cognito_id}
-                                ref={childRefs[index]}
+                                // ref={childRefs[index]}
                                 preventSwipe={['up', 'down']}
                                 onSwipe={(dir) => swiped(dir, chiller)}
                                 onCardLeftScreen={() => outOfFrame(chiller)}
@@ -107,6 +90,17 @@ export default function Match() {
                                         <Typography variant="h4">
                                             {chiller.name}
                                         </Typography>
+                                        <Typography component="p">
+                                            {chiller.about}
+                                        </Typography>
+                                        {/* <Grid></Grid> */}
+                                        {/* <ul>
+                                            {chiller?.games.map((game) => (
+                                                <li key={game.id}>
+                                                    {game.name}
+                                                </li>
+                                            ))}
+                                        </ul> */}
                                     </div>
                                 </div>
                             </TinderCard>
