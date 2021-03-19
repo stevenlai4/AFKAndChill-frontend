@@ -83,10 +83,8 @@ export async function getChatBoxes() {
     }
 }
 
-//submit message to chat
-// get chat box
+// create msg
 export const sendMsg = async (data) => {
-    // export async function sendMsg(data) {
     try {
         const token = await getToken();
         const response = await api.post(
