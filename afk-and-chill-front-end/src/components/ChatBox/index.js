@@ -259,6 +259,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                 </div>
 
                 {/*----------------------------chat box---------------------------------------*/}
+                {/*----------------------------chat header-----------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
                         <CardHeader
@@ -271,7 +272,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                             }
                             title={matchedChiller.name}
                         />
-
+                        {/*----------------------------message box---------------------------------------*/}
                         {isLoading ? (
                             <CircularProgress />
                         ) : (
@@ -286,6 +287,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                 ))}
                             </CardContent>
                         )}
+                        {/*----------------------------Message submit Form---------------------------------------*/}
                         <div className={classes.messageForm}>
                             <MessageForm
                                 // setRerender={setRerender}
