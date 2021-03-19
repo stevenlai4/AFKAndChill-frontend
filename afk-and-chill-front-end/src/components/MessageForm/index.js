@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MessageForm({ onSubmit }) {
+export default function MessageForm({ onSubmit, setRerender }) {
     const classes = useStyles();
 
     const [message, setMessage] = useState('');
@@ -26,6 +26,7 @@ export default function MessageForm({ onSubmit }) {
     const submit = (event) => {
         event.preventDefault();
         onSubmit({ message });
+        setRerender((prev) => !prev);
         setMessage('');
     };
 

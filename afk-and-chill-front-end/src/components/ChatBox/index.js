@@ -133,7 +133,6 @@ export default function ChatBox({
 
     const onMessage = (data) => {
         sendMsg({ message: data.message, chatboxId: chatboxId });
-        setRerender((prev) => !prev);
     };
 
     // useEffect(() => {
