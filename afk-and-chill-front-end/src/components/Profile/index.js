@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
 import {
     Select,
-    InputBase,
     MenuItem,
     TextField,
     FormControl,
     Button,
 } from '@material-ui/core';
 import Modal from 'react-bootstrap/Modal';
+import { updateUser } from '../../network';
 import Games from '../Games';
 
 const useStyles = makeStyles((theme) => ({
@@ -92,9 +91,8 @@ const useStyles = makeStyles((theme) => ({
     modalSection: {
         display: 'flex',
         justifyContent: 'center',
-        overflow: 'scroll',
+        overflowY: 'scroll',
         // maxHeight: '500px',
-        // overflowY: 'hidden',
         zIndex: 10000,
     },
     modalTitle: {
@@ -102,15 +100,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Profile({ onSubmitSearch, user, games, updateUser }) {
+export default function Profile({ userInfo, setUserInfo }) {
     const classes = useStyles();
-    const [search, setSearch] = useState('');
-    const [genderPref, setGenderPref] = useState('');
-    const [gender, setGender] = useState('');
-    const [file, setFile] = useState('');
-    const [username, setUserName] = useState('');
-    const [email, setEmail] = useState('');
-    const [about, setAbout] = useState('');
+    const [gameSearch, setGameSearch] = useState('');
+    const [file, setFile] = useState();
 
     // Error Handling
     const [userNameError, setUserNameError] = useState('');
@@ -125,13 +118,12 @@ export default function Profile({ onSubmitSearch, user, games, updateUser }) {
         event.preventDefault();
     };
 
-    const onUpdate = async (event) => {
+    const handleEdit = async (event) => {
         event.preventDefault();
 
-        if (username === null || username === '') {
+        if (userInfo.name === null || userInfo.name === '') {
             setUserNameError('Username can not be blank');
             return;
-        } else {
         }
     };
 
@@ -147,30 +139,21 @@ export default function Profile({ onSubmitSearch, user, games, updateUser }) {
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
-                            <h3>Chiller Name:</h3> {username}
-                            <h3>Gender:</h3> {user.gender}
+                            <h3>Chiller Name:</h3> {userInfo.name}
+                            <h3>Gender:</h3> {userInfo.gender}
                             <h3>Gender you want to chill with: </h3>{' '}
-                            {user.gender_pref}
+                            {userInfo.gender_pref}
                             <h3>About you:</h3>
-                            {user.about}
-                            {/* <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            id="Register"
-                            className={classes.button}
-                        >
-                            Submit
-                        </Button> */}
+                            {userInfo.about}
                         </div>
                         {/* profile image */}
                         <div>
                             <img
-                                src="https://images.unsplash.com/photo-1615396662271-e313de4da9ff?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=675&q=80"
-                                alt="raining"
+                                src={userInfo.photo_url}
+                                alt={userInfo.name}
                                 width="400"
                                 height="400"
-                            ></img>
+                            />
                             <div>
                                 <input
                                     filename={file}
@@ -226,18 +209,25 @@ export default function Profile({ onSubmitSearch, user, games, updateUser }) {
                         }}
                         helperText={userNameError}
                         id="username"
-                        value={username}
+                        value={userInfo.name}
                         autoComplete="on"
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={(e) =>
+                            setUserInfo({ ...userInfo, name: e.target.value })
+                        }
                     />
-                    <p>Gender Preference</p>
+                    <p>What gender do you want to chill with?</p>
                     <FormControl className={classes.formControl}>
                         <Select
                             defaultValue="other"
                             variant="outlined"
-                            value={genderPref}
+                            value={userInfo.gender_pref}
                             required={true}
-                            onChange={(e) => setGenderPref(e.target.value)}
+                            onChange={(e) =>
+                                setUserInfo({
+                                    ...userInfo,
+                                    gender_pref: e.target.value,
+                                })
+                            }
                         >
                             <MenuItem value="male">Male</MenuItem>
                             <MenuItem value="female">Female</MenuItem>
@@ -250,8 +240,10 @@ export default function Profile({ onSubmitSearch, user, games, updateUser }) {
                         rowsMax="4"
                         margin="normal"
                         variant="outlined"
-                        value={user.about}
-                        onChange={(e) => setAbout(e.target.value)}
+                        value={userInfo.about}
+                        onChange={(e) =>
+                            setUserInfo({ ...userInfo, about: e.target.value })
+                        }
                     />
                     <p>Games to chill with:</p>
                     <Games
@@ -286,7 +278,7 @@ export default function Profile({ onSubmitSearch, user, games, updateUser }) {
                     <Button
                         variant="outlined"
                         style={{ background: 'green' }}
-                        onUpdate={onUpdate}
+                        onClick={handleEdit}
                     >
                         Save Changes
                     </Button>

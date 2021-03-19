@@ -2,29 +2,19 @@ import React, { useState, useEffect } from 'react';
 import Profile from '../../components/Profile';
 import { getUser } from '../../network';
 
-export default function ProfilePage({ setisAuthenticated }) {
-    const [user, setUser] = useState([]);
-    const [games, setGames] = useState([]);
-    //const [updateUser, setUpdateUser] = useState([]);
+export default function ProfilePage() {
+    const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
         (async () => {
             try {
                 const response = await getUser();
-                setUser(response.user);
-                setGames(response.user.games);
-                console.log(response);
+                setUserInfo(response.user);
             } catch (error) {
-                console.error(error);
+                console.error(error.message);
             }
         })();
     }, []);
 
-    return (
-        <Profile
-            user={user}
-            games={games}
-            setisAuthenticated={setisAuthenticated}
-        />
-    );
+    return <Profile userInfo={userInfo} setUserInfo={setUserInfo} />;
 }

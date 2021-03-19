@@ -75,7 +75,7 @@ export async function getUser() {
         });
 
         if (response) {
-            const data = await JSON.parse(response.data.body);
+            const data = await JSON.parse(response.data?.body);
             return data;
         }
     } catch (error) {
