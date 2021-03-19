@@ -1,15 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
-import './index.css';
-//import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { Typography } from '@material-ui/core';
 import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
-import { IconButton, Avatar, Typography } from '@material-ui/core';
 import { getMatchableChillers, dislike, like } from '../../network';
+import UserInfo from './UserInfo';
+
+const useStyles = makeStyles((theme) => ({
+    tinderCardsContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '15vh',
+        [theme.breakpoints.down('md')]: {
+            marginTop: '10vh',
+        },
+    },
+    heartSVG: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+    },
+    noMatchText: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '40px',
+    },
+    swipe: {
+        position: 'absolute',
+    },
+    tinderCard: {
+        backgroundColor: '#fff',
+        width: '800px',
+        maxWidth: '100vw',
+        height: '50vh',
+        boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.3)',
+        borderRadius: '10px',
+        borderColor: 'grey',
+        borderStyle: 'solid',
+        borderWidth: '1px 0 1px 1px',
+        display: 'flex',
+        [theme.breakpoints.down('md')]: {
+            display: 'block',
+            width: '80%',
+            height: '80vh',
+        },
+    },
+    photo: {
+        width: '40%',
+        borderRadius: '10px 0 0 10px',
+        [theme.breakpoints.down('md')]: {
+            width: '100%',
+            borderRadius: '10px 10px 0 0',
+        },
+    },
+}));
 
 export default function Match() {
     const [chillers, setChillers] = useState([]);
-    let chillersState = chillers;
     const [isLoading, setIsLoading] = useState(true);
+    const classes = useStyles();
+    let chillersState = chillers;
 
     // CDM
     useEffect(async () => {
@@ -52,81 +105,32 @@ export default function Match() {
     };
 
     return (
-        <div>
+        <div className={classes.root}>
             {isLoading ? (
-                <LoadingHeart />
+                <LoadingHeart className={classes.heartSVG} />
             ) : chillers.length > 0 ? (
-                <>
-                    <div className="tinderCards__cardContainer">
-                        {chillers.map((chiller, index) => (
-                            <TinderCard
-                                className="swipe"
-                                key={chiller.cognito_id}
-                                // ref={childRefs[index]}
-                                preventSwipe={['up', 'down']}
-                                onSwipe={(dir) => swiped(dir, chiller)}
-                                onCardLeftScreen={() => outOfFrame(chiller)}
-                            >
-                                {/* <div className="wholeCard">
-                                    <div
-                                        style={{
-                                            backgroundImage: `url(
-                                                chiller.photo_url 
-                                                )`,
-                                        }}
-                                        className="card"
-                                    ></div>
-                                    <div className="descriptionCard">
-                                        <h3>{chiller.name}</h3>
-                                        <h5>{chiller.about}</h5>
-                                    </div>
-                                </div> */}
-                                <div className="wholeCard card">
-                                    <Avatar
-                                        alt={chiller.name}
-                                        src={chiller.photo_url}
-                                    />
-                                    <div>
-                                        <Typography variant="h4">
-                                            {chiller.name}
-                                        </Typography>
-                                        <Typography component="p">
-                                            {chiller.about}
-                                        </Typography>
-                                        {/* <Grid></Grid> */}
-                                        {/* <ul>
-                                            {chiller?.games.map((game) => (
-                                                <li key={game.id}>
-                                                    {game.name}
-                                                </li>
-                                            ))}
-                                        </ul> */}
-                                    </div>
-                                </div>
-                            </TinderCard>
-                        ))}
-                    </div>
-                    {/* <div className="swipeButtons">
-                        <div className="likeAndDislikeButtons">
-                            <IconButton onClick={() => swipe('left')}>
-                                <Cancel
-                                    className="swipeButtons__cancel"
-                                    fontSize="large"
-                                />
-                            </IconButton>
-                        </div>
-                        <div className="likeAndDislikeButtons">
-                            <IconButton onClick={() => swipe('right')}>
-                                <Favorite
-                                    className="swipeButtons_favorite"
-                                    fontSize="large"
-                                />
-                            </IconButton>
-                        </div>
-                    </div> */}
-                </>
+                <div className={classes.tinderCardsContainer}>
+                    {chillers.map((chiller) => (
+                        <TinderCard
+                            className={`${classes.swipe} ${classes.tinderCard}`}
+                            key={chiller.cognito_id}
+                            preventSwipe={['up', 'down']}
+                            onSwipe={(dir) => swiped(dir, chiller)}
+                            onCardLeftScreen={() => outOfFrame(chiller)}
+                        >
+                            <img
+                                className={classes.photo}
+                                alt={chiller.name}
+                                src={chiller.photo_url}
+                            />
+                            <UserInfo chiller={chiller} />
+                        </TinderCard>
+                    ))}
+                </div>
             ) : (
-                <p>No More Matchable Chillers</p>
+                <Typography component="p" className={classes.noMatchText}>
+                    No More Matchable Chillers
+                </Typography>
             )}
         </div>
     );
