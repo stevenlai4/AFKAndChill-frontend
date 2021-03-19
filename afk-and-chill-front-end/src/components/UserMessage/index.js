@@ -4,9 +4,17 @@ import clsx from 'clsx';
 import { Avatar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    rootRight: {
         overflow: 'auto',
-        // display: "flex"
+        display: 'flex',
+        // color:'red',
+        // justifyContent: 'flex-end',
+    },
+    rootLeft: {
+        overflow: 'auto',
+        display: 'flex',
+        // color:'red',
+        justifyContent: 'flex-end',
     },
     avatar: {
         float: 'left',
@@ -15,23 +23,48 @@ const useStyles = makeStyles((theme) => ({
     },
     text: {
         paddingTop: 5,
+        margin: 10,
     },
 }));
 
-export default function UserMessage({ message, className }) {
+export default function UserMessage({ message, className, cognitoId }) {
     const classes = useStyles();
 
     return (
-        <div className={clsx(classes.root, className)}>
-            <Avatar className={classes.avatar}>{message.name}</Avatar>
-            <Typography
-                className={classes.text}
-                variant="body2"
-                color="textPrimary"
-                component="p"
-            >
-                <b>{message.name}</b> {message.message}
-            </Typography>
-        </div>
+        <>
+            {message.user.cognito_id == cognitoId ? (
+                <div className={clsx(classes.rootRight, className)}>
+                    <Avatar
+                        className={classes.avatar}
+                        alt="userIcon"
+                        src={message.user.photo_url}
+                    ></Avatar>
+                    <Typography
+                        className={classes.text}
+                        variant="body2"
+                        color="textPrimary"
+                        component="p"
+                    >
+                        {message.message}
+                    </Typography>
+                </div>
+            ) : (
+                <div className={clsx(classes.rootLeft, className)}>
+                    <Typography
+                        className={classes.text}
+                        variant="body2"
+                        color="textPrimary"
+                        component="p"
+                    >
+                        {message.message}
+                    </Typography>
+                    <Avatar
+                        className={classes.avatar}
+                        alt="userIcon"
+                        src={message.user.photo_url}
+                    ></Avatar>
+                </div>
+            )}
+        </>
     );
 }

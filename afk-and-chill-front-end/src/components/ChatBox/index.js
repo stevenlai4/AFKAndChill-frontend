@@ -101,6 +101,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [matchedChiller, setMatchedChiller] = useState({});
+    const [user, setUser] = useState({});
     const [rerender, setRerender] = useState(false);
 
     // CDU get messages
@@ -127,8 +128,10 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
         // Check user_one or user_two is the matched chiller
         if (chatItem.user_one.cognito_id === cognitoId) {
             setMatchedChiller(chatItem.user_two);
+            setUser(chatItem.user_one);
         } else {
             setMatchedChiller(chatItem.user_one);
+            setUser(chatItem.user_two);
         }
         setChatboxId(chatItem._id);
         // onClickChatItem(chatboxId);
@@ -268,40 +271,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                             }
                             title={matchedChiller.name}
                         />
-                        {/* {messages && messages[0].cognito_id
- ? <p>{messages[0]?.user?.name}</p> : null} */}
 
-                        {/* {chatboxes.map((chatItem) => (
-                            <>
-                                {cognitoId == messages[0].name? (
-                                    <CardHeader
-                                        avatar={
-                                            <Avatar
-                                                alt="userIcon"
-                                                src={
-                                                    chatItem.user_one.photo_url
-                                                }
-                                                className={classes.avatar}
-                                            />
-                                        }
-                                        title={chatItem.user_one.name}
-                                    />
-                                ) : (
-                                    <CardHeader
-                                        avatar={
-                                            <Avatar
-                                                alt="userIcon"
-                                                src={
-                                                    chatItem.user_two.photo_url
-                                                }
-                                                className={classes.avatar}
-                                            />
-                                        }
-                                        title={chatItem.user_two.name}
-                                    />
-                                )}
-                            </>
-                        ))} */}
                         {isLoading ? (
                             <CircularProgress />
                         ) : (
@@ -311,21 +281,11 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                         key={message._id}
                                         className={classes.message}
                                         message={message}
+                                        cognitoId={cognitoId}
                                     ></UserMessage>
                                 ))}
                             </CardContent>
                         )}
-
-                        {/* {isLoading ? (
-                            <CircularProgress />
-                        ) : (
-                            <div>
-                                {messages.map((message) => (
-                                    <p>{message.message}</p>
-                                ))}
-                            </div>
-                        )} */}
-
                         <div className={classes.messageForm}>
                             <MessageForm
                                 // setRerender={setRerender}
