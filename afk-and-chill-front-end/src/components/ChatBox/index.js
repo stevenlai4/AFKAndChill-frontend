@@ -6,7 +6,13 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, CardHeader, Card, CardContent } from '@material-ui/core';
+import {
+    Avatar,
+    CardHeader,
+    Card,
+    CardContent,
+    CircularProgress,
+} from '@material-ui/core';
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
 import { getMsges } from '../../network';
@@ -98,8 +104,8 @@ export default function ChatBox({
 }) {
     const classes = useStyles();
     const [chatboxId, setChatboxId] = useState('');
-
     const [messages, setMessage] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // CDU
     useEffect(() => {
@@ -110,6 +116,7 @@ export default function ChatBox({
                 if (chatboxId && messageResult) {
                     setMessage(messageResult.messages);
                 }
+                setIsLoading(false);
             } catch (error) {
                 console.error(error.message);
             }
@@ -118,6 +125,7 @@ export default function ChatBox({
 
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatboxId) => {
+        setIsLoading(true);
         setChatboxId(chatboxId);
         onClickChatItem(chatboxId);
     };
@@ -271,11 +279,16 @@ export default function ChatBox({
                             ))}
                         </CardContent> */}
                         {/* {console.log(messages)} */}
-                        <div>
-                            {messages.map((message) => (
-                                <p>{message.message}</p>
-                            ))}
-                        </div>
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <div>
+                                {messages.map((message) => (
+                                    <p>{message.message}</p>
+                                ))}
+                            </div>
+                        )}
+
                         <div className={classes.messageForm}>
                             <MessageForm onSubmit={onMessage}></MessageForm>
                         </div>
