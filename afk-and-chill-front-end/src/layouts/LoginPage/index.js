@@ -45,12 +45,6 @@ export default function LoginPage({ setIsAuthenticated }) {
                 ></path>
             </svg>
             <div className={classes.imgContainer}>
-                {/* <img
-                    src="https://i.imgur.com/1ow85f8.png"
-                    title="Play game image"
-                    alt="Play game"
-                    className={classes.image}
-                /> */}
                 <PlayGameSvg className={classes.image} />
             </div>
             <LoginForm setIsAuthenticated={setIsAuthenticated} />

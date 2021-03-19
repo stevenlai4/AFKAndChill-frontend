@@ -1,6 +1,6 @@
-import React from "react";
-import Match from "../../components/Match";
+import React from 'react';
+import Match from '../../components/Match';
 
 export default function MatchPage() {
-    return <Match></Match>;
+    return <Match />;
 }
