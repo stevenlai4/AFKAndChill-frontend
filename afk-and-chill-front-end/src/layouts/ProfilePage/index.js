@@ -6,6 +6,7 @@ import { updateUser } from '../../network';
 export default function ProfilePage({ setisAuthenticated }) {
     const [user, setUser] = useState([]);
     const [games, setGames] = useState([]);
+    //const [updateUser, setUpdateUser] = useState([]);
 
     useEffect(() => {
         (async () => {
@@ -24,7 +25,7 @@ export default function ProfilePage({ setisAuthenticated }) {
         <Profile
             user={user}
             games={games}
-            // updateUser={updateUser}
+            updateUser={updateUser}
             setisAuthenticated={setisAuthenticated}
         />
     );

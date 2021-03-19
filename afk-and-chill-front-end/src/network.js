@@ -84,12 +84,12 @@ export async function getUser() {
 }
 
 //Update User information
-export async function updateUser(data) {
+export async function updateUser() {
     try {
         const token = await getToken();
         const response = await api.patch(
             '/user',
-            // { gender_pref: data.gender_pref },
+            {},
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
