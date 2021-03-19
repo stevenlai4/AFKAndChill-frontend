@@ -18,16 +18,18 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MessageForm({ onSubmit, setRerender }) {
+export default function MessageForm({ onSubmit }) {
     const classes = useStyles();
 
     const [message, setMessage] = useState('');
 
     const submit = (event) => {
         event.preventDefault();
-        onSubmit({ message });
-        setRerender((prev) => !prev);
-        setMessage('');
+
+        if (message) {
+            onSubmit({ message });
+            setMessage('');
+        }
     };
 
     return (

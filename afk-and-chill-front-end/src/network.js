@@ -87,16 +87,20 @@ export async function getChatBoxes() {
 }
 
 // create msg
-export const sendMsg = async (data) => {
+export const sendMsg = async ({ message, chatboxId }) => {
     try {
         const token = await getToken();
-        const response = await api.post(`/chatbox/message`, data, {
-            params: {
-                chatboxId: data.chatboxId,
-            },
+        const response = await api.post(
+            `/chatbox/message`,
+            { message },
+            {
+                params: {
+                    chatboxId,
+                },
 
-            headers: { Authorization: `Bearer ${token}` },
-        });
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
 
         if (response) {
             const body = response.data?.body;
@@ -117,7 +121,6 @@ export async function getMsges({ chatboxId }) {
             params: {
                 chatboxId: chatboxId,
             },
-
             headers: { Authorization: `Bearer ${token}` },
         });
 

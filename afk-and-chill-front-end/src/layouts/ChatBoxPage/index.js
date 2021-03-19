@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ChatBox from '../../components/ChatBox';
 import data from '../../fakeData';
 import { CircularProgress } from '@material-ui/core';
-import { getChatBoxes, sendMsg } from '../../network';
+import { getChatBoxes } from '../../network';
 import { getUserInfo } from '../../userAuth';
 
 export default function ChatBoxPage() {
@@ -39,7 +39,6 @@ export default function ChatBoxPage() {
             ) : (
                 <ChatBox
                     // message={data[0]}
-                    sendMsg={sendMsg}
                     cognitoId={cognitoId}
                     chatboxes={chatboxes}
                     onClickChatItem={onClickChatItem}

@@ -15,7 +15,7 @@ import {
 } from '@material-ui/core';
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
-import { getMsges } from '../../network';
+import { getMsges, sendMsg } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
     AFKChat: {
@@ -95,27 +95,24 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ChatBox({
-    onClickChatItem,
-    chatboxes,
-    cognitoId,
-    sendMsg,
-}) {
+export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
     const classes = useStyles();
     const [chatboxId, setChatboxId] = useState('');
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [rerender, setRerender] = useState(false);
     const [matchedChiller, setMatchedChiller] = useState({});
+    const [rerender, setRerender] = useState(false);
 
     // CDU get messages
     useEffect(() => {
         (async () => {
             try {
                 setIsLoading(true);
-                const messageResult = await getMsges({ chatboxId: chatboxId });
 
-                if (chatboxId && messageResult) {
+                if (chatboxId) {
+                    const messageResult = await getMsges({
+                        chatboxId: chatboxId,
+                    });
                     setMessage(messageResult.messages);
                 }
                 setIsLoading(false);
@@ -138,7 +135,8 @@ export default function ChatBox({
     };
 
     const onMessage = (data) => {
-        sendMsg({ message: data.message, chatboxId: chatboxId });
+        sendMsg({ message: data.message, chatboxId });
+        setRerender((prev) => !prev);
     };
 
     //----------------------------Drawer---------------------------------------//
@@ -304,16 +302,19 @@ export default function ChatBox({
                                 )}
                             </>
                         ))} */}
-
-                        <CardContent className={classes.message}>
-                            {messages.map((message) => (
-                                <UserMessage
-                                    key={message._id}
-                                    className={classes.message}
-                                    message={message}
-                                ></UserMessage>
-                            ))}
-                        </CardContent>
+                        {isLoading ? (
+                            <CircularProgress />
+                        ) : (
+                            <CardContent className={classes.message}>
+                                {messages.map((message) => (
+                                    <UserMessage
+                                        key={message._id}
+                                        className={classes.message}
+                                        message={message}
+                                    ></UserMessage>
+                                ))}
+                            </CardContent>
+                        )}
 
                         {/* {isLoading ? (
                             <CircularProgress />
@@ -327,7 +328,7 @@ export default function ChatBox({
 
                         <div className={classes.messageForm}>
                             <MessageForm
-                                setRerender={setRerender}
+                                // setRerender={setRerender}
                                 onSubmit={onMessage}
                             ></MessageForm>
                         </div>
