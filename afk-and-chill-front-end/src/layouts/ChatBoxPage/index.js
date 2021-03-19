@@ -27,7 +27,7 @@ export default function ChatBoxPage() {
 
     return (
         <ChatBox
-            message={data[0]}
+            // message={data[0]}
             sendMsg={sendMsg}
             cognitoId={cognitoId}
             chatboxes={chatboxes}

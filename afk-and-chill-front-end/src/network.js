@@ -87,18 +87,13 @@ export async function getChatBoxes() {
 export const sendMsg = async (data) => {
     try {
         const token = await getToken();
-        const response = await api.post(
-            `/chatbox/message`,
-            data,
+        const response = await api.post(`/chatbox/message`, data, {
+            params: {
+                chatboxId: data.chatboxId,
+            },
 
-            {
-                params: {
-                    chatboxId: data.chatboxId,
-                },
-
-                headers: { Authorization: `Bearer ${token}` },
-            }
-        );
+            headers: { Authorization: `Bearer ${token}` },
+        });
 
         console.log(data);
         const result = await JSON.parse(response.data.body);
@@ -107,3 +102,27 @@ export const sendMsg = async (data) => {
         throw error;
     }
 };
+
+//get messages
+export async function getMsges({ chatboxId }) {
+    try {
+        const token = await getToken();
+        const response = await api.get(`/chatbox/messages`, {
+            params: {
+                chatboxId: chatboxId,
+            },
+
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        const result = await JSON.parse(response.data.body);
+        return result;
+    } catch (error) {
+        throw error;
+    }
+    // try {
+    //   const result = await axios.get(`/api/posts/${postId}/comments`)
+    //   return result.data
+    // } catch (error) {
+    //   console.log(error)
+    // }
+}

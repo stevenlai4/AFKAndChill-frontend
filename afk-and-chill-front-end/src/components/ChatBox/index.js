@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, CardHeader, Card, CardContent } from '@material-ui/core';
 import MessageForm from '../MessageForm';
 import UserMessage from '../UserMessage';
+import { getMsges } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
     AFKChat: {
@@ -89,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChatBox({
-    message,
+    // message,
     onClickChatItem,
     chatboxes,
     cognitoId,
@@ -97,16 +98,31 @@ export default function ChatBox({
 }) {
     const classes = useStyles();
     const [chatboxId, setChatboxId] = useState('');
+
+    const [messages, setMessage] = useState([]);
+
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatboxId) => {
         setChatboxId(chatboxId);
         onClickChatItem(chatboxId);
+        (async () => {
+            const messageResult = await getMsges({ chatboxId: chatboxId });
+            setMessage(messageResult.messages);
+        })();
     };
 
     const onMessage = (data) => {
         sendMsg({ message: data.message, chatboxId: chatboxId });
     };
 
+    // useEffect(() => {
+    // (async () => {
+    //     const messageResult = await getMsges({ chatboxId: chatboxId });
+    //     setMessage(messageResult);
+    // })();
+    // }, []);
+
+    console.log(messages);
     //----------------------------Drawer---------------------------------------//
     const [state, setState] = useState({
         left: false,
@@ -226,7 +242,7 @@ export default function ChatBox({
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
-                        <CardHeader
+                        {/* <CardHeader
                             avatar={
                                 <Avatar className={classes.avatar}>
                                     {message.username[0]}
@@ -242,7 +258,7 @@ export default function ChatBox({
                                     message={message}
                                 ></UserMessage>
                             ))}
-                        </CardContent>
+                        </CardContent> */}
                         <div className={classes.messageForm}>
                             <MessageForm onSubmit={onMessage}></MessageForm>
                         </div>
