@@ -1,5 +1,6 @@
 import React from 'react';
 import LoginForm from '../../components/LoginForm';
+import { ReactComponent as PlayGameSvg } from '../../assests/play-game.svg';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,12 +45,13 @@ export default function LoginPage({ setIsAuthenticated }) {
                 ></path>
             </svg>
             <div className={classes.imgContainer}>
-                <img
+                {/* <img
                     src="https://i.imgur.com/1ow85f8.png"
                     title="Play game image"
                     alt="Play game"
                     className={classes.image}
-                />
+                /> */}
+                <PlayGameSvg className={classes.image} />
             </div>
             <LoginForm setIsAuthenticated={setIsAuthenticated} />
             <svg
