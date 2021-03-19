@@ -43,6 +43,10 @@ const useStyles = makeStyles((theme) => ({
         width: '70%',
         marginBottom: 20,
     },
+    loginBtn: {
+        backgroundColor: '#1A2E46',
+        color: '#fff',
+    },
     helperText: {
         color: 'red',
     },
@@ -59,7 +63,7 @@ export default function Form({ setIsAuthenticated }) {
         event.preventDefault();
 
         try {
-            await login(email, password);
+            await login(email.trim(), password);
             setIsAuthenticated(true);
             history.push('/findChillers');
         } catch (error) {
@@ -97,9 +101,8 @@ export default function Form({ setIsAuthenticated }) {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <Button
-                        className={classes.input}
+                        className={`${classes.input} ${classes.loginBtn}`}
                         variant="contained"
-                        color="primary"
                         type="submit"
                         name="submitBtn"
                     >
