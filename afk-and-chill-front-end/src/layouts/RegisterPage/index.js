@@ -33,7 +33,8 @@ export default function RegisterPage() {
         password: '',
         confirmPassword: '',
         about: '',
-        photoUrl: '',
+        photoUrl:
+            'https://afk-and-chill-bucket.s3.us-east-2.amazonaws.com/Portrait_Placeholder.png',
         gender: '',
         genderPref: '',
         games: [],
