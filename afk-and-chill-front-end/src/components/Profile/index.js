@@ -10,6 +10,7 @@ import {
     Button,
 } from '@material-ui/core';
 import Modal from 'react-bootstrap/Modal';
+import Games from '../Games';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -101,7 +102,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Profile({ onSubmitSearch, user, games }) {
+export default function Profile({ onSubmitSearch, user, games, updateUser }) {
     const classes = useStyles();
     const [search, setSearch] = useState('');
     const [genderPref, setGenderPref] = useState('');
@@ -124,12 +125,13 @@ export default function Profile({ onSubmitSearch, user, games }) {
         event.preventDefault();
     };
 
-    const handleEdit = async (event) => {
+    const onUpdate = async (event) => {
         event.preventDefault();
 
         if (username === null || username === '') {
             setUserNameError('Username can not be blank');
             return;
+        } else {
         }
     };
 
@@ -145,7 +147,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
-                            <h3>Chiller Name:</h3> {user.name}
+                            <h3>Chiller Name:</h3> {username}
                             <h3>Gender:</h3> {user.gender}
                             <h3>Gender you want to chill with: </h3>{' '}
                             {user.gender_pref}
@@ -194,15 +196,6 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         >
                             Edit profile
                         </Button>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                            id="Register"
-                            className={classes.submitButton}
-                        >
-                            Submit
-                        </Button>
                     </div>
                 </form>
             </div>
@@ -237,21 +230,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         autoComplete="on"
                         onChange={(e) => setUserName(e.target.value)}
                     />
-                    <p>What is your gender?</p>
-                    <FormControl className={classes.formControl}>
-                        <Select
-                            defaultValue="other"
-                            variant="outlined"
-                            required={true}
-                            value={user.gender}
-                            onChange={(e) => setGender(e.target.value)}
-                        >
-                            <MenuItem value="male">Male</MenuItem>
-                            <MenuItem value="female">Female</MenuItem>
-                            <MenuItem value="other">Other</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <p>What gender do you want to chill with?</p>
+                    <p>Gender Preference</p>
                     <FormControl className={classes.formControl}>
                         <Select
                             defaultValue="other"
@@ -275,7 +254,13 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         onChange={(e) => setAbout(e.target.value)}
                     />
                     <p>Games to chill with:</p>
-                    <div className={classes.search}>
+                    <Games
+                        userInfo={userInfo}
+                        setUserInfo={setUserInfo}
+                        gameSearch={gameSearch}
+                        setGameSearch={setGameSearch}
+                    />
+                    {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -294,14 +279,14 @@ export default function Profile({ onSubmitSearch, user, games }) {
                             }}
                             inputProps={{ 'aria-label': 'search' }}
                         />
-                    </div>
+                    </div> */}
                 </Modal.Body>
                 <Modal.Footer>
                     {/* <Button onUpdate={onUpdate}></Button> */}
                     <Button
                         variant="outlined"
                         style={{ background: 'green' }}
-                        onClick={handleEdit}
+                        onUpdate={onUpdate}
                     >
                         Save Changes
                     </Button>

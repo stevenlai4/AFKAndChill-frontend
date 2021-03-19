@@ -5,6 +5,7 @@ import { getUser } from '../../network';
 export default function ProfilePage({ setisAuthenticated }) {
     const [user, setUser] = useState([]);
     const [games, setGames] = useState([]);
+    //const [updateUser, setUpdateUser] = useState([]);
 
     useEffect(() => {
         (async () => {
