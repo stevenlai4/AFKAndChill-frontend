@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
     input: {
         marginBottom: 20,
-        width: '100%',
+        width: '90%',
     },
     register: {
         display: 'flex',
@@ -91,6 +91,13 @@ const useStyles = makeStyles((theme) => ({
     modalSection: {
         display: 'flex',
         justifyContent: 'center',
+        overflow: 'scroll',
+        // maxHeight: '500px',
+        // overflowY: 'hidden',
+        $zindexModal: 100001,
+    },
+    modalTitle: {
+        color: 'white',
     },
 }));
 
@@ -211,12 +218,12 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     closeButton
                     style={{ backgroundColor: '#2E3B55' }}
                 >
-                    <Modal.Title style={{ color: 'white' }}>
+                    <Modal.Title className={classes.modalTitle}>
                         Edit Profile
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h3>Chiller Name:</h3>
+                    <p>Chiller Name:</p>
                     <TextField
                         type="text"
                         variant="outlined"
@@ -230,7 +237,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         autoComplete="on"
                         onChange={(e) => setUserName(e.target.value)}
                     />
-                    <h3>What is your gender?</h3>
+                    <p>What is your gender?</p>
                     <FormControl className={classes.formControl}>
                         <Select
                             defaultValue="other"
@@ -244,7 +251,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                             <MenuItem value="other">Other</MenuItem>
                         </Select>
                     </FormControl>
-                    <h3>What gender do you want to chill with?</h3>
+                    <p>What gender do you want to chill with?</p>
                     <FormControl className={classes.formControl}>
                         <Select
                             defaultValue="other"
@@ -258,7 +265,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                             <MenuItem value="other">Other</MenuItem>
                         </Select>
                     </FormControl>
-                    <h3>About you:</h3>
+                    <p>About you:</p>
                     <TextField
                         multiline
                         rowsMax="4"
@@ -267,7 +274,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         value={user.about}
                         onChange={(e) => setAbout(e.target.value)}
                     />
-                    <h3>Games to chill with:</h3>
+                    <p>Games to chill with:</p>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
@@ -291,8 +298,20 @@ export default function Profile({ onSubmitSearch, user, games }) {
                 </Modal.Body>
                 <Modal.Footer>
                     {/* <Button onUpdate={onUpdate}></Button> */}
-                    <Button onClick={handleEdit}>Save Changes</Button>
-                    <Button onClick={handleClose}>Close</Button>
+                    <Button
+                        variant="outlined"
+                        style={{ background: 'green' }}
+                        onClick={handleEdit}
+                    >
+                        Save Changes
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        style={{ background: 'red' }}
+                        onClick={handleClose}
+                    >
+                        Close
+                    </Button>
                 </Modal.Footer>
             </Modal>
         </div>
