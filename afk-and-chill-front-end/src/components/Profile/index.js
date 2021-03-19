@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'scroll',
         // maxHeight: '500px',
         // overflowY: 'hidden',
-        $zindexModal: 100001,
+        zIndex: 10000,
     },
     modalTitle: {
         color: 'white',
