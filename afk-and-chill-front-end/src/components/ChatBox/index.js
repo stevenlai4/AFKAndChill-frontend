@@ -106,8 +106,7 @@ export default function ChatBox({
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [rerender, setRerender] = useState(false);
-    const [chatboxInfo, setChatboxInfo] = useState({});
-    const [userOne, setUserOne] = useState({});
+    const [matchedChiller, setMatchedChiller] = useState({});
 
     // CDU get messages
     useEffect(() => {
@@ -127,26 +126,21 @@ export default function ChatBox({
     }, [chatboxId, rerender]);
 
     //----------------------------Submit Message---------------------------------------//
-    const onChatItem = (chatboxId) => {
-        setChatboxId(chatboxId);
-        onClickChatItem(chatboxId);
-        setChatboxInfo(getOneChatBox);
+    const onChatItem = (chatItem) => {
+        // Check user_one or user_two is the matched chiller
+        if (chatItem.user_one.cognito_id === cognitoId) {
+            setMatchedChiller(chatItem.user_two);
+        } else {
+            setMatchedChiller(chatItem.user_one);
+        }
+        setChatboxId(chatItem._id);
+        // onClickChatItem(chatboxId);
     };
 
     const onMessage = (data) => {
         sendMsg({ message: data.message, chatboxId: chatboxId });
     };
 
-    const getOneChatBox = chatboxes.filter(function (chatbox) {
-        return chatbox._id == chatboxId;
-    });
-
-    // const chatBoxInfStr = JSON.stringify(getOneChatBox);
-    // const chatBoxInfObj = JSON.parse(chatBoxInfStr);
-
-    // console.log('matching' + JSON.stringify(getOneChatBox));
-    console.log('item' + JSON.stringify(chatboxInfo));
-    console.log(chatboxes);
     //----------------------------Drawer---------------------------------------//
     const [state, setState] = useState({
         left: false,
@@ -237,7 +231,7 @@ export default function ChatBox({
                     {chatboxes.map((chatItem) => (
                         <Card
                             className={classes.chillerCard}
-                            onClick={() => onChatItem(chatItem._id)}
+                            onClick={() => onChatItem(chatItem)}
                             key={chatItem._id}
                         >
                             {cognitoId == chatItem.user_one.cognito_id ? (
@@ -270,10 +264,11 @@ export default function ChatBox({
                             avatar={
                                 <Avatar
                                     alt="userIcon"
-                                    // src={chatItem.user_one.photo_url}
+                                    src={matchedChiller.photo_url}
                                     className={classes.avatar}
                                 />
                             }
+                            title={matchedChiller.name}
                         />
                         {/* {messages && messages[0].cognito_id
  ? <p>{messages[0]?.user?.name}</p> : null} */}
