@@ -75,9 +75,12 @@ export async function getChatBoxes() {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        const data = await JSON.parse(response.data.body);
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
 
-        return data;
+            return data;
+        }
     } catch (error) {
         throw error;
     }
@@ -95,9 +98,12 @@ export const sendMsg = async (data) => {
             headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log(data);
-        const result = await JSON.parse(response.data.body);
-        console.log(result);
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+
+            return data;
+        }
     } catch (error) {
         throw error;
     }
@@ -114,8 +120,13 @@ export async function getMsges({ chatboxId }) {
 
             headers: { Authorization: `Bearer ${token}` },
         });
-        const result = await JSON.parse(response.data.body);
-        return result;
+
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+
+            return data;
+        }
     } catch (error) {
         throw error;
     }

@@ -101,14 +101,25 @@ export default function ChatBox({
 
     const [messages, setMessage] = useState([]);
 
+    // CDU
+    useEffect(() => {
+        (async () => {
+            try {
+                const messageResult = await getMsges({ chatboxId: chatboxId });
+
+                if (chatboxId && messageResult) {
+                    setMessage(messageResult.messages);
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+        })();
+    }, [chatboxId]);
+
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatboxId) => {
         setChatboxId(chatboxId);
         onClickChatItem(chatboxId);
-        (async () => {
-            const messageResult = await getMsges({ chatboxId: chatboxId });
-            setMessage(messageResult.messages);
-        })();
     };
 
     const onMessage = (data) => {
@@ -122,7 +133,7 @@ export default function ChatBox({
     // })();
     // }, []);
 
-    console.log(messages);
+    // console.log(messages);
     //----------------------------Drawer---------------------------------------//
     const [state, setState] = useState({
         left: false,
@@ -259,6 +270,12 @@ export default function ChatBox({
                                 ></UserMessage>
                             ))}
                         </CardContent> */}
+                        {/* {console.log(messages)} */}
+                        <div>
+                            {messages.map((message) => (
+                                <p>{message.message}</p>
+                            ))}
+                        </div>
                         <div className={classes.messageForm}>
                             <MessageForm onSubmit={onMessage}></MessageForm>
                         </div>
