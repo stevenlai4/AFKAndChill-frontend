@@ -90,12 +90,22 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ChatBox({
     message,
-    submitMessage,
     onClickChatItem,
     chatboxes,
     cognitoId,
+    sendMsg,
 }) {
     const classes = useStyles();
+    const [chatboxId, setChatboxId] = useState('');
+    //----------------------------Submit Message---------------------------------------//
+    const onChatItem = (chatboxId) => {
+        setChatboxId(chatboxId);
+        onClickChatItem(chatboxId);
+    };
+
+    const onMessage = (data) => {
+        sendMsg({ message: data.message, chatboxId: chatboxId });
+    };
 
     //----------------------------Drawer---------------------------------------//
     const [state, setState] = useState({
@@ -112,8 +122,6 @@ export default function ChatBox({
 
         setState({ ...state, [anchor]: open });
     };
-
-    const chillerList = ['Mongo', 'Bob'];
 
     const list = (anchor) => (
         <div
@@ -159,15 +167,6 @@ export default function ChatBox({
             </List>
         </div>
     );
-
-    //----------------------------Submit Message---------------------------------------//
-    const onMessage = (data) => {
-        submitMessage({ chatId: message._id, text: data.message });
-    };
-
-    const onChatItem = (data) => {
-        onClickChatItem(data);
-    };
 
     return (
         <div>
@@ -222,8 +221,8 @@ export default function ChatBox({
                             )}
                         </Card>
                     ))}
-                    
                 </div>
+
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
