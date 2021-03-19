@@ -45,7 +45,7 @@ export default function LoginPage({ setIsAuthenticated }) {
             </svg>
             <div className={classes.imgContainer}>
                 <img
-                    src="https://i.imgur.com/1ow85f8.png"
+                    src="https://i.imgur.com/0MTAle0.png"
                     title="Play game image"
                     alt="Play game"
                     className={classes.image}
