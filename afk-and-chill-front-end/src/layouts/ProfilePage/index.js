@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Profile from '../../components/Profile';
 import { getUser } from '../../network';
+import { updateUser } from '../../network';
 
 export default function ProfilePage({ setisAuthenticated }) {
     const [user, setUser] = useState([]);
@@ -23,6 +24,7 @@ export default function ProfilePage({ setisAuthenticated }) {
         <Profile
             user={user}
             games={games}
+            // updateUser={updateUser}
             setisAuthenticated={setisAuthenticated}
         />
     );

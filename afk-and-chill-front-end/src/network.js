@@ -84,16 +84,21 @@ export async function getUser() {
 }
 
 //Update User information
-export async function updateUser() {
+export async function updateUser(data) {
     try {
         const token = await getToken();
-        const response = await api.patch('/user', {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
+        const response = await api.patch(
+            '/user',
+            // { gender_pref: data.gender_pref },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
         if (response) {
-            const data = await JSON.parse(response.data.body);
-            return data;
+            const data = await JSON.parse(response.data?.body);
+            return data.successMsg;
         }
     } catch (error) {
         throw error;

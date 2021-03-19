@@ -126,6 +126,11 @@ export default function Profile({ onSubmitSearch, user, games }) {
         }
     };
 
+    // const onUpdate = (data) => {
+    //     updateUser({ gender_pref: data.genderPref });
+    //     console.log('updategender pref', data);
+    // };
+
     return (
         <div>
             <div className={classes.wrapper}>
@@ -166,9 +171,9 @@ export default function Profile({ onSubmitSearch, user, games }) {
                                 />
                             </div>
                             <h3>Games you have selected</h3>
-                            {games.map((game) => (
+                            {/* {games.map((game) => (
                                 <p key={game.id}>{game.name}</p>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                     <div className={classes.submitButtonSection}>
@@ -221,7 +226,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         }}
                         helperText={userNameError}
                         id="username"
-                        value={user.name}
+                        value={username}
                         autoComplete="on"
                         onChange={(e) => setUserName(e.target.value)}
                     />
@@ -244,7 +249,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                         <Select
                             defaultValue="other"
                             variant="outlined"
-                            value={user.gender_pref}
+                            value={genderPref}
                             required={true}
                             onChange={(e) => setGenderPref(e.target.value)}
                         >
@@ -285,6 +290,7 @@ export default function Profile({ onSubmitSearch, user, games }) {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
+                    {/* <Button onUpdate={onUpdate}></Button> */}
                     <Button onClick={handleEdit}>Save Changes</Button>
                     <Button onClick={handleClose}>Close</Button>
                 </Modal.Footer>
