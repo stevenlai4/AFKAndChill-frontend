@@ -96,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChatBox({
-    // message,
     onClickChatItem,
     chatboxes,
     cognitoId,
@@ -107,8 +106,10 @@ export default function ChatBox({
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [rerender, setRerender] = useState(false);
+    const [chatboxInfo, setChatboxInfo] = useState({});
+    const [userOne, setUserOne] = useState({});
 
-    // CDU
+    // CDU get messages
     useEffect(() => {
         (async () => {
             try {
@@ -129,20 +130,23 @@ export default function ChatBox({
     const onChatItem = (chatboxId) => {
         setChatboxId(chatboxId);
         onClickChatItem(chatboxId);
+        setChatboxInfo(getOneChatBox);
     };
 
     const onMessage = (data) => {
         sendMsg({ message: data.message, chatboxId: chatboxId });
     };
 
-    // useEffect(() => {
-    // (async () => {
-    //     const messageResult = await getMsges({ chatboxId: chatboxId });
-    //     setMessage(messageResult);
-    // })();
-    // }, []);
+    const getOneChatBox = chatboxes.filter(function (chatbox) {
+        return chatbox._id == chatboxId;
+    });
 
-    // console.log(messages);
+    // const chatBoxInfStr = JSON.stringify(getOneChatBox);
+    // const chatBoxInfObj = JSON.parse(chatBoxInfStr);
+
+    // console.log('matching' + JSON.stringify(getOneChatBox));
+    console.log('item' + JSON.stringify(chatboxInfo));
+    console.log(chatboxes);
     //----------------------------Drawer---------------------------------------//
     const [state, setState] = useState({
         left: false,
@@ -262,25 +266,61 @@ export default function ChatBox({
                 {/*----------------------------chat box---------------------------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
-                        {/* <CardHeader
+                        <CardHeader
                             avatar={
-                                <Avatar className={classes.avatar}>
-                                    {message.username[0]}
-                                </Avatar>
+                                <Avatar
+                                    alt="userIcon"
+                                    // src={chatItem.user_one.photo_url}
+                                    className={classes.avatar}
+                                />
                             }
-                            title={message.username}
                         />
+                        {/* {messages && messages[0].cognito_id
+ ? <p>{messages[0]?.user?.name}</p> : null} */}
+
+                        {/* {chatboxes.map((chatItem) => (
+                            <>
+                                {cognitoId == messages[0].name? (
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar
+                                                alt="userIcon"
+                                                src={
+                                                    chatItem.user_one.photo_url
+                                                }
+                                                className={classes.avatar}
+                                            />
+                                        }
+                                        title={chatItem.user_one.name}
+                                    />
+                                ) : (
+                                    <CardHeader
+                                        avatar={
+                                            <Avatar
+                                                alt="userIcon"
+                                                src={
+                                                    chatItem.user_two.photo_url
+                                                }
+                                                className={classes.avatar}
+                                            />
+                                        }
+                                        title={chatItem.user_two.name}
+                                    />
+                                )}
+                            </>
+                        ))} */}
+
                         <CardContent className={classes.message}>
-                            {message.messages.map((message) => (
+                            {messages.map((message) => (
                                 <UserMessage
                                     key={message._id}
                                     className={classes.message}
                                     message={message}
                                 ></UserMessage>
                             ))}
-                        </CardContent> */}
-                        {/* {console.log(messages)} */}
-                        {isLoading ? (
+                        </CardContent>
+
+                        {/* {isLoading ? (
                             <CircularProgress />
                         ) : (
                             <div>
@@ -288,7 +328,7 @@ export default function ChatBox({
                                     <p>{message.message}</p>
                                 ))}
                             </div>
-                        )}
+                        )} */}
 
                         <div className={classes.messageForm}>
                             <MessageForm

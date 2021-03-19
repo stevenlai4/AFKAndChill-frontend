@@ -23,16 +23,14 @@ export default function UserMessage({ message, className }) {
 
     return (
         <div className={clsx(classes.root, className)}>
-            <Avatar className={classes.avatar}>
-                {message.user.username[0]}
-            </Avatar>
+            <Avatar className={classes.avatar}>{message.name}</Avatar>
             <Typography
                 className={classes.text}
                 variant="body2"
                 color="textPrimary"
                 component="p"
             >
-                <b>{message.user.username}</b> {message.text}
+                <b>{message.name}</b> {message.message}
             </Typography>
         </div>
     );
