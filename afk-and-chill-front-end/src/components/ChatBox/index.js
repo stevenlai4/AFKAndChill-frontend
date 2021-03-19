@@ -106,11 +106,13 @@ export default function ChatBox({
     const [chatboxId, setChatboxId] = useState('');
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [rerender, setRerender] = useState(false);
 
     // CDU
     useEffect(() => {
         (async () => {
             try {
+                setIsLoading(true);
                 const messageResult = await getMsges({ chatboxId: chatboxId });
 
                 if (chatboxId && messageResult) {
@@ -121,17 +123,17 @@ export default function ChatBox({
                 console.error(error.message);
             }
         })();
-    }, [chatboxId]);
+    }, [chatboxId, rerender]);
 
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatboxId) => {
-        setIsLoading(true);
         setChatboxId(chatboxId);
         onClickChatItem(chatboxId);
     };
 
     const onMessage = (data) => {
         sendMsg({ message: data.message, chatboxId: chatboxId });
+        setRerender((prev) => !prev);
     };
 
     // useEffect(() => {
@@ -290,7 +292,10 @@ export default function ChatBox({
                         )}
 
                         <div className={classes.messageForm}>
-                            <MessageForm onSubmit={onMessage}></MessageForm>
+                            <MessageForm
+                                setRerender={setRerender}
+                                onSubmit={onMessage}
+                            ></MessageForm>
                         </div>
                     </div>
                 </Card>
