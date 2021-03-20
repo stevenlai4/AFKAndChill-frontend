@@ -1,10 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
@@ -16,6 +10,7 @@ import {
 import ChatDrawer from './ChatDrawer';
 import MessageForm from './MessageForm';
 import UserMessage from './UserMessage';
+import ChillerItem from './ChillerItem';
 import { getMsges, sendMsg } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
@@ -39,22 +34,9 @@ const useStyles = makeStyles((theme) => ({
             margin: 0,
         },
     },
-    chillerItem: {
-        width: '40%',
-        margin: 10,
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    chillerItemCard: {
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-    },
     avatar: {
         margin: '3%',
     },
-    chillerCard: { marginBottom: '5%' },
     chat: {
         display: 'flex',
         flexDirection: 'column',
@@ -128,39 +110,12 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                 chatboxes={chatboxes}
                 onChatItem={onChatItem}
             />
-            {/*----------------------------chiller Item---------------------------------------*/}
             <section className={classes.AFKChat}>
-                <div className={classes.chillerItem}>
-                    {chatboxes.map((chatItem) => (
-                        <Card
-                            className={classes.chillerCard}
-                            onClick={() => onChatItem(chatItem)}
-                            key={chatItem._id}
-                        >
-                            {cognitoId == chatItem.user_one.cognito_id ? (
-                                <div className={classes.chillerItemCard}>
-                                    <Avatar
-                                        alt="userIcon"
-                                        src={chatItem.user_two.photo_url}
-                                        className={classes.avatar}
-                                    />
-                                    <h4>{chatItem.user_two.name}</h4>
-                                </div>
-                            ) : (
-                                <div className={classes.chillerItemCard}>
-                                    <Avatar
-                                        alt="userIcon"
-                                        src={chatItem.user_one.photo_url}
-                                        className={classes.avatar}
-                                    />
-                                    <h4>{chatItem.user_one.name}</h4>
-                                </div>
-                            )}
-                        </Card>
-                    ))}
-                </div>
-
-                {/*----------------------------chat box---------------------------------------*/}
+                <ChillerItem
+                    cognitoId={cognitoId}
+                    chatboxes={chatboxes}
+                    onChatItem={onChatItem}
+                />
                 {/*----------------------------chat header-----------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
