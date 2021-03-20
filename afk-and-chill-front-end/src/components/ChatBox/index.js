@@ -13,8 +13,9 @@ import {
     CardContent,
     CircularProgress,
 } from '@material-ui/core';
-import MessageForm from '../MessageForm';
-import UserMessage from '../UserMessage';
+import ChatDrawer from './ChatDrawer';
+import MessageForm from './MessageForm';
+import UserMessage from './UserMessage';
 import { getMsges, sendMsg } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,11 +27,6 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-        },
-    },
-    drawer: {
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
         },
     },
     chatBox: {
@@ -55,15 +51,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         cursor: 'pointer',
     },
-    chillerItemCardDrawer: {
-        display: 'flex',
-        alignItems: 'center',
-        cursor: 'pointer',
-    },
-    textDrawer: { marginLeft: '10px' },
-    avatarDrawer: {
-        margin: '5%',
-    },
     avatar: {
         margin: '3%',
     },
@@ -75,9 +62,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         width: '100%',
     },
-    listButton: {
-        margin: '2% 2% 0 2%',
-    },
     messageForm: {
         margin: 20,
     },
@@ -86,9 +70,6 @@ const useStyles = makeStyles((theme) => ({
     },
     messages: {
         overflowY: 'scroll',
-    },
-    list: {
-        width: 250,
     },
     fullList: {
         width: 'auto',
@@ -101,7 +82,6 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [matchedChiller, setMatchedChiller] = useState({});
-    const [user, setUser] = useState({});
     const [rerender, setRerender] = useState(false);
 
     // CDU get messages
@@ -129,14 +109,11 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
         // Check user_one or user_two is the matched chiller
         if (chatItem.user_one.cognito_id === cognitoId) {
             setMatchedChiller(chatItem.user_two);
-            setUser(chatItem.user_one);
         } else {
             setMatchedChiller(chatItem.user_one);
-            setUser(chatItem.user_two);
         }
         setChatboxId(chatItem._id);
         // onClickChatItem(chatItem._id);
-        // console.log(chatItem.user_one.cognito_id);
     };
 
     const onMessage = (data) => {
@@ -144,90 +121,13 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
         setRerender((prev) => !prev);
     };
 
-    //----------------------------Drawer---------------------------------------//
-    const [state, setState] = useState({
-        left: false,
-    });
-
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-        ) {
-            return;
-        }
-
-        setState({ ...state, [anchor]: open });
-    };
-
-    const list = (anchor) => (
-        <div
-            className={clsx(classes.list, {
-                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-            })}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {chatboxes.map((chatItem) => (
-                    <ListItem
-                        button
-                        key={chatItem._id}
-                        onClick={() => onChatItem(chatItem)}
-                    >
-                        {cognitoId == chatItem.user_one.cognito_id ? (
-                            <div className={classes.chillerItemCardDrawer}>
-                                <Avatar
-                                    alt="userIcon"
-                                    src={chatItem.user_two.photo_url}
-                                    className={classes.avatarDrawer}
-                                />
-                                <h4 className={classes.textDrawer}>
-                                    {chatItem.user_two.name}
-                                </h4>
-                            </div>
-                        ) : (
-                            <div className={classes.chillerItemCardDrawer}>
-                                <Avatar
-                                    alt="userIcon"
-                                    src={chatItem.user_one.photo_url}
-                                    className={classes.avatarDrawer}
-                                />
-                                <h4 className={classes.textDrawer}>
-                                    {chatItem.user_one.name}
-                                </h4>
-                            </div>
-                        )}
-                    </ListItem>
-                ))}
-            </List>
-        </div>
-    );
-
     return (
         <div>
-            {/*----------------------------Drawer---------------------------------------*/}
-            <section className={classes.drawer}>
-                {['left'].map((anchor) => (
-                    <React.Fragment key={anchor}>
-                        <Button
-                            onClick={toggleDrawer(anchor, true)}
-                            className={classes.listButton}
-                        >
-                            <MenuIcon fontSize="large" />
-                            Chiller's List
-                        </Button>
-                        <Drawer
-                            anchor={anchor}
-                            open={state[anchor]}
-                            onClose={toggleDrawer(anchor, false)}
-                        >
-                            {list(anchor)}
-                        </Drawer>
-                    </React.Fragment>
-                ))}
-            </section>
+            <ChatDrawer
+                cognitoId={cognitoId}
+                chatboxes={chatboxes}
+                onChatItem={onChatItem}
+            />
             {/*----------------------------chiller Item---------------------------------------*/}
             <section className={classes.AFKChat}>
                 <div className={classes.chillerItem}>
@@ -289,7 +189,6 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                 ))}
                             </CardContent>
                         )}
-                        {/*----------------------------Message submit Form---------------------------------------*/}
                         <div className={classes.messageForm}>
                             <MessageForm
                                 // setRerender={setRerender}

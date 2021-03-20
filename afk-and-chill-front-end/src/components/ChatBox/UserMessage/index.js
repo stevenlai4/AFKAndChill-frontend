@@ -32,7 +32,7 @@ export default function UserMessage({ message, className, cognitoId }) {
 
     return (
         <>
-            {message.user.cognito_id == cognitoId ? (
+            {message.user.cognito_id !== cognitoId ? (
                 <div className={clsx(classes.rootRight, className)}>
                     <Avatar
                         className={classes.avatar}
