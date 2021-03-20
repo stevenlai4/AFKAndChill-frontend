@@ -98,10 +98,10 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
         // onClickChatItem(chatItem._id);
     };
 
-    const onMessage = (data) => {
-        sendMsg({ message: data.message, chatboxId });
-        setRerender((prev) => !prev);
-    };
+    // const onMessage = (data) => {
+    //     sendMsg({ message: data.message, chatboxId });
+    //     setRerender((prev) => !prev);
+    // };
 
     return (
         <div>
@@ -146,8 +146,8 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                         )}
                         <div className={classes.messageForm}>
                             <MessageForm
-                                // setRerender={setRerender}
-                                onSubmit={onMessage}
+                                setRerender={setRerender}
+                                chatboxId={chatboxId}
                             ></MessageForm>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import { sendMsg } from '../../../network';
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -18,22 +18,21 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function MessageForm({ onSubmit }) {
+export default function MessageForm({ chatboxId, setRerender }) {
     const classes = useStyles();
-
     const [message, setMessage] = useState('');
 
-    const submit = (event) => {
+    const onMessage = (event) => {
         event.preventDefault();
-
+        sendMsg({ message: message, chatboxId });
+        setRerender((prev) => !prev);
         if (message) {
-            onSubmit({ message });
             setMessage('');
         }
     };
 
     return (
-        <form onSubmit={submit} className={classes.form}>
+        <form onSubmit={onMessage} className={classes.form}>
             <TextField
                 className={classes.textField}
                 value={message}
