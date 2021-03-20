@@ -125,6 +125,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
 
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatItem) => {
+        console.log(chatItem.user_one.cognito_id);
         // Check user_one or user_two is the matched chiller
         if (chatItem.user_one.cognito_id === cognitoId) {
             setMatchedChiller(chatItem.user_two);
@@ -134,7 +135,8 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
             setUser(chatItem.user_two);
         }
         setChatboxId(chatItem._id);
-        // onClickChatItem(chatboxId);
+        // onClickChatItem(chatItem._id);
+        // console.log(chatItem.user_one.cognito_id);
     };
 
     const onMessage = (data) => {
@@ -172,7 +174,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                     <ListItem
                         button
                         key={chatItem._id}
-                        onClick={() => onChatItem(chatItem._id)}
+                        onClick={() => onChatItem(chatItem)}
                     >
                         {cognitoId == chatItem.user_one.cognito_id ? (
                             <div className={classes.chillerItemCardDrawer}>
