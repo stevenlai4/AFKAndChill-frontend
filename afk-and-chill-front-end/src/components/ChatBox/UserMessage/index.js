@@ -4,13 +4,13 @@ import clsx from 'clsx';
 import { Avatar, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    rootRight: {
+    chatboxToRight: {
         overflow: 'auto',
         display: 'flex',
         // color:'red',
         // justifyContent: 'flex-end',
     },
-    rootLeft: {
+    chatboxToLeft: {
         overflow: 'auto',
         display: 'flex',
         // color:'red',
@@ -29,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMessage({ message, className, cognitoId }) {
     const classes = useStyles();
-
+    const d = new Date(0);
     return (
         <>
+            {}
             {message.user.cognito_id !== cognitoId ? (
-                <div className={clsx(classes.rootRight, className)}>
+                <div className={clsx(classes.chatboxToRight, className)}>
                     <Avatar
                         className={classes.avatar}
                         alt="userIcon"
@@ -49,7 +50,7 @@ export default function UserMessage({ message, className, cognitoId }) {
                     </Typography>
                 </div>
             ) : (
-                <div className={clsx(classes.rootLeft, className)}>
+                <div className={clsx(classes.chatboxToLeft, className)}>
                     <Typography
                         className={classes.text}
                         variant="body2"
