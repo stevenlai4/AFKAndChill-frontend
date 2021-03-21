@@ -26,8 +26,22 @@ const useStyles = makeStyles((theme) => ({
     chillerText: {
         padding: '2%',
         margin: 10,
-        backgroundColor: '#00aeff',
+        backgroundColor: '#0082ff',
         color: 'white',
+    },
+    userTimestamp: {
+        fontSize: 'small',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        marginRight: 60,
+        color: '#d3d3d3',
+    },
+    chillerTimestamp: {
+        fontSize: 'small',
+        // display: 'flex',
+        // justifyContent: 'flex-end',
+        marginLeft: 60,
+        color: '#d3d3d3',
     },
 }));
 
@@ -36,46 +50,50 @@ export default function UserMessage({ message, className, cognitoId }) {
 
     return (
         <>
-            {console.log(moment.now())}
             {message.user.cognito_id !== cognitoId ? (
-                <div className={clsx(classes.UserChatbox, className)}>
-                    <Avatar
-                        className={classes.avatar}
-                        alt="userIcon"
-                        src={message.user.photo_url}
-                    ></Avatar>
-                    <Card
-                        className={classes.userText}
-                        variant="body2"
-                        color="textPrimary"
-                        component="p"
-                    >
+                <>
+                    <div className={clsx(classes.UserChatbox, className)}>
+                        <Avatar
+                            className={classes.avatar}
+                            alt="userIcon"
+                            src={message.user.photo_url}
+                        ></Avatar>
+                        <Card className={classes.userText}>
+                            {message.message}
+                        </Card>
+                    </div>{' '}
+                    <div className={classes.chillerTimestamp}>
                         {moment(message.timestamp).format(
                             'YYYY-MM-DD HH:mm:ss'
                         )}
-                        {message.message}
-                    </Card>
-                    <Typography component="p"></Typography>
-                </div>
+                    </div>
+                </>
             ) : (
-                <div className={clsx(classes.chillerChatbox, className)}>
-                    <Card
-                        className={classes.chillerText}
-                        variant="body2"
-                        color="textPrimary"
-                        component="p"
-                    >
-                        {message.message}
+                <>
+                    <div className={clsx(classes.chillerChatbox, className)}>
+                        <Card
+                            className={classes.chillerText}
+                            variant="body2"
+                            color="textPrimary"
+                            component="p"
+                        >
+                            {message.message}
+                            {moment(message.timestamp).format(
+                                'YYYY-MM-DD HH:mm:ss'
+                            )}
+                        </Card>
+                        <Avatar
+                            className={classes.avatar}
+                            alt="userIcon"
+                            src={message.user.photo_url}
+                        ></Avatar>
+                    </div>
+                    <div className={classes.userTimestamp}>
                         {moment(message.timestamp).format(
                             'YYYY-MM-DD HH:mm:ss'
                         )}
-                    </Card>
-                    <Avatar
-                        className={classes.avatar}
-                        alt="userIcon"
-                        src={message.user.photo_url}
-                    ></Avatar>
-                </div>
+                    </div>
+                </>
             )}
         </>
     );
