@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         background: 'transparent',
         boxShadow: 'none',
-        // zIndex: theme.zIndex.drawer + 1,
+        zIndex: 1,
     },
     logo: {
         flexGrow: 1,

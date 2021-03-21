@@ -155,12 +155,24 @@ export async function getUser() {
 }
 
 //Update User information
-export async function updateUser() {
+export async function updateUser({
+    userName,
+    gender,
+    genderPref,
+    about,
+    games,
+}) {
     try {
         const token = await getToken();
         const response = await api.patch(
             '/user',
-            {},
+            {
+                userName,
+                gender,
+                genderPref,
+                about,
+                games,
+            },
             {
                 headers: {
                     Authorization: `Bearer ${token}`,

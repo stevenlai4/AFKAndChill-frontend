@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'fixed',
         top: 0,
         width: '100%',
-        zIndex: 1000,
+        //zIndex: 1000,
     },
     wrapper: {
         margin: 30,
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         overflowY: 'scroll',
         // maxHeight: '500px',
-        zIndex: 10000,
+        // zIndex: 2000,
     },
     modalTitle: {
         color: 'white',
@@ -114,9 +114,9 @@ export default function Profile({ userInfo, setUserInfo }) {
     const handleShow = () => setShow(true);
 
     //Button handlers
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    };
+    // const handleSubmit = async (event) => {
+    //     event.preventDefault();
+    // };
 
     const handleEdit = async (event) => {
         event.preventDefault();
@@ -124,8 +124,25 @@ export default function Profile({ userInfo, setUserInfo }) {
         if (userInfo.name === null || userInfo.name === '') {
             setUserNameError('Username can not be blank');
             return;
+        } else {
+            updateUser({
+                userName: userInfo.name,
+                gender: userInfo.gender,
+                genderPref: userInfo.gender_pref,
+                about: userInfo.about,
+                games: gameSearch,
+            });
         }
     };
+
+    // const  = (event) => {
+    //     event.preventDefault();
+    //     sendMsg({ message: message, chatboxId });
+    //     setRerender((prev) => !prev);
+    //     if (message) {
+    //         setMessage('');
+    //     }
+    // };
 
     // const onUpdate = (data) => {
     //     updateUser({ gender_pref: data.genderPref });
@@ -135,7 +152,7 @@ export default function Profile({ userInfo, setUserInfo }) {
     return (
         <div>
             <div className={classes.wrapper}>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleEdit}>
                     <div className={classes.register}>
                         {/* Profile form */}
                         <div className={classes.registerForm}>
@@ -229,7 +246,9 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 })
                             }
                         >
-                            <MenuItem value="male">Male</MenuItem>
+                            <MenuItem className={classes.dropDown} value="male">
+                                Male
+                            </MenuItem>
                             <MenuItem value="female">Female</MenuItem>
                             <MenuItem value="other">Other</MenuItem>
                         </Select>
