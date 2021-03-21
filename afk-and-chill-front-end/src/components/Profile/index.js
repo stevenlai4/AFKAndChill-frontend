@@ -130,7 +130,7 @@ export default function Profile({ userInfo, setUserInfo }) {
                 gender: userInfo.gender,
                 genderPref: userInfo.gender_pref,
                 about: userInfo.about,
-                games: gameSearch,
+                games: userInfo.games,
             });
         }
     };
@@ -181,9 +181,9 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 />
                             </div>
                             <h3>Games you have selected</h3>
-                            {/* {game.map((game) => (
+                            {userInfo?.games?.map((game) => (
                                 <p key={game.id}>{game.name}</p>
-                            ))} */}
+                            ))}
                         </div>
                     </div>
                     <div className={classes.submitButtonSection}>
