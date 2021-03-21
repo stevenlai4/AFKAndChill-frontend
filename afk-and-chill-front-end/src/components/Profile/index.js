@@ -151,6 +151,7 @@ export default function Profile({ userInfo, setUserInfo }) {
 
     return (
         <div>
+            {console.log(`game search>>>${gameSearch}`)}
             <div className={classes.wrapper}>
                 <form onSubmit={handleEdit}>
                     <div className={classes.register}>
@@ -180,7 +181,7 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 />
                             </div>
                             <h3>Games you have selected</h3>
-                            {/* {games.map((game) => (
+                            {/* {game.map((game) => (
                                 <p key={game.id}>{game.name}</p>
                             ))} */}
                         </div>
