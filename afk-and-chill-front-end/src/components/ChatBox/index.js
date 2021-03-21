@@ -149,16 +149,18 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                         {isLoading ? (
                             <CircularProgress />
                         ) : (
-                            <CardContent className={classes.message}>
-                                {messages.map((message) => (
-                                    <UserMessage
-                                        key={message._id}
-                                        className={classes.message}
-                                        message={message}
-                                        cognitoId={cognitoId}
-                                    ></UserMessage>
-                                ))}
-                            </CardContent>
+                            <div style={{ overflow: 'auto' }}>
+                                <CardContent className={classes.message}>
+                                    {messages.map((message) => (
+                                        <UserMessage
+                                            key={message._id}
+                                            className={classes.message}
+                                            message={message}
+                                            cognitoId={cognitoId}
+                                        ></UserMessage>
+                                    ))}
+                                </CardContent>
+                            </div>
                         )}
                         <div className={classes.messageForm}>
                             <MessageForm
