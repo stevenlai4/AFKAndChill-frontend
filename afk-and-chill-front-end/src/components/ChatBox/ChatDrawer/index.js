@@ -4,11 +4,19 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
+    itemButton: {
+        background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+        borderRadius: 3,
+        border: 0,
+        color: 'white',
+        height: 48,
+        padding: '0 30px',
+        boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    },
     drawer: {
         [theme.breakpoints.up('md')]: {
             display: 'none',
@@ -23,15 +31,23 @@ const useStyles = makeStyles((theme) => ({
     avatarDrawer: {
         margin: '5%',
     },
-    listButton: {
-        margin: '2% 2% 0 2%',
+    button: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '5%',
     },
     list: {
         width: 250,
     },
 }));
 
-export default function ChatDrawer({ chatboxes, cognitoId, onChatItem }) {
+export default function ChatDrawer({
+    chatboxes,
+    cognitoId,
+    onChatItem,
+    className,
+}) {
     const classes = useStyles();
     const [state, setState] = useState({
         left: false,
@@ -96,13 +112,15 @@ export default function ChatDrawer({ chatboxes, cognitoId, onChatItem }) {
         <section className={classes.drawer}>
             {['left'].map((anchor) => (
                 <React.Fragment key={anchor}>
-                    <Button
-                        onClick={toggleDrawer(anchor, true)}
-                        className={classes.listButton}
-                    >
-                        <MenuIcon fontSize="large" />
-                        Chiller's List
-                    </Button>
+                    <div className={classes.button}>
+                        <Button
+                            onClick={toggleDrawer(anchor, true)}
+                            className={clsx(classes.itemButton, className)}
+                        >
+                            {/* <MenuIcon fontSize="large" /> */}
+                            Chiller's List
+                        </Button>
+                    </div>
                     <Drawer
                         anchor={anchor}
                         open={state[anchor]}

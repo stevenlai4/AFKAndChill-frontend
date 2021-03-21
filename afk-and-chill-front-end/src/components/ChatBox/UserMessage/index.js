@@ -38,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
     },
     chillerTimestamp: {
         fontSize: 'small',
-        // display: 'flex',
-        // justifyContent: 'flex-end',
         marginLeft: 60,
         color: '#d3d3d3',
     },

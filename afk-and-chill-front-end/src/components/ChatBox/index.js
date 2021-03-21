@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
     title: {
         fontFamily: 'Josefin Sans, cursive',
     },
-    chatHeader: { backgroundColor: '#ededed' },
+    chatHeader: {
+        background: '#F8F8F8',
+    },
     chat: {
         display: 'flex',
         flexDirection: 'column',
@@ -56,9 +58,6 @@ const useStyles = makeStyles((theme) => ({
     },
     message: {
         margin: '10px 0',
-    },
-    messages: {
-        overflowY: 'scroll',
     },
     fullList: {
         width: 'auto',
@@ -104,11 +103,6 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
         setChatboxId(chatItem._id);
         // onClickChatItem(chatItem._id);
     };
-
-    // const onMessage = (data) => {
-    //     sendMsg({ message: data.message, chatboxId });
-    //     setRerender((prev) => !prev);
-    // };
 
     return (
         <div>
