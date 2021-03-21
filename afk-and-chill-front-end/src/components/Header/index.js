@@ -28,6 +28,8 @@ const useStyles = makeStyles((theme) => ({
     menuText: {
         color: 'white',
         fontWeight: 600,
+        fontSize: 20,
+        fontFamily: 'Josefin Sans, cursive',
     },
     logoImage: {
         width: 300,
@@ -123,11 +125,7 @@ export default function Header({
                 </Toolbar>
                 {isAuthenticated ? (
                     <Toolbar style={{ background: '#2E3B55' }}>
-                        <Grid
-                            justify="space-around" // Add it here :)
-                            container
-                            spacing={2}
-                        >
+                        <Grid justify="space-around" container spacing={2}>
                             <Grid item>
                                 <Link
                                     onClick={findChillersClicked}
@@ -139,20 +137,20 @@ export default function Header({
                             </Grid>
                             <Grid item>
                                 <Link
-                                    onClick={chillersPostClicked}
-                                    className={classes.menuText}
-                                    component="button"
-                                >
-                                    Chiller's Posts
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link
                                     onClick={AFKChatClicked}
                                     className={classes.menuText}
                                     component="button"
                                 >
                                     AFK chat
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Link
+                                    onClick={profileClicked}
+                                    className={classes.menuText}
+                                    component="button"
+                                >
+                                    My Profile
                                 </Link>
                             </Grid>
                         </Grid>

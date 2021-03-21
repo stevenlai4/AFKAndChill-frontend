@@ -11,9 +11,12 @@ import ChatDrawer from './ChatDrawer';
 import MessageForm from './MessageForm';
 import UserMessage from './UserMessage';
 import ChillerItem from './ChillerItem';
-import { getMsges, sendMsg } from '../../network';
+import { getMsges } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        fontFamily: 'Vazir, sans-serif ',
+    },
     AFKChat: {
         display: 'flex',
         margin: 30,
@@ -37,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
         margin: '3%',
     },
+    title: {
+        fontFamily: 'Josefin Sans, cursive',
+    },
+    chatHeader: { backgroundColor: '#ededed' },
     chat: {
         display: 'flex',
         flexDirection: 'column',
@@ -119,16 +126,25 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                 {/*----------------------------chat header-----------------------*/}
                 <Card className={classes.chatBox}>
                     <div className={classes.chat}>
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    alt="userIcon"
-                                    src={matchedChiller.photo_url}
-                                    className={classes.avatar}
-                                />
-                            }
-                            title={matchedChiller.name}
-                        />
+                        <div className={classes.chatHeader}>
+                            <CardHeader
+                                classes={{
+                                    title: classes.title,
+                                }}
+                                avatar={
+                                    <Avatar
+                                        alt="userIcon"
+                                        src={matchedChiller.photo_url}
+                                        className={classes.avatar}
+                                    />
+                                }
+                                titleTypographyProps={{
+                                    variant: 'h6',
+                                    color: 'white',
+                                }}
+                                title={matchedChiller.name}
+                            />
+                        </div>
                         {/*----------------------------message box---------------------------------------*/}
                         {isLoading ? (
                             <CircularProgress />

@@ -78,9 +78,6 @@ export default function UserMessage({ message, className, cognitoId }) {
                             component="p"
                         >
                             {message.message}
-                            {moment(message.timestamp).format(
-                                'YYYY-MM-DD HH:mm:ss'
-                            )}
                         </Card>
                         <Avatar
                             className={classes.avatar}
