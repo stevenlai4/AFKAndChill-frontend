@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
         height: 48,
         padding: '0 30px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+        width: '80%',
     },
     drawer: {
         [theme.breakpoints.up('md')]: {
@@ -117,7 +118,6 @@ export default function ChatDrawer({
                             onClick={toggleDrawer(anchor, true)}
                             className={clsx(classes.itemButton, className)}
                         >
-                            {/* <MenuIcon fontSize="large" /> */}
                             Chiller's List
                         </Button>
                     </div>

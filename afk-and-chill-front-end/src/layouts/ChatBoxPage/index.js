@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ChatBox from '../../components/ChatBox';
-import data from '../../fakeData';
+import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
 import { CircularProgress } from '@material-ui/core';
 import { getChatBoxes } from '../../network';
 import { getUserInfo } from '../../userAuth';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default function ChatBoxPage() {
     const [chatboxes, setChatboxes] = useState([]);
@@ -13,7 +14,23 @@ export default function ChatBoxPage() {
     // const sendMsg = async (data) => {
     //     console.log('Submit Message', data);
     // };
-
+    const useStyles = makeStyles((theme) => ({
+        tinderCardsContainer: {
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '15vh',
+            [theme.breakpoints.down('md')]: {
+                marginTop: '10vh',
+            },
+        },
+        heartSVG: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    }));
+    const classes = useStyles();
     const onClickChatItem = async (data) => {
         console.log('ChatBoxId', data);
     };
@@ -35,7 +52,7 @@ export default function ChatBoxPage() {
     return (
         <>
             {isLoading ? (
-                <CircularProgress />
+                <LoadingHeart className={classes.heartSVG} />
             ) : (
                 <ChatBox
                     // message={data[0]}

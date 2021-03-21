@@ -12,6 +12,7 @@ import MessageForm from './MessageForm';
 import UserMessage from './UserMessage';
 import ChillerItem from './ChillerItem';
 import { getMsges } from '../../network';
+import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'Josefin Sans, cursive',
     },
     chatHeader: {
-        background: '#F8F8F8',
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
     },
     chat: {
         display: 'flex',
@@ -61,6 +62,16 @@ const useStyles = makeStyles((theme) => ({
     },
     fullList: {
         width: 'auto',
+    },
+    heartSVG: {
+        position: 'absolute',
+        transform: 'translate(-50%, -50%)',
+        top: '70%',
+        left: '70%',
+        [theme.breakpoints.down('sm')]: {
+            top: '70%',
+            left: '50%',
+        },
     },
 }));
 
@@ -141,7 +152,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                         </div>
                         {/*----------------------------message box---------------------------------------*/}
                         {isLoading ? (
-                            <CircularProgress />
+                            <LoadingHeart className={classes.heartSVG} />
                         ) : (
                             <div style={{ overflow: 'auto' }}>
                                 <CardContent className={classes.message}>
