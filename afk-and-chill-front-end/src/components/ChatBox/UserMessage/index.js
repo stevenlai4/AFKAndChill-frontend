@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { Avatar, Typography } from '@material-ui/core';
+import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
     chatboxToRight: {
         overflow: 'auto',
         display: 'flex',
-        // color:'red',
-        // justifyContent: 'flex-end',
     },
     chatboxToLeft: {
         overflow: 'auto',
         display: 'flex',
-        // color:'red',
         justifyContent: 'flex-end',
     },
     avatar: {
@@ -29,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMessage({ message, className, cognitoId }) {
     const classes = useStyles();
-    const d = new Date(0);
+
     return (
         <>
-            {}
+            {console.log(moment.now())}
             {message.user.cognito_id !== cognitoId ? (
                 <div className={clsx(classes.chatboxToRight, className)}>
                     <Avatar
@@ -46,8 +44,12 @@ export default function UserMessage({ message, className, cognitoId }) {
                         color="textPrimary"
                         component="p"
                     >
+                        {moment(message.timestamp).format(
+                            'YYYY-MM-DD HH:mm:ss'
+                        )}
                         {message.message}
                     </Typography>
+                    <Typography component="p"></Typography>
                 </div>
             ) : (
                 <div className={clsx(classes.chatboxToLeft, className)}>
@@ -58,6 +60,9 @@ export default function UserMessage({ message, className, cognitoId }) {
                         component="p"
                     >
                         {message.message}
+                        {moment(message.timestamp).format(
+                            'YYYY-MM-DD HH:mm:ss'
+                        )}
                     </Typography>
                     <Avatar
                         className={classes.avatar}
