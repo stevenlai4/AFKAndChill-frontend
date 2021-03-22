@@ -10,6 +10,7 @@ import {
 import Modal from 'react-bootstrap/Modal';
 import { updateUser } from '../../network';
 import Games from '../Games';
+import { updateCognitoUser } from '../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -113,10 +114,10 @@ export default function Profile({ userInfo, setUserInfo }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    //Button handlers
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    // };
+    // remove dulicated games
+    const editGames = [
+        ...new Map(userInfo?.games?.map((g) => [g.id, g])).values(),
+    ];
 
     const handleEdit = async (event) => {
         event.preventDefault();
@@ -125,29 +126,23 @@ export default function Profile({ userInfo, setUserInfo }) {
             setUserNameError('Username can not be blank');
             return;
         } else {
-            updateUser({
-                userName: userInfo.name,
-                gender: userInfo.gender,
-                genderPref: userInfo.gender_pref,
-                about: userInfo.about,
-                games: userInfo.games,
-            });
+            // cognito updateCognitoUser api
+            try {
+                const userSub = await updateCognitoUser({
+                    name: userInfo.name,
+                });
+                updateUser({
+                    userName: userSub,
+                    gender: userInfo.gender,
+                    genderPref: userInfo.gender_pref,
+                    about: userInfo.about,
+                    games: editGames,
+                });
+            } catch (error) {
+                console.error(error.message);
+            }
         }
     };
-
-    // const  = (event) => {
-    //     event.preventDefault();
-    //     sendMsg({ message: message, chatboxId });
-    //     setRerender((prev) => !prev);
-    //     if (message) {
-    //         setMessage('');
-    //     }
-    // };
-
-    // const onUpdate = (data) => {
-    //     updateUser({ gender_pref: data.genderPref });
-    //     console.log('updategender pref', data);
-    // };
 
     return (
         <div>
