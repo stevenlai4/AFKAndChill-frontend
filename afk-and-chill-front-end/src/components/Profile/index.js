@@ -108,6 +108,7 @@ export default function Profile({ userInfo, setUserInfo }) {
 
     // Error Handling
     const [userNameError, setUserNameError] = useState('');
+    const [saveMsg, setSaveMsg] = useState('');
 
     // Modal handling
     const [show, setShow] = useState(false);
@@ -146,7 +147,6 @@ export default function Profile({ userInfo, setUserInfo }) {
 
     return (
         <div>
-            {console.log(`game search>>>${gameSearch}`)}
             <div className={classes.wrapper}>
                 <form onSubmit={handleEdit}>
                     <div className={classes.register}>
@@ -289,7 +289,7 @@ export default function Profile({ userInfo, setUserInfo }) {
                     </div> */}
                 </Modal.Body>
                 <Modal.Footer>
-                    {/* <Button onUpdate={onUpdate}></Button> */}
+                    <p></p>
                     <Button
                         variant="outlined"
                         style={{ background: 'green' }}
