@@ -31,10 +31,11 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
     // CDM
     useEffect(() => {
         const userGames = userInfo.games;
-
-        if (userGames.includes(game)) {
-            setIsSelected(true);
-        }
+        userGames.forEach((userGame) => {
+            if (userGame.id === game.id) {
+                setIsSelected(true);
+            }
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
