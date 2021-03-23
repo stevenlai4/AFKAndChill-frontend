@@ -141,40 +141,12 @@ export async function savePhotoFile(file) {
 export async function getChatBoxes() {
     try {
         const token = await getToken();
-
-        // chatboxesResponse:
-        // {_id: ..., user_one: ..., userTwo: ...}
-        const chatboxesResponse = await api.get('/chatboxes', {
+        const response = await api.get('/chatboxes', {
             headers: { Authorization: `Bearer ${token}` },
         });
-
-        // // userOneResponse
-        // // {_id: ..., name: ..., ..........}
-        // const userOneResponse o= await api.get('/user', {
-        //     headers: { Authorization: `Bearer ${tken}` },
-        // });
-
-        // // userTwoResponse
-        // // {_id: ..., name: ..., ..........}
-        // const userTwoResponse = await api.get(
-        //     `/user/${chatboxesResponse.user_two}`,
-        //     {
-        //         headers: { Authorization: `Bearer ${token}` },
-        //     }
-        // );
-
-        // // response:
-        // // {_id: ..., user_one: {cognito_id: ...}}
-        // const response = {
-        //     _id: chatboxesResponse._id,
-        //     user_one: userOneResponse.data.body,
-        //     user_Two: userTwoResponse.data,
-        // };
-
         if (response) {
             const body = response.data?.body;
             const data = await JSON.parse(body);
-
             return data;
         }
     } catch (error) {

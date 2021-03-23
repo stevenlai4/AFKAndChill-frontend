@@ -6,6 +6,7 @@ import {
     Card,
     CardContent,
     CircularProgress,
+    Typography,
 } from '@material-ui/core';
 import ChatDrawer from './ChatDrawer';
 import MessageForm from './MessageForm';
@@ -89,6 +90,10 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
             try {
                 setIsLoading(true);
 
+                if (chatboxes.length > 0) {
+                    setChatboxId(chatboxes[0]._id);
+                }
+
                 if (chatboxId) {
                     const messageResult = await getMsges({
                         chatboxId: chatboxId,
@@ -117,65 +122,76 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
 
     return (
         <div>
-            <ChatDrawer
-                cognitoId={cognitoId}
-                chatboxes={chatboxes}
-                onChatItem={onChatItem}
-            />
-            <section className={classes.AFKChat}>
-                <ChillerItem
-                    cognitoId={cognitoId}
-                    chatboxes={chatboxes}
-                    onChatItem={onChatItem}
-                />
-                {/*----------------------------chat header-----------------------*/}
-                <Card className={classes.chatBox}>
-                    <div className={classes.chat}>
-                        <div className={classes.chatHeader}>
-                            <CardHeader
-                                classes={{
-                                    title: classes.title,
-                                }}
-                                avatar={
-                                    <Avatar
-                                        alt="userIcon"
-                                        src={matchedChiller.photo_url}
-                                        className={classes.avatar}
+            {chatboxes.length > 0 ? (
+                <>
+                    <ChatDrawer
+                        cognitoId={cognitoId}
+                        chatboxes={chatboxes}
+                        onChatItem={onChatItem}
+                    />
+                    <section className={classes.AFKChat}>
+                        <ChillerItem
+                            cognitoId={cognitoId}
+                            chatboxes={chatboxes}
+                            onChatItem={onChatItem}
+                        />
+                        {/*----------------------------chat header-----------------------*/}
+                        <Card className={classes.chatBox}>
+                            <div className={classes.chat}>
+                                <div className={classes.chatHeader}>
+                                    <CardHeader
+                                        classes={{
+                                            title: classes.title,
+                                        }}
+                                        avatar={
+                                            <Avatar
+                                                alt="userIcon"
+                                                src={matchedChiller.photo_url}
+                                                className={classes.avatar}
+                                            />
+                                        }
+                                        titleTypographyProps={{
+                                            variant: 'h6',
+                                            color: 'white',
+                                        }}
+                                        title={matchedChiller.name}
                                     />
-                                }
-                                titleTypographyProps={{
-                                    variant: 'h6',
-                                    color: 'white',
-                                }}
-                                title={matchedChiller.name}
-                            />
-                        </div>
-                        {/*----------------------------message box---------------------------------------*/}
-                        {isLoading ? (
-                            <LoadingHeart className={classes.heartSVG} />
-                        ) : (
-                            <div style={{ overflow: 'auto' }}>
-                                <CardContent className={classes.message}>
-                                    {messages.map((message) => (
-                                        <UserMessage
-                                            key={message._id}
+                                </div>
+                                {/*----------------------------message box---------------------------------------*/}
+                                {isLoading ? (
+                                    <LoadingHeart
+                                        className={classes.heartSVG}
+                                    />
+                                ) : (
+                                    <div style={{ overflow: 'auto' }}>
+                                        <CardContent
                                             className={classes.message}
-                                            message={message}
-                                            cognitoId={cognitoId}
-                                        ></UserMessage>
-                                    ))}
-                                </CardContent>
+                                        >
+                                            {messages.map((message) => (
+                                                <UserMessage
+                                                    key={message._id}
+                                                    className={classes.message}
+                                                    message={message}
+                                                    cognitoId={cognitoId}
+                                                ></UserMessage>
+                                            ))}
+                                        </CardContent>
+                                    </div>
+                                )}
+                                <div className={classes.messageForm}>
+                                    <MessageForm
+                                        setRerender={setRerender}
+                                        chatboxId={chatboxId}
+                                    ></MessageForm>
+                                </div>
                             </div>
-                        )}
-                        <div className={classes.messageForm}>
-                            <MessageForm
-                                setRerender={setRerender}
-                                chatboxId={chatboxId}
-                            ></MessageForm>
-                        </div>
-                    </div>
-                </Card>
-            </section>
+                        </Card>
+                        )
+                    </section>
+                </>
+            ) : (
+                <Typography component="h3">You don't have any chat</Typography>
+            )}
         </div>
     );
 }
