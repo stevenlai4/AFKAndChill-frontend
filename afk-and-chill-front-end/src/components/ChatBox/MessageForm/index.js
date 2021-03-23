@@ -22,15 +22,18 @@ export default function MessageForm({ chatboxId, setRerender }) {
     const classes = useStyles();
     const [message, setMessage] = useState('');
 
-    const onMessage = (event) => {
+    const onMessage = async (event) => {
         event.preventDefault();
-        sendMsg({ message: message, chatboxId });
-        setRerender((prev) => !prev);
-        if (message) {
-            setMessage('');
+        try {
+            if (message) {
+                await sendMsg({ message: message, chatboxId });
+                setRerender((prev) => !prev);
+                setMessage('');
+            }
+        } catch (error) {
+            console.error(error.message);
         }
     };
-
     return (
         <form onSubmit={onMessage} className={classes.form}>
             <TextField
