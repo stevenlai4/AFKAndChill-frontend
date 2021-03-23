@@ -115,7 +115,7 @@ export default function Profile({ userInfo, setUserInfo }) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    // remove dulicated games
+    // remove duplicate games
     const editGames = [
         ...new Map(userInfo?.games?.map((g) => [g.id, g])).values(),
     ];
@@ -153,6 +153,7 @@ export default function Profile({ userInfo, setUserInfo }) {
                         {/* Profile form */}
                         <div className={classes.registerForm}>
                             <h3>Chiller Name:</h3> {userInfo.name}
+                            {console.log({ userInfo })}
                             <h3>Gender:</h3> {userInfo.gender}
                             <h3>Gender you want to chill with: </h3>{' '}
                             {userInfo.gender_pref}
@@ -176,9 +177,9 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 />
                             </div>
                             <h3>Games you have selected</h3>
-                            {userInfo?.games?.map((game) => (
+                            {/* {userInfo?.games?.map((game) => (
                                 <p key={game.id}>{game.name}</p>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                     <div className={classes.submitButtonSection}>
