@@ -1,5 +1,6 @@
 import Header from '../../components/Header';
-
+import React, { useState, useEffect } from 'react';
+import { getUser } from '../../network';
 import { useHistory } from 'react-router-dom';
 
 export default function HeaderNavigation({
@@ -13,6 +14,20 @@ export default function HeaderNavigation({
         history.push('/');
     };
 
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const response = await getUser();
+                setUserInfo(response.user);
+                // console.log(response.user);
+            } catch (error) {
+                console.error(error.message);
+            }
+        })();
+    }, []);
+
     return (
         <Header
             setIsAuthenticated={setIsAuthenticated}
@@ -24,6 +39,7 @@ export default function HeaderNavigation({
             logoClicked={() => history.push('/findChillers')}
             profileClicked={() => history.push('/profile')}
             signOut={signOut}
+            userInfo={userInfo}
         ></Header>
     );
 }

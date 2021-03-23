@@ -204,10 +204,22 @@ export async function getMsges({ chatboxId }) {
     } catch (error) {
         throw error;
     }
-    // try {
-    //   const result = await axios.get(`/api/posts/${postId}/comments`)
-    //   return result.data
-    // } catch (error) {
-    //   console.log(error)
-    // }
+}
+
+//GET INDIVIDUAL USER
+export async function getUser() {
+    try {
+        const token = await getToken();
+        const response = await api.get('/user', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response) {
+            const data = await JSON.parse(response.data?.body);
+            return data;
+        }
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
 }

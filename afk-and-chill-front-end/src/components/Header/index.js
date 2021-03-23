@@ -8,6 +8,7 @@ import {
     AppBar,
     Toolbar,
     IconButton,
+    Avatar,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 
@@ -49,6 +50,7 @@ export default function Header({
     AFKChatClicked,
     logoClicked,
     profileClicked,
+    userInfo,
 }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -64,6 +66,7 @@ export default function Header({
 
     return (
         <div className={classes.root}>
+            {console.log(userInfo)}
             <AppBar position="relative" className={classes.appBar}>
                 <Toolbar>
                     <div className={classes.logo}>
@@ -83,10 +86,12 @@ export default function Header({
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle
-                                    fontSize="large"
-                                    color="primary"
+                                <Avatar
+                                    alt="userIcon"
+                                    src={userInfo.photo_url}
+                                    className={classes.avatar}
                                 />
+                                {/* <AccountCircle /> */}
                             </IconButton>
 
                             <Menu
@@ -144,7 +149,7 @@ export default function Header({
                                     AFK chat
                                 </Link>
                             </Grid>
-                            <Grid item>
+                            {/* <Grid item>
                                 <Link
                                     onClick={profileClicked}
                                     className={classes.menuText}
@@ -152,7 +157,7 @@ export default function Header({
                                 >
                                     My Profile
                                 </Link>
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Toolbar>
                 ) : null}
