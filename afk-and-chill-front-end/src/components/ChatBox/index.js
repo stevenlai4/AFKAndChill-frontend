@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
@@ -13,7 +13,6 @@ import MessageForm from './MessageForm';
 import UserMessage from './UserMessage';
 import ChillerItem from './ChillerItem';
 import { getMsges } from '../../network';
-import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -64,19 +63,12 @@ const useStyles = makeStyles((theme) => ({
     fullList: {
         width: 'auto',
     },
-    heartSVG: {
-        position: 'absolute',
-        transform: 'translate(-50%, -50%)',
-        top: '70%',
-        left: '70%',
-        [theme.breakpoints.down('sm')]: {
-            top: '70%',
-            left: '50%',
-        },
+    loadingIcon: {
+        margin: 'auto',
     },
 }));
 
-export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
+export default function ChatBox({ chatboxes, cognitoId }) {
     const classes = useStyles();
     const [chatboxId, setChatboxId] = useState('');
     const [messages, setMessage] = useState([]);
@@ -126,7 +118,6 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
             setMatchedChiller(chatItem.user_one);
         }
         setChatboxId(chatItem._id);
-        // onClickChatItem(chatItem._id);
     };
 
     return (
@@ -168,8 +159,8 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                 </div>
                                 {/*----------------------------message box---------------------------------------*/}
                                 {isLoading ? (
-                                    <LoadingHeart
-                                        className={classes.heartSVG}
+                                    <CircularProgress
+                                        className={classes.loadingIcon}
                                     />
                                 ) : (
                                     <div style={{ overflow: 'auto' }}>
@@ -187,6 +178,7 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                         </CardContent>
                                     </div>
                                 )}
+                                {/*----------------------------Message send form ---------------------------------------*/}
                                 <div className={classes.messageForm}>
                                     <MessageForm
                                         setRerender={setRerender}
@@ -195,7 +187,6 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
                                 </div>
                             </div>
                         </Card>
-                        )
                     </section>
                 </>
             ) : (

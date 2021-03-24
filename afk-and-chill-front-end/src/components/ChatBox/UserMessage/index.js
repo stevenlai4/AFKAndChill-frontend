@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { Avatar, Typography, Card } from '@material-ui/core';
@@ -46,6 +46,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserMessage({ message, className, cognitoId }) {
     const classes = useStyles();
+    const messagesEndRef = useRef(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView();
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, []);
 
     return (
         <>
@@ -60,12 +69,13 @@ export default function UserMessage({ message, className, cognitoId }) {
                         <Card className={classes.userText}>
                             {message.message}
                         </Card>
-                    </div>{' '}
+                    </div>
                     <div className={classes.chillerTimestamp}>
                         {moment(message.timestamp).format(
                             'YYYY-MM-DD HH:mm:ss'
                         )}
                     </div>
+                    <div ref={messagesEndRef} />
                 </>
             ) : (
                 <>
@@ -89,6 +99,7 @@ export default function UserMessage({ message, className, cognitoId }) {
                             'YYYY-MM-DD HH:mm:ss'
                         )}
                     </div>
+                    <div ref={messagesEndRef} />
                 </>
             )}
         </>
