@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import React, { useState, useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Modal from 'react-bootstrap/Modal';
 import {
     Select,
@@ -29,38 +29,51 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
-    const [gameSearch, setGameSearch] = useState('');
+export default function EditForm({
+    userInfo,
+    setUserInfo,
+    modalShow,
+    setModalShow,
+    setSuccessMsg,
+    setOpen,
+}) {
     const classes = useStyles();
-
+    const [gameSearch, setGameSearch] = useState('');
     const [userNameError, setUserNameError] = useState('');
+    const [newUserInfo, setNewUserInfo] = useState({});
 
-    const handleClose = () => setShow(false);
+    useEffect(() => {
+        setNewUserInfo(userInfo);
+    }, []);
 
-    // remove duplicate games
-    // const editGames = [
-    //     ...new Map(userInfo?.games?.map((g) => [g.id, g])).values(),
-    // ];
+    // Modal handling
+    const handleClose = () => setModalShow(false);
 
     const handleEdit = async (event) => {
         event.preventDefault();
 
-        if (userInfo.name === null || userInfo.name === '') {
+        if (newUserInfo.name === null || newUserInfo.name === '') {
             setUserNameError('Username can not be blank');
             return;
         } else {
             // cognito updateCognitoUser api
             try {
                 const userSub = await updateCognitoUser({
-                    name: userInfo.name,
+                    name: newUserInfo.name,
                 });
-                updateUser({
+                const successMsg = await updateUser({
                     userName: userSub,
-                    gender: userInfo.gender,
-                    genderPref: userInfo.gender_pref,
-                    about: userInfo.about,
-                    games: userInfo.games,
+                    gender: newUserInfo.gender,
+                    genderPref: newUserInfo.gender_pref,
+                    about: newUserInfo.about,
+                    games: newUserInfo.games,
                 });
+
+                if (successMsg) {
+                    setUserInfo(newUserInfo);
+                    setSuccessMsg(successMsg);
+                    setOpen(true);
+                }
             } catch (error) {
                 console.error(error.message);
             }
@@ -69,7 +82,7 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
     return (
         <div>
             <Modal
-                show={show}
+                show={modalShow}
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
@@ -77,7 +90,9 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
             >
                 <Modal.Header
                     closeButton
-                    style={{ backgroundColor: '#2E3B55' }}
+                    style={{
+                        backgroundColor: '#2E3B55',
+                    }}
                 >
                     <Modal.Title className={classes.modalTitle}>
                         Edit Profile
@@ -95,11 +110,11 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                             }}
                             helperText={userNameError}
                             id="username"
-                            value={userInfo.name}
+                            value={newUserInfo.name}
                             autoComplete="on"
                             onChange={(e) =>
                                 setUserInfo({
-                                    ...userInfo,
+                                    ...newUserInfo,
                                     name: e.target.value,
                                 })
                             }
@@ -109,11 +124,11 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                             <Select
                                 defaultValue="other"
                                 variant="outlined"
-                                value={userInfo.gender_pref}
+                                value={newUserInfo.gender_pref}
                                 required={true}
                                 onChange={(e) =>
                                     setUserInfo({
-                                        ...userInfo,
+                                        ...newUserInfo,
                                         gender_pref: e.target.value,
                                     })
                                 }
@@ -134,18 +149,18 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                             rowsMax="4"
                             margin="normal"
                             variant="outlined"
-                            value={userInfo.about}
+                            value={newUserInfo.about}
                             onChange={(e) =>
                                 setUserInfo({
-                                    ...userInfo,
+                                    ...newUserInfo,
                                     about: e.target.value,
                                 })
                             }
                         />
                         <p>Games to chill with:</p>
                         <Games
-                            userInfo={userInfo}
-                            setUserInfo={setUserInfo}
+                            userInfo={newUserInfo}
+                            setUserInfo={setNewUserInfo}
                             gameSearch={gameSearch}
                             setGameSearch={setGameSearch}
                         />
@@ -153,14 +168,18 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                     <Modal.Footer>
                         <Button
                             variant="outlined"
-                            style={{ background: 'green' }}
+                            style={{
+                                background: 'green',
+                            }}
                             onClick={handleEdit}
                         >
                             Save Changes
                         </Button>
                         <Button
                             variant="outlined"
-                            style={{ background: 'red' }}
+                            style={{
+                                background: 'red',
+                            }}
                             onClick={handleClose}
                         >
                             Close

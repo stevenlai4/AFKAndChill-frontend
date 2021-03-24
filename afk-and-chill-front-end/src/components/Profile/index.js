@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import {
-    Select,
-    MenuItem,
-    TextField,
-    FormControl,
-    Button,
-} from '@material-ui/core';
+import { Snackbar, Button } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 
 import EditForm from './Modal';
 
@@ -83,18 +78,40 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Profile({ userInfo, setUserInfo, games }) {
+export default function Profile({ userInfo, setUserInfo }) {
     const classes = useStyles();
     const [gameSearch, setGameSearch] = useState('');
     const [file, setFile] = useState();
+    const [successMsg, setSuccessMsg] = useState('');
+    const [modalShow, setModalShow] = useState(false);
+
+    // Snackbar state
+    const [open, setOpen] = useState(false);
 
     // Modal handling
-    const [show, setShow] = useState(false);
+    const handleShow = () => setModalShow(true);
 
-    const handleShow = () => setShow(true);
+    // Snackbar close handling
+    const handleSnackbarClose = (e, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     return (
-        <div>
+        <>
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                open={open}
+                autoHideDuration={3000}
+                onClose={handleSnackbarClose}
+            >
+                <Alert onClose={handleSnackbarClose} severity="success">
+                    {successMsg}
+                </Alert>
+            </Snackbar>
             <div className={classes.wrapper}>
                 <div className={classes.register}>
                     {/* Profile form */}
@@ -146,9 +163,11 @@ export default function Profile({ userInfo, setUserInfo, games }) {
             <EditForm
                 userInfo={userInfo}
                 setUserInfo={setUserInfo}
-                show={show}
-                setShow={setShow}
+                modalShow={modalShow}
+                setModalShow={setModalShow}
+                setSuccessMsg={setSuccessMsg}
+                setOpen={setOpen}
             />
-        </div>
+        </>
     );
 }
