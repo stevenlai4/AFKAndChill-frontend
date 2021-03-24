@@ -70,3 +70,24 @@ export async function getNextPage(cursor) {
         throw error;
     }
 }
+
+// Search for a game
+export async function searchGame(gameName) {
+    try {
+        const token = await getToken();
+
+        const response = await axios.get('https://api.twitch.tv/helix/games', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'client-id': config.twitch.CLIENT_ID,
+            },
+            params: {
+                name: gameName,
+            },
+        });
+
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+}
