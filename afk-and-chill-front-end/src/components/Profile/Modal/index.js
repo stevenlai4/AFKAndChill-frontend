@@ -17,10 +17,15 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         overflowY: 'scroll',
-        maxWidth: '90% !important',
+        minWidth: '50%',
     },
     modalTitle: {
         color: 'white',
+    },
+
+    formControl: {
+        marginTop: '2%',
+        marginBottom: '2%',
     },
 }));
 
@@ -68,7 +73,7 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                 onHide={handleClose}
                 backdrop="static"
                 keyboard={false}
-                className={classes.modalSection}
+                dialogClassName={classes.modalSection}
             >
                 <Modal.Header
                     closeButton
@@ -146,7 +151,6 @@ export default function EditForm({ userInfo, setUserInfo, show, setShow }) {
                         />
                     </Modal.Body>
                     <Modal.Footer>
-                        <p></p>
                         <Button
                             variant="outlined"
                             style={{ background: 'green' }}
