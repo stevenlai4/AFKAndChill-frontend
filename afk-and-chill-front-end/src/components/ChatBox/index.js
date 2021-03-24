@@ -84,15 +84,24 @@ export default function ChatBox({ onClickChatItem, chatboxes, cognitoId }) {
     const [matchedChiller, setMatchedChiller] = useState({});
     const [rerender, setRerender] = useState(false);
 
+    // CDM
+    useEffect(() => {
+        if (chatboxes.length > 0) {
+            if (chatboxes[0].user_one.cognito_id === cognitoId) {
+                setMatchedChiller(chatboxes[0].user_two);
+            } else {
+                setMatchedChiller(chatboxes[0].user_one);
+            }
+
+            setChatboxId(chatboxes[0]._id);
+        }
+    }, []);
+
     // CDU get messages
     useEffect(() => {
         (async () => {
             try {
                 setIsLoading(true);
-
-                if (chatboxes.length > 0) {
-                    setChatboxId(chatboxes[0]._id);
-                }
 
                 if (chatboxId) {
                     const messageResult = await getMsges({
