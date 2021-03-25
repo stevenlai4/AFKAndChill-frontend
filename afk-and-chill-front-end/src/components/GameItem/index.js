@@ -32,9 +32,11 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
     useEffect(() => {
         const userGames = userInfo.games;
 
-        if (userGames.includes(game)) {
-            setIsSelected(true);
-        }
+        userGames.forEach((userGame) => {
+            if (userGame.id === game.id) {
+                setIsSelected(true);
+            }
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -45,11 +47,12 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
         const userGames = userInfo.games;
 
         if (isSelected) {
-            const gameIndex = userGames.indexOf(game);
-
             // Check if the game exists in the array
-            if (gameIndex > -1) {
-                userGames.splice(gameIndex, 1);
+            for (let i = 0; i < userGames.length; i++) {
+                if (userGames[i].id === game.id) {
+                    userGames.splice(i, 1);
+                    break;
+                }
             }
         } else {
             userGames.push(game);

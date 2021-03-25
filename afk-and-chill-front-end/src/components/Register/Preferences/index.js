@@ -19,12 +19,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function Preferences({
-    gameSearch,
-    setGameSearch,
-    userInfo,
-    setUserInfo,
-}) {
+export default function Preferences({ userInfo, setUserInfo }) {
     const classes = useStyles();
 
     return (
@@ -80,12 +75,7 @@ export default function Preferences({
                     </Select>
                 </FormControl>
             </div>
-            <Games
-                userInfo={userInfo}
-                setUserInfo={setUserInfo}
-                gameSearch={gameSearch}
-                setGameSearch={setGameSearch}
-            />
+            <Games userInfo={userInfo} setUserInfo={setUserInfo} />
         </>
     );
 }
