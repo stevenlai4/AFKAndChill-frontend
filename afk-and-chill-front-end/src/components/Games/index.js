@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { InputBase, Grid, Link } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { getTopGames, getNextPage } from '../../api/twitchAPI';
+import { getTopGames, getNextPage, searchGame } from '../../api/twitchAPI';
 import GameItem from '../GameItem';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,14 +29,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
     },
     searchInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
+        paddingLeft: theme.spacing(8),
+        paddingRight: theme.spacing(2),
+        paddingTop: '5px',
+        paddingBottom: '5px',
     },
     loadGameBtn: {
         display: 'block',
@@ -44,14 +40,10 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Game({
-    userInfo,
-    setUserInfo,
-    gameSearch,
-    setGameSearch,
-}) {
+export default function Game({ userInfo, setUserInfo }) {
     const [twitchGames, setTwitchGames] = useState([]);
     const [twitchCursor, setTwitchCursor] = useState('');
+    const [gameSearch, setGameSearch] = useState('');
     const classes = useStyles();
 
     // CDM
@@ -66,6 +58,28 @@ export default function Game({
             }
         })();
     }, []);
+
+    // Handle game search
+    const handleGameSearch = async (e) => {
+        try {
+            // If there is something in the search input then fetch
+            // the game from twitch API. Otherwise, display all games
+            if (gameSearch) {
+                const searchedGame = await searchGame(gameSearch);
+
+                if (searchedGame) {
+                    setTwitchGames(searchedGame.data);
+                    setTwitchCursor('');
+                }
+            } else {
+                const nextPage = await getTopGames();
+                setTwitchCursor(nextPage.pagination?.cursor);
+                setTwitchGames(nextPage.data);
+            }
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
 
     // Load more games function
     const loadMoreGames = async (e) => {
@@ -89,15 +103,10 @@ export default function Game({
                 <InputBase
                     placeholder="Search Game…"
                     value={gameSearch}
-                    onKeyUp={(event) => {
-                        if (event.keyCode === 13) {
-                        }
-                    }}
+                    onKeyUp={handleGameSearch}
                     onChange={(e) => setGameSearch(e.target.value)}
-                    classes={{
-                        root: classes.inputRoot,
-                        input: classes.searchInput,
-                    }}
+                    className={classes.searchInput}
+                    fullWidth={true}
                     inputProps={{
                         'aria-label': 'search',
                     }}
@@ -129,13 +138,15 @@ export default function Game({
                         );
                     })}
                 </Grid>
-                <Link
-                    className={classes.loadGameBtn}
-                    component="button"
-                    onClick={loadMoreGames}
-                >
-                    Load more games...
-                </Link>
+                {gameSearch ? null : (
+                    <Link
+                        className={classes.loadGameBtn}
+                        component="button"
+                        onClick={loadMoreGames}
+                    >
+                        Load more games...
+                    </Link>
+                )}
             </div>
         </div>
     );
