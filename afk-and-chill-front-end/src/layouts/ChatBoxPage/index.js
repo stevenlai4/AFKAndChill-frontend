@@ -5,13 +5,12 @@ import { CircularProgress } from '@material-ui/core';
 import { getChatBoxes } from '../../network';
 import { getUserInfo } from '../../userAuth';
 import { makeStyles } from '@material-ui/core/styles';
-import { getChatBoxesNew } from '../../network';
 
 export default function ChatBoxPage() {
     const [chatboxes, setChatboxes] = useState([]);
     const [cognitoId, setCognitoId] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [chatboxesNew, setChatboxesNew] = useState([]);
+
     // const sendMsg = async (data) => {
     //     console.log('Submit Message', data);
     // };
@@ -41,10 +40,6 @@ export default function ChatBoxPage() {
             try {
                 const tempChatBox = await getChatBoxes();
                 const tempUserInfo = await getUserInfo();
-
-                // const tempChatBoxNew = await getChatBoxesNew();
-                // setChatboxesNew(tempChatBoxNew.chatboxes);
-
                 setChatboxes(tempChatBox.chatboxes);
                 setCognitoId(tempUserInfo.attributes.sub);
                 setIsLoading(false);
@@ -56,7 +51,6 @@ export default function ChatBoxPage() {
 
     return (
         <>
-            {/* {console.log(chatboxesNew)} */}
             {isLoading ? (
                 <LoadingHeart className={classes.heartSVG} />
             ) : (
