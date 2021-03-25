@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     heading: {
         marginBottom: 20,
+        marginTop: 20,
     },
     button: {
         marginTop: 20,
