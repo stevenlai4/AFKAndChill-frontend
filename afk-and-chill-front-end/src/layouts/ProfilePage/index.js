@@ -30,12 +30,7 @@ export default function ProfilePage() {
     const [gameSearch, setGameSearch] = useState('');
     const [userInfo, setUserInfo] = useState({
         name: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
         about: '',
-        photoUrl: '',
-        gender: '',
         genderPref: '',
         games: [],
     });
@@ -45,9 +40,15 @@ export default function ProfilePage() {
     useEffect(() => {
         (async () => {
             const response = await getUser();
+            const tempUserInfo = response.user;
 
             if (response) {
-                setUserInfo(response.user);
+                setUserInfo({
+                    name: tempUserInfo.name,
+                    about: tempUserInfo.about,
+                    genderPref: tempUserInfo.gender_pref,
+                    games: tempUserInfo.games,
+                });
             }
         })();
     }, []);
