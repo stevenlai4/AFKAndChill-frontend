@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const history = useHistory();
-    const [gameSearch, setGameSearch] = useState('');
     const [userInfo, setUserInfo] = useState({
         name: '',
         email: '',
@@ -139,12 +138,7 @@ export default function RegisterPage() {
                 <Typography className={classes.heading} variant="h4">
                     Preferences
                 </Typography>
-                <Preferences
-                    gameSearch={gameSearch}
-                    setGameSearch={setGameSearch}
-                    userInfo={userInfo}
-                    setUserInfo={setUserInfo}
-                />
+                <Preferences userInfo={userInfo} setUserInfo={setUserInfo} />
                 <Button
                     variant="contained"
                     color="primary"
