@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Snackbar, Button } from '@material-ui/core';
+import { Snackbar, Button, Card } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 import EditForm from './Modal';
@@ -12,9 +12,39 @@ const useStyles = makeStyles((theme) => ({
         top: 0,
         width: '100%',
     },
-    wrapper: {
-        margin: 30,
+    cardProfile: {
+        backgroundColor: '#fff',
+        color: 'black',
+        width: '40%',
+        boxShadow: '5px 5px 14px #2E3B55',
     },
+
+    cardTitle: {
+        color: '#fff',
+        backgroundColor: '#2E3B55',
+        textAlign: 'center',
+        textShadow:
+            '-1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, 2px 2px 2px rgba(206,89,55,0)',
+        paddingTop: '4%',
+        paddingBottom: '3%',
+    },
+
+    cardInfo: {
+        flexDirection: 'column',
+        display: 'flex',
+        marginTop: '2%',
+    },
+
+    gameInfo: {
+        color: 'white',
+        textShadow:
+            '-1px 2px 1px #737272, -2px 4px 1px #767474, -3px 6px 1px #787777, 2px 2px 2px rgba(206,89,55,0)',
+        backgroundColor: '#2E3B55',
+        paddingTop: '5%',
+        textAlign: 'center',
+        paddingBottom: '3%',
+    },
+
     formControl: {
         minWidth: 100,
     },
@@ -50,10 +80,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-around',
     },
-    registerForm: {
-        flexDirection: 'column',
+    profileInfo: {
+        flexDirection: 'row',
         display: 'flex',
     },
+
     searchInput: {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -75,6 +106,10 @@ const useStyles = makeStyles((theme) => ({
     },
     helperText: {
         color: 'red',
+    },
+
+    wrapper: {
+        margin: 30,
     },
 }));
 
@@ -114,16 +149,29 @@ export default function Profile({ userInfo, setUserInfo }) {
             </Snackbar>
             <div className={classes.wrapper}>
                 <div className={classes.register}>
-                    {/* Profile form */}
-                    <div className={classes.registerForm}>
-                        <h3>Chiller Name:</h3> {userInfo.name}
-                        {console.log({ userInfo })}
-                        <h3>Gender:</h3> {userInfo.gender}
-                        <h3>Gender you want to chill with: </h3>{' '}
-                        {userInfo.gender_pref}
-                        <h3>About you:</h3>
-                        {userInfo.about}
-                    </div>
+                    {/* Profile display information */}
+                    <Card className={classes.cardProfile}>
+                        <h3 className={classes.cardTitle}>About Me</h3>
+                        <div className={classes.cardInfo}>
+                            <p>
+                                {' '}
+                                <strong>Chiller Name:</strong> {userInfo.name}{' '}
+                            </p>
+                            {/* {console.log({ userInfo })} */}
+                            <p>
+                                {' '}
+                                <strong>Gender: </strong> {userInfo.gender}{' '}
+                            </p>
+                            <p>
+                                <strong>Gender you want to chill with: </strong>
+                                {userInfo.gender_pref}
+                            </p>
+                            <p>
+                                <strong>About you: </strong>
+                                {userInfo.about}
+                            </p>
+                        </div>
+                    </Card>
                     {/* profile image */}
                     <div>
                         <img
@@ -140,7 +188,9 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 accept="image/*"
                             />
                         </div>
-                        <h3>Games you have selected</h3>
+                        <h3 className={classes.gameInfo}>
+                            Games you have selected
+                        </h3>
                         {userInfo?.games?.map((game) => (
                             <p key={game.id}>{game.name}</p>
                         ))}
