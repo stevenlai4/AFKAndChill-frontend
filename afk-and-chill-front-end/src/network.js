@@ -220,3 +220,44 @@ export async function getUser() {
         throw error;
     }
 }
+
+export async function getChatBoxesNew() {
+    try {
+        const token = await getToken();
+        const chatboxesResponse = await api.get('/chatboxes', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const chatboxesUser_one = chatboxesResponse.user_one;
+        const chatboxesUser_two = chatboxesResponse.user_two;
+
+        const userOneResponse = await api.get(
+            '/user',
+            { id: chatboxesUser_one },
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
+        const userTwoResponse = await api.get(
+            `/user`,
+            { id: chatboxesUser_two },
+            {
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
+
+        if (chatboxesResponse && userOneResponse && userTwoResponse) {
+            const body = chatboxesResponse.data?.body;
+            const chatdata = await JSON.parse(body);
+        }
+        const chatdata = {
+            _id: chatdata._id,
+            user_one: chatdata.user_one,
+            user_two: chatdata.user_two,
+        };
+
+        return chatdata;
+    } catch (error) {
+        throw error;
+    }
+}
