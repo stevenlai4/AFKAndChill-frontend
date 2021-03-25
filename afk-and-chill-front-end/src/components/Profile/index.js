@@ -188,7 +188,12 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 accept="image/*"
                             />
                         </div>
-                        <h3 className={classes.gameInfo}>Favorite games!</h3>
+                        <h3
+                            style={{ marginTop: '2%' }}
+                            className={classes.gameInfo}
+                        >
+                            Favorite games!
+                        </h3>
 
                         {userInfo?.games?.map((game) => (
                             <p key={game.id}>
