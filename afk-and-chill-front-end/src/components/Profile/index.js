@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import { Snackbar, Button, Card } from '@material-ui/core';
+import { Snackbar, Button, Card, Chip } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 
 import EditForm from './Modal';
@@ -188,11 +188,17 @@ export default function Profile({ userInfo, setUserInfo }) {
                                 accept="image/*"
                             />
                         </div>
-                        <h3 className={classes.gameInfo}>
-                            Games you have selected
-                        </h3>
+                        <h3 className={classes.gameInfo}>Favorite games!</h3>
+
                         {userInfo?.games?.map((game) => (
-                            <p key={game.id}>{game.name}</p>
+                            <p key={game.id}>
+                                {' '}
+                                <Chip
+                                    label={game.name}
+                                    color="primary"
+                                    clickable
+                                />
+                            </p>
                         ))}
                     </div>
                 </div>
