@@ -51,14 +51,19 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         width: '100%',
     },
     messageForm: {
         margin: 20,
+        justifyContent: 'flex-end',
     },
     message: {
         margin: '10px 0',
+    },
+    messageBox: {
+        height: '100%',
+        overflow: 'auto',
     },
     fullList: {
         width: 'auto',
@@ -163,7 +168,7 @@ export default function ChatBox({ chatboxes, cognitoId }) {
                                         className={classes.loadingIcon}
                                     />
                                 ) : (
-                                    <div style={{ overflow: 'auto' }}>
+                                    <div className={classes.messageBox}>
                                         <CardContent
                                             className={classes.message}
                                         >
