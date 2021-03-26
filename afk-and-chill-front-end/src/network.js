@@ -137,24 +137,6 @@ export async function savePhotoFile(file) {
     }
 }
 
-//GET INDIVIDUAL USER
-export async function getUser() {
-    try {
-        const token = await getToken();
-        const response = await api.get('/user', {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response) {
-            const data = await JSON.parse(response.data?.body);
-            return data;
-        }
-    } catch (error) {
-        console.error(error.message);
-        throw error;
-    }
-}
-
 // get chat box
 export async function getChatBoxes() {
     try {
@@ -173,20 +155,13 @@ export async function getChatBoxes() {
 }
 
 //Update User information
-export async function updateUser({
-    userName,
-    gender,
-    genderPref,
-    about,
-    games,
-}) {
+export async function updateUser({ userName, genderPref, about, games }) {
     try {
         const token = await getToken();
         const response = await api.patch(
             '/user',
             {
                 userName,
-                gender,
                 genderPref,
                 about,
                 games,
