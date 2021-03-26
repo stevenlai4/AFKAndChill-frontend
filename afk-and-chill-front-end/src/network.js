@@ -136,3 +136,87 @@ export async function savePhotoFile(file) {
         throw error;
     }
 }
+
+// get chat box
+export async function getChatBoxes() {
+    try {
+        const token = await getToken();
+        const response = await api.get('/chatboxes', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+            return data;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+// create msg
+export const sendMsg = async ({ message, chatboxId }) => {
+    try {
+        const token = await getToken();
+        const response = await api.post(
+            `/chatbox/message`,
+            { message },
+            {
+                params: {
+                    chatboxId,
+                },
+
+                headers: { Authorization: `Bearer ${token}` },
+            }
+        );
+
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+
+            return data;
+        }
+    } catch (error) {
+        throw error;
+    }
+};
+
+//get messages
+export async function getMsges({ chatboxId }) {
+    try {
+        const token = await getToken();
+        const response = await api.get(`/chatbox/messages`, {
+            params: {
+                chatboxId: chatboxId,
+            },
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+
+            return data;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
+//GET INDIVIDUAL USER
+export async function getUser() {
+    try {
+        const token = await getToken();
+        const response = await api.get('/user', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (response) {
+            const data = await JSON.parse(response.data?.body);
+            return data;
+        }
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+}

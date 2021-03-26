@@ -1,21 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ChatBox from '../../components/ChatBox';
-import data from '../../fakeData';
+import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
+import { getChatBoxes } from '../../network';
+import { getUserInfo } from '../../userAuth';
+import { makeStyles } from '@material-ui/core/styles';
 
 export default function ChatBoxPage() {
-    const submitMessage = async (data) => {
-        console.log('Submit Message', data);
+    const [chatboxes, setChatboxes] = useState([]);
+    const [cognitoId, setCognitoId] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const useStyles = makeStyles((theme) => ({
+        tinderCardsContainer: {
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '15vh',
+            [theme.breakpoints.down('md')]: {
+                marginTop: '10vh',
+            },
+        },
+        heartSVG: {
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+        },
+    }));
+    const classes = useStyles();
+    const onClickChatItem = async (data) => {
+        console.log('ChatBoxId', data);
     };
 
-    const onClickChatItem = async (data) => {
-        console.log('chat Item clicked', data);
-    };
+    useEffect(() => {
+        (async () => {
+            try {
+                const tempChatBox = await getChatBoxes();
+                const tempUserInfo = await getUserInfo();
+                setChatboxes(tempChatBox.chatboxes);
+                setCognitoId(tempUserInfo.attributes.sub);
+                setIsLoading(false);
+            } catch (error) {
+                console.error(error.message);
+            }
+        })();
+    }, []);
 
     return (
-        <ChatBox
-            message={data[0]}
-            submitMessage={submitMessage}
-            onClickChatItem={onClickChatItem}
-        />
+        <>
+            {isLoading ? (
+                <LoadingHeart className={classes.heartSVG} />
+            ) : (
+                <ChatBox
+                    // message={data[0]}
+                    cognitoId={cognitoId}
+                    chatboxes={chatboxes}
+                    onClickChatItem={onClickChatItem}
+                />
+            )}
+        </>
     );
 }
