@@ -1,124 +1,23 @@
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import {
-//     Avatar,
-//     CardHeader,
-//     Card,
-//     CardActions,
-//     CardContent,
-// } from '@material-ui/core';
-// import MessageForm from '../MessageForm';
-// import UserMessage from '../UserMessage';
-
-// const useStyles = makeStyles((theme) => ({
-//     wrapper: {
-//         display: 'flex',
-//         margin: 30,
-//         flexDirection: 'row',
-//         [theme.breakpoints.down('sm')]: {
-//             flexDirection: 'column',
-//             alignItems: 'center',
-//             justifyContent: 'center',
-//         },
-//     },
-//     chatBox: {
-//         width: '50%',
-//         height: 650,
-//         display: 'flex',
-//         margin: 10,
-//         [theme.breakpoints.down('sm')]: {
-//             width: '100%',
-//         },
-//     },
-//     chillerItem: {
-//         width: '50%',
-//         margin: 10,
-//         [theme.breakpoints.down('sm')]: {
-//             width: '100%',
-//         },
-//     },
-//     otherData: {
-//         display: 'flex',
-//         flexDirection: 'column',
-//         boxSizing: 'border-box',
-//         justifyContent: 'space-between',
-//         width: '100%',
-//     },
-//     messageForm: {
-//         margin: 20,
-//     },
-//     message: {
-//         margin: '10px 0',
-//     },
-//     messages: {
-//         overflowY: 'scroll',
-//     },
-// }));
-
-// export default function ChatBox({ message, submitMessage }) {
-//     const classes = useStyles();
-
-//     const onMessage = (data) => {
-//         submitMessage({ chatId: message._id, text: data.message });
-//     };
-
-//     return (
-//         <section className={classes.wrapper}>
-//             <div className={classes.chillerItem}>
-//                 <Card>
-//                     <CardHeader
-//                         avatar={
-//                             <Avatar className={classes.avatar}>
-//                                 {message.chiller[0]}
-//                             </Avatar>
-//                         }
-//                         title={message.chiller}
-//                     />
-//                 </Card>
-//             </div>
-//             <Card className={classes.chatBox}>
-//                 <div className={classes.otherData}>
-//                     <CardHeader
-//                         avatar={
-//                             <Avatar className={classes.avatar}>
-//                                 {message.username[0]}
-//                             </Avatar>
-//                         }
-//                         title={message.username}
-//                     />
-//                     <CardContent className={classes.message}>
-//                         {message.messages.map((message) => (
-//                             <UserMessage
-//                                 key={message._id}
-//                                 className={classes.message}
-//                                 message={message}
-//                             ></UserMessage>
-//                         ))}
-//                     </CardContent>
-//                     <div className={classes.messageForm}>
-//                         <CardActions></CardActions>
-//                         <MessageForm onSubmit={onMessage}></MessageForm>
-//                     </div>
-//                 </div>
-//             </Card>
-//         </section>
-//     );
-// }
-
-import React, { useState } from 'react';
-import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import Button from '@material-ui/core/Button';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import MenuIcon from '@material-ui/icons/Menu';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, CardHeader, Card, CardContent } from '@material-ui/core';
-import MessageForm from '../MessageForm';
-import UserMessage from '../UserMessage';
+import {
+    Avatar,
+    CardHeader,
+    Card,
+    CardContent,
+    CircularProgress,
+    Typography,
+} from '@material-ui/core';
+import ChatDrawer from './ChatDrawer';
+import MessageForm from './MessageForm';
+import UserMessage from './UserMessage';
+import ChillerItem from './ChillerItem';
+import { getMsges } from '../../network';
 
 const useStyles = makeStyles((theme) => ({
+    root: {
+        fontFamily: 'Vazir, sans-serif ',
+    },
     AFKChat: {
         display: 'flex',
         margin: 30,
@@ -129,13 +28,8 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'center',
         },
     },
-    drawer: {
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        },
-    },
     chatBox: {
-        width: '50%',
+        width: '60%',
         height: 650,
         display: 'flex',
         margin: 10,
@@ -144,160 +38,163 @@ const useStyles = makeStyles((theme) => ({
             margin: 0,
         },
     },
-    chillerItem: {
-        width: '50%',
-        margin: 10,
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
+    avatar: {
+        margin: '3%',
+    },
+    title: {
+        fontFamily: 'Josefin Sans, cursive',
+    },
+    chatHeader: {
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
     },
     chat: {
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         width: '100%',
-    },
-    listButton: {
-        margin: '2% 2% 0 2%',
     },
     messageForm: {
         margin: 20,
+        justifyContent: 'flex-end',
     },
     message: {
         margin: '10px 0',
     },
-    messages: {
-        overflowY: 'scroll',
-    },
-    list: {
-        width: 250,
+    messageBox: {
+        height: '100%',
+        overflow: 'auto',
     },
     fullList: {
         width: 'auto',
     },
+    loadingIcon: {
+        margin: 'auto',
+    },
 }));
 
-export default function ChatBox({ message, submitMessage, onClickChatItem }) {
+export default function ChatBox({ chatboxes, cognitoId }) {
     const classes = useStyles();
+    const [chatboxId, setChatboxId] = useState('');
+    const [messages, setMessage] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [matchedChiller, setMatchedChiller] = useState({});
+    const [rerender, setRerender] = useState(false);
 
-    //----------------------------Drawer---------------------------------------//
-    const [state, setState] = useState({
-        left: false,
-    });
+    // CDM
+    useEffect(() => {
+        if (chatboxes.length > 0) {
+            if (chatboxes[0].user_one.cognito_id === cognitoId) {
+                setMatchedChiller(chatboxes[0].user_two);
+            } else {
+                setMatchedChiller(chatboxes[0].user_one);
+            }
 
-    const toggleDrawer = (anchor, open) => (event) => {
-        if (
-            event.type === 'keydown' &&
-            (event.key === 'Tab' || event.key === 'Shift')
-        ) {
-            return;
+            setChatboxId(chatboxes[0]._id);
         }
+    }, []);
 
-        setState({ ...state, [anchor]: open });
-    };
+    // CDU get messages
+    useEffect(() => {
+        (async () => {
+            try {
+                setIsLoading(true);
 
-    const chillerList = ['Mongo', 'Bob'];
-
-    const list = (anchor) => (
-        <div
-            className={clsx(classes.list, {
-                [classes.fullList]: anchor === 'top' || anchor === 'bottom',
-            })}
-            role="presentation"
-            onClick={toggleDrawer(anchor, false)}
-            onKeyDown={toggleDrawer(anchor, false)}
-        >
-            <List>
-                {/* {chillerList.map((text, index) => ( */}
-                <ListItem
-                    button
-                    key={message.chiller}
-                    onClick={onClickChatItem}
-                >
-                    {/* <ListItemText primary={text} /> */}
-                    <CardHeader
-                        avatar={
-                            <Avatar className={classes.avatar}>
-                                {message.chiller[0]}
-                            </Avatar>
-                        }
-                        title={message.chiller}
-                    />
-                </ListItem>
-                {/* // ))} */}
-            </List>
-        </div>
-    );
+                if (chatboxId) {
+                    const messageResult = await getMsges({
+                        chatboxId: chatboxId,
+                    });
+                    setMessage(messageResult.messages);
+                }
+                setIsLoading(false);
+            } catch (error) {
+                console.error(error.message);
+            }
+        })();
+    }, [chatboxId, rerender]);
 
     //----------------------------Submit Message---------------------------------------//
-    const onMessage = (data) => {
-        submitMessage({ chatId: message._id, text: data.message });
+    const onChatItem = (chatItem) => {
+        // Check user_one or user_two is the matched chiller
+        if (chatItem.user_one.cognito_id === cognitoId) {
+            setMatchedChiller(chatItem.user_two);
+        } else {
+            setMatchedChiller(chatItem.user_one);
+        }
+        setChatboxId(chatItem._id);
     };
 
     return (
         <div>
-            {/*----------------------------Drawer---------------------------------------*/}
-            <section className={classes.drawer}>
-                {['left'].map((anchor) => (
-                    <React.Fragment key={anchor}>
-                        <Button
-                            onClick={toggleDrawer(anchor, true)}
-                            className={classes.listButton}
-                        >
-                            <MenuIcon fontSize="large" />
-                            Chiller's List
-                        </Button>
-                        <Drawer
-                            anchor={anchor}
-                            open={state[anchor]}
-                            onClose={toggleDrawer(anchor, false)}
-                        >
-                            {list(anchor)}
-                        </Drawer>
-                    </React.Fragment>
-                ))}
-            </section>
-            {/*----------------------------chiller Item---------------------------------------*/}
-            <section className={classes.AFKChat}>
-                <div className={classes.chillerItem}>
-                    <Card onClick={onClickChatItem}>
-                        <CardHeader
-                            avatar={
-                                <Avatar className={classes.avatar}>
-                                    {message.chiller[0]}
-                                </Avatar>
-                            }
-                            title={message.chiller}
+            {chatboxes.length > 0 ? (
+                <>
+                    <ChatDrawer
+                        cognitoId={cognitoId}
+                        chatboxes={chatboxes}
+                        onChatItem={onChatItem}
+                    />
+                    <section className={classes.AFKChat}>
+                        <ChillerItem
+                            cognitoId={cognitoId}
+                            chatboxes={chatboxes}
+                            onChatItem={onChatItem}
                         />
-                    </Card>
-                </div>
-                {/*----------------------------chat box---------------------------------------*/}
-                <Card className={classes.chatBox}>
-                    <div className={classes.chat}>
-                        <CardHeader
-                            avatar={
-                                <Avatar className={classes.avatar}>
-                                    {message.username[0]}
-                                </Avatar>
-                            }
-                            title={message.username}
-                        />
-                        <CardContent className={classes.message}>
-                            {message.messages.map((message) => (
-                                <UserMessage
-                                    key={message._id}
-                                    className={classes.message}
-                                    message={message}
-                                ></UserMessage>
-                            ))}
-                        </CardContent>
-                        <div className={classes.messageForm}>
-                            <MessageForm onSubmit={onMessage}></MessageForm>
-                        </div>
-                    </div>
-                </Card>
-            </section>
+                        {/*----------------------------chat header-----------------------*/}
+                        <Card className={classes.chatBox}>
+                            <div className={classes.chat}>
+                                <div className={classes.chatHeader}>
+                                    <CardHeader
+                                        classes={{
+                                            title: classes.title,
+                                        }}
+                                        avatar={
+                                            <Avatar
+                                                alt="userIcon"
+                                                src={matchedChiller.photo_url}
+                                                className={classes.avatar}
+                                            />
+                                        }
+                                        titleTypographyProps={{
+                                            variant: 'h6',
+                                        }}
+                                        title={matchedChiller.name}
+                                    />
+                                </div>
+                                {/*----------------------------message box---------------------------------------*/}
+                                {isLoading ? (
+                                    <CircularProgress
+                                        className={classes.loadingIcon}
+                                    />
+                                ) : (
+                                    <div className={classes.messageBox}>
+                                        <CardContent
+                                            className={classes.message}
+                                        >
+                                            {messages.map((message) => (
+                                                <UserMessage
+                                                    key={message._id}
+                                                    className={classes.message}
+                                                    message={message}
+                                                    cognitoId={cognitoId}
+                                                ></UserMessage>
+                                            ))}
+                                        </CardContent>
+                                    </div>
+                                )}
+                                {/*----------------------------Message send form ---------------------------------------*/}
+                                <div className={classes.messageForm}>
+                                    <MessageForm
+                                        setRerender={setRerender}
+                                        chatboxId={chatboxId}
+                                    ></MessageForm>
+                                </div>
+                            </div>
+                        </Card>
+                    </section>
+                </>
+            ) : (
+                <Typography component="h3">You don't have any chat</Typography>
+            )}
         </div>
     );
 }

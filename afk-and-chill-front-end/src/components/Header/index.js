@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
     Link,
     MenuItem,
@@ -8,6 +7,7 @@ import {
     AppBar,
     Toolbar,
     IconButton,
+    Avatar,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
 
@@ -18,16 +18,15 @@ const useStyles = makeStyles((theme) => ({
     appBar: {
         background: 'transparent',
         boxShadow: 'none',
-        zIndex: 1,
     },
     logo: {
         flexGrow: 1,
-        // width: 300,
-        // height: 100,
     },
     menuText: {
         color: 'white',
         fontWeight: 600,
+        fontSize: 20,
+        fontFamily: 'Josefin Sans, cursive',
     },
     logoImage: {
         width: 300,
@@ -47,6 +46,7 @@ export default function Header({
     AFKChatClicked,
     logoClicked,
     profileClicked,
+    userInfo,
 }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -81,10 +81,12 @@ export default function Header({
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle
-                                    fontSize="large"
-                                    color="primary"
+                                <Avatar
+                                    alt="userIcon"
+                                    src={userInfo.photo_url}
+                                    className={classes.avatar}
                                 />
+                                {/* <AccountCircle /> */}
                             </IconButton>
 
                             <Menu
@@ -123,11 +125,7 @@ export default function Header({
                 </Toolbar>
                 {isAuthenticated ? (
                     <Toolbar style={{ background: '#2E3B55' }}>
-                        <Grid
-                            justify="space-around" // Add it here :)
-                            container
-                            spacing={2}
-                        >
+                        <Grid justify="space-around" container spacing={2}>
                             <Grid item>
                                 <Link
                                     onClick={findChillersClicked}
@@ -139,15 +137,6 @@ export default function Header({
                             </Grid>
                             <Grid item>
                                 <Link
-                                    onClick={chillersPostClicked}
-                                    className={classes.menuText}
-                                    component="button"
-                                >
-                                    Chiller's Posts
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link
                                     onClick={AFKChatClicked}
                                     className={classes.menuText}
                                     component="button"
@@ -155,6 +144,15 @@ export default function Header({
                                     AFK chat
                                 </Link>
                             </Grid>
+                            {/* <Grid item>
+                                <Link
+                                    onClick={profileClicked}
+                                    className={classes.menuText}
+                                    component="button"
+                                >
+                                    My Profile
+                                </Link>
+                            </Grid> */}
                         </Grid>
                     </Toolbar>
                 ) : null}
