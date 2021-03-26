@@ -147,6 +147,14 @@ export async function getUser() {
 
         if (response) {
             const data = await JSON.parse(response.data?.body);
+            return data;
+        }
+    } catch (error) {
+        console.error(error.message);
+        throw error;
+    }
+}
+
 // get chat box
 export async function getChatBoxes() {
     try {
@@ -190,10 +198,15 @@ export async function updateUser({
             }
         );
         if (response) {
-            const data = await JSON.parse(response.data?.body);
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
             return data.successMsg;
         }
     } catch (error) {
+        throw error;
+    }
+}
+
 // create msg
 export const sendMsg = async ({ message, chatboxId }) => {
     try {
