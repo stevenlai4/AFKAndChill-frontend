@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Avatar, Typography, Card } from '@material-ui/core';
+import { Avatar, Card } from '@material-ui/core';
 import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +82,6 @@ export default function UserMessage({ message, className, cognitoId }) {
                     <div className={clsx(classes.chillerChatbox, className)}>
                         <Card
                             className={classes.chillerText}
-                            variant="body2"
                             color="textPrimary"
                             component="p"
                         >

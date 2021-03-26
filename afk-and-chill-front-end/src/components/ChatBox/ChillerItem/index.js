@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Card, CardActionArea } from '@material-ui/core';
 
@@ -33,7 +33,7 @@ export default function ChillerItem({ chatboxes, cognitoId, onChatItem }) {
                     key={chatItem._id}
                 >
                     <CardActionArea>
-                        {cognitoId == chatItem.user_one.cognito_id ? (
+                        {cognitoId === chatItem.user_one.cognito_id ? (
                             <div className={classes.chillerItemCard}>
                                 <Avatar
                                     alt="userIcon"

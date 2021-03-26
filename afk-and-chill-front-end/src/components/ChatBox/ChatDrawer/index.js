@@ -81,7 +81,7 @@ export default function ChatDrawer({
                         key={chatItem._id}
                         onClick={() => onChatItem(chatItem)}
                     >
-                        {cognitoId == chatItem.user_one.cognito_id ? (
+                        {cognitoId === chatItem.user_one.cognito_id ? (
                             <div className={classes.chillerItemCardDrawer}>
                                 <Avatar
                                     alt="userIcon"

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ChatBox from '../../components/ChatBox';
 import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
-import { CircularProgress } from '@material-ui/core';
 import { getChatBoxes } from '../../network';
 import { getUserInfo } from '../../userAuth';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,9 +10,6 @@ export default function ChatBoxPage() {
     const [cognitoId, setCognitoId] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    // const sendMsg = async (data) => {
-    //     console.log('Submit Message', data);
-    // };
     const useStyles = makeStyles((theme) => ({
         tinderCardsContainer: {
             display: 'flex',

@@ -1,6 +1,5 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import {
     Link,
     MenuItem,
@@ -66,7 +65,6 @@ export default function Header({
 
     return (
         <div className={classes.root}>
-            {console.log(userInfo)}
             <AppBar position="relative" className={classes.appBar}>
                 <Toolbar>
                     <div className={classes.logo}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
@@ -115,7 +115,6 @@ export default function ChatBox({ chatboxes, cognitoId }) {
 
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatItem) => {
-        console.log(chatItem.user_one.cognito_id);
         // Check user_one or user_two is the matched chiller
         if (chatItem.user_one.cognito_id === cognitoId) {
             setMatchedChiller(chatItem.user_two);
@@ -157,7 +156,6 @@ export default function ChatBox({ chatboxes, cognitoId }) {
                                         }
                                         titleTypographyProps={{
                                             variant: 'h6',
-                                            color: 'white',
                                         }}
                                         title={matchedChiller.name}
                                     />
