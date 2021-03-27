@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         marginTop: '15vh',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: '10vh',
         },
     },
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         borderStyle: 'solid',
         borderWidth: '1px 0 1px 1px',
         display: 'flex',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'block',
             width: '80%',
             height: '80vh',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     photo: {
         width: '40%',
         borderRadius: '10px 0 0 10px',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             borderRadius: '10px 10px 0 0',
         },
