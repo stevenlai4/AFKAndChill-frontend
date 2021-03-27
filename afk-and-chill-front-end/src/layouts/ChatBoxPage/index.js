@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ChatBox from '../../components/ChatBox';
-import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
+import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
 import { getChatBoxes } from '../../network';
 import { getUserInfo } from '../../userAuth';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,7 +19,7 @@ export default function ChatBoxPage() {
                 marginTop: '10vh',
             },
         },
-        heartSVG: {
+        loadingSVG: {
             position: 'absolute',
             top: '50%',
             left: '50%',
@@ -48,7 +48,7 @@ export default function ChatBoxPage() {
     return (
         <>
             {isLoading ? (
-                <LoadingHeart className={classes.heartSVG} />
+                <LoadingBeanEater className={classes.loadingSVG} />
             ) : (
                 <ChatBox
                     // message={data[0]}

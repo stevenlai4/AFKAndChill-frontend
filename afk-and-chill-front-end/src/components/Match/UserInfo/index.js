@@ -20,39 +20,39 @@ const useStyles = makeStyles((theme) => ({
             '-ms-overflow-style': 'none' /* IE and Edge */,
             scrollbarWidth: 'none' /* Firefox */,
         },
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: '10px',
             width: '100%',
         },
     },
     name: {
         marginBottom: 20,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginBottom: 10,
         },
     },
     about: {
         marginBottom: 20,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },
     chipsContainer: {
         display: 'none',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'flex',
             flexWrap: 'wrap',
         },
     },
     chip: {
         margin: 5,
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             margin: 2,
         },
     },
     gameCardsContainer: {
         display: 'block',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'none',
         },
     },
@@ -90,7 +90,7 @@ export default function UserInfo({ chiller }) {
                             .replace('{height}', '400');
 
                         return (
-                            <Grid key={game.id} item lg={4}>
+                            <Grid key={game.id} item sm={4}>
                                 <Card>
                                     <CardActionArea>
                                         <CardMedia

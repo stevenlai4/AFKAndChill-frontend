@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Form from '../../components/Register/Form';
 import Preferences from '../../components/Register/Preferences';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
 import { registerUser } from '../../network';
@@ -41,6 +41,7 @@ export default function RegisterPage() {
         games: [],
     });
     const [errorMsgs, setErrorMsgs] = useState([]);
+    const [isRegistering, setIsRegistering] = useState(false);
 
     // Handle errors function
     const handleErrors = () => {
@@ -95,8 +96,14 @@ export default function RegisterPage() {
 
         if (errors.length > 0) {
             setErrorMsgs(errors);
+
+            // Scroll to top if there are error(s)
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             return;
         }
+
+        setIsRegistering(true);
 
         try {
             // cognito register api
@@ -119,6 +126,8 @@ export default function RegisterPage() {
             if (userSub) {
                 console.log('Successfully Register');
                 history.push('/confirmEmail');
+            } else {
+                setIsRegistering(false);
             }
         } catch (error) {
             setErrorMsgs([error.message]);
@@ -140,15 +149,19 @@ export default function RegisterPage() {
                     Preferences
                 </Typography>
                 <Preferences userInfo={userInfo} setUserInfo={setUserInfo} />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    id="Register"
-                    className={classes.button}
-                >
-                    Register
-                </Button>
+                {isRegistering ? (
+                    <CircularProgress color="#1A2E46" />
+                ) : (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        id="Register"
+                        className={classes.button}
+                    >
+                        Register
+                    </Button>
+                )}
             </form>
         </div>
     );
