@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
+import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
 import { getMatchableChillers, dislike, like } from '../../network';
 import UserInfo from './UserInfo';
 
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
             marginTop: '10vh',
         },
     },
-    heartSVG: {
+    loadingSVG: {
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -107,7 +107,7 @@ export default function Match() {
     return (
         <div className={classes.root}>
             {isLoading ? (
-                <LoadingHeart className={classes.heartSVG} />
+                <LoadingBeanEater className={classes.loadingSVG} />
             ) : chillers.length > 0 ? (
                 <div className={classes.tinderCardsContainer}>
                     {chillers.map((chiller) => (
