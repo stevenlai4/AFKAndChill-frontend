@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
-import { ReactComponent as LoadingHeart } from '../../assests/loading-heart.svg';
+import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
 import { getMatchableChillers, dislike, like } from '../../network';
 import UserInfo from './UserInfo';
 
@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
         marginTop: '15vh',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             marginTop: '10vh',
         },
     },
-    heartSVG: {
+    loadingSVG: {
         position: 'absolute',
         top: '50%',
         left: '50%',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
         borderStyle: 'solid',
         borderWidth: '1px 0 1px 1px',
         display: 'flex',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             display: 'block',
             width: '80%',
             height: '80vh',
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
     photo: {
         width: '40%',
         borderRadius: '10px 0 0 10px',
-        [theme.breakpoints.down('md')]: {
+        [theme.breakpoints.down('sm')]: {
             width: '100%',
             borderRadius: '10px 10px 0 0',
         },
@@ -107,7 +107,7 @@ export default function Match() {
     return (
         <div className={classes.root}>
             {isLoading ? (
-                <LoadingHeart className={classes.heartSVG} />
+                <LoadingBeanEater className={classes.loadingSVG} />
             ) : chillers.length > 0 ? (
                 <div className={classes.tinderCardsContainer}>
                     {chillers.map((chiller) => (
