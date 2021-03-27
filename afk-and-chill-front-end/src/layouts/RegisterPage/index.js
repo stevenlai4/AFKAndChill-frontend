@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: 20,
+        marginBottom: 20,
     },
     errorMsg: {
         color: 'red',

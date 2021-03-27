@@ -49,6 +49,7 @@ export default function Form({ userInfo, setUserInfo }) {
     const [filePreview, setFilePreview] = useState();
 
     const deletePhoto = () => {
+        setUserInfo({ ...userInfo, photoUrl: '' });
         setFile(null);
         setFilePreview(null);
     };
@@ -92,6 +93,15 @@ export default function Form({ userInfo, setUserInfo }) {
                     }
                 />
                 <TextField
+                    label="Email"
+                    variant="outlined"
+                    type="email"
+                    id="email"
+                    className={classes.input}
+                    value={userInfo.email}
+                    disabled
+                />
+                <TextField
                     className={classes.input}
                     helperText={''}
                     multiline={true}
@@ -110,7 +120,7 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
             </div>
             <div className={classes.photoUploadContainer}>
-                {file ? (
+                {file || userInfo.photoUrl ? (
                     <div className={classes.imagePreview}>
                         <IconButton
                             className={classes.photoDeleteBtn}
@@ -122,7 +132,7 @@ export default function Form({ userInfo, setUserInfo }) {
                         <Avatar
                             className={classes.lgAvatar}
                             alt="selfie"
-                            src={filePreview}
+                            src={filePreview ?? userInfo.photoUrl}
                         />
                     </div>
                 ) : (

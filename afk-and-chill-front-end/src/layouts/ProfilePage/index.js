@@ -3,13 +3,20 @@ import Form from '../../components/Profile/Form';
 import Preferences from '../../components/Profile/Preferences';
 import { Button, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { useHistory } from 'react-router-dom';
 import { updateUser, getUser } from '../../network';
 import { updateCognitoUser } from '../../userAuth';
+import { Auth } from 'aws-amplify';
+import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         margin: '0 5%',
+    },
+    loadingSVG: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
     },
     heading: {
         marginBottom: 20,
@@ -17,6 +24,12 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: 20,
+        marginBottom: 20,
+        backgroundColor: '#1A2E46',
+        color: '#fff',
+        '&:hover': {
+            backgroundColor: '#0a1829',
+        },
     },
     errorMsg: {
         color: 'red',
@@ -26,29 +39,47 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ProfilePage() {
     const classes = useStyles();
-    const history = useHistory();
     const [gameSearch, setGameSearch] = useState('');
     const [userInfo, setUserInfo] = useState({
         name: '',
+        email: '',
+        photoUrl: '',
         about: '',
+        gender: '',
         genderPref: '',
         games: [],
     });
     const [errorMsgs, setErrorMsgs] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     // CDM
     useEffect(() => {
         (async () => {
-            const response = await getUser();
-            const tempUserInfo = response.user;
+            try {
+                setIsLoading(true);
 
-            if (response) {
-                setUserInfo({
-                    name: tempUserInfo.name,
-                    about: tempUserInfo.about,
-                    genderPref: tempUserInfo.gender_pref,
-                    games: tempUserInfo.games,
-                });
+                // Fetch current user from MongoDB
+                const response = await getUser();
+                const tempUserInfo = response.user;
+
+                // Fetch current authenticated user from cognito
+                const cognitoUserInfo = await Auth.currentUserInfo();
+
+                if (response && cognitoUserInfo) {
+                    setUserInfo({
+                        name: tempUserInfo.name,
+                        email: cognitoUserInfo.attributes.email,
+                        about: tempUserInfo.about,
+                        photoUrl: tempUserInfo.photo_url,
+                        gender: tempUserInfo.gender,
+                        genderPref: tempUserInfo.gender_pref,
+                        games: tempUserInfo.games,
+                    });
+                }
+
+                setIsLoading(false);
+            } catch (error) {
+                console.error(error.message);
             }
         })();
     }, []);
@@ -56,38 +87,6 @@ export default function ProfilePage() {
     // Handle errors function
     const handleErrors = () => {
         let tempArr = [];
-
-        //Password length validation;
-        if (userInfo.password.length < 8) {
-            tempArr.push('Password needs to be a minimum of 8 characters');
-        }
-
-        // Uppercase validation
-        let upperCase = new RegExp(/^(?=.*[A-Z])/);
-        if (!upperCase.test(userInfo.password)) {
-            tempArr.push('Password needs an UPPERCASE letter');
-        }
-
-        //Lowercase validation
-        let lowerCase = new RegExp(/^(?=.*[a-z])/);
-        if (!lowerCase.test(userInfo.password)) {
-            tempArr.push('Password needs an lowercase letter');
-        }
-        //Number validation
-        let digits = new RegExp(/^(?=.*[0-9])/);
-        if (!digits.test(userInfo.password)) {
-            tempArr.push('Password needs to include a number');
-        }
-        //Special character validaton
-        let special = new RegExp(/^(?=.*?[#?!@$%^&*-])/);
-        if (!special.test(userInfo.password)) {
-            tempArr.push('Password needs to include a special character');
-        }
-
-        //Password match validation
-        if (userInfo.password !== userInfo.confirmPassword) {
-            tempArr.push('Password & Confirm Password does not match');
-        }
 
         //Game minimum selection validation
         if (userInfo.games.length <= 0) {
@@ -110,25 +109,22 @@ export default function ProfilePage() {
         }
 
         try {
-            // cognito register api
-            const userSub = await updateCognitoUser({
+            // Update username in cognito
+            await updateCognitoUser({
                 name: userInfo.name,
             });
 
-            await updateUser({
-                userId: userSub,
+            // Update user info in the database
+            const response = await updateUser({
                 name: userInfo.name,
                 about: userInfo.about,
                 gender: userInfo.gender,
                 genderPref: userInfo.genderPref,
-                photoUrl: userInfo.photoUrl,
+                photoUrl:
+                    userInfo.photoUrl ||
+                    'https://afk-and-chill-bucket.s3.us-east-2.amazonaws.com/Portrait_Placeholder.png',
                 games: userInfo.games,
             });
-
-            if (userSub) {
-                console.log('Successfully Register');
-                history.push('/confirmEmail');
-            }
         } catch (error) {
             setErrorMsgs([error.message]);
             console.error(error.message);
@@ -137,30 +133,35 @@ export default function ProfilePage() {
 
     return (
         <div className={classes.root}>
-            <Typography className={classes.heading} variant="h3">
-                Profile
-            </Typography>
-            <form onSubmit={handleSubmit}>
-                {errorMsgs.map((errorMsg) => (
-                    <p className={classes.errorMsg}>{errorMsg}</p>
-                ))}
-                <Form userInfo={userInfo} setUserInfo={setUserInfo} />
-                <Preferences
-                    gameSearch={gameSearch}
-                    setGameSearch={setGameSearch}
-                    userInfo={userInfo}
-                    setUserInfo={setUserInfo}
-                />
-                <Button
-                    variant="contained"
-                    color="primary"
-                    type="submit"
-                    id="Register"
-                    className={classes.button}
-                >
-                    Update
-                </Button>
-            </form>
+            {isLoading ? (
+                <LoadingBeanEater className={classes.loadingSVG} />
+            ) : (
+                <>
+                    <Typography className={classes.heading} variant="h3">
+                        Profile
+                    </Typography>
+                    <form onSubmit={handleSubmit}>
+                        {errorMsgs.map((errorMsg) => (
+                            <p className={classes.errorMsg}>{errorMsg}</p>
+                        ))}
+                        <Form userInfo={userInfo} setUserInfo={setUserInfo} />
+                        <Preferences
+                            gameSearch={gameSearch}
+                            setGameSearch={setGameSearch}
+                            userInfo={userInfo}
+                            setUserInfo={setUserInfo}
+                        />
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            id="Register"
+                            className={classes.button}
+                        >
+                            Update
+                        </Button>
+                    </form>{' '}
+                </>
+            )}
         </div>
     );
 }

@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Game({ userInfo, setUserInfo }) {
+export default function Games({ userInfo, setUserInfo }) {
     const [twitchGames, setTwitchGames] = useState([]);
     const [twitchCursor, setTwitchCursor] = useState('');
     const [gameSearch, setGameSearch] = useState('');

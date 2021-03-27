@@ -31,6 +31,21 @@ export default function Preferences({
         <>
             <div className={classes.formControlContainer}>
                 <FormControl
+                    variant="outlined"
+                    className={`${classes.formControl} ${classes.genderFormControl}`}
+                    disabled
+                >
+                    <InputLabel htmlFor="gender">Gender</InputLabel>
+                    <Select id="gender" value={userInfo.gender} label="Gender">
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value="male">Male</MenuItem>
+                        <MenuItem value="female">Female</MenuItem>
+                        <MenuItem value="other">Other</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl
                     required
                     variant="outlined"
                     className={`${classes.formControl} ${classes.genderPrefFormControl}`}

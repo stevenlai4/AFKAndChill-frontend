@@ -155,15 +155,24 @@ export async function getChatBoxes() {
 }
 
 //Update User information
-export async function updateUser({ userName, genderPref, about, games }) {
+export async function updateUser({
+    name,
+    genderPref,
+    gender,
+    about,
+    photoUrl,
+    games,
+}) {
     try {
         const token = await getToken();
         const response = await api.patch(
             '/user',
             {
-                userName,
+                userName: name,
                 genderPref,
+                gender,
                 about,
+                photoUrl,
                 games,
             },
             {

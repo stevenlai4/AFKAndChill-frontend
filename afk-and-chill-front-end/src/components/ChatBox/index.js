@@ -71,6 +71,13 @@ const useStyles = makeStyles((theme) => ({
     loadingIcon: {
         margin: 'auto',
     },
+    noChatboxText: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        fontSize: '40px',
+    },
 }));
 
 export default function ChatBox({ chatboxes, cognitoId }) {
@@ -92,6 +99,7 @@ export default function ChatBox({ chatboxes, cognitoId }) {
 
             setChatboxId(chatboxes[0]._id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // CDU get messages
@@ -193,7 +201,9 @@ export default function ChatBox({ chatboxes, cognitoId }) {
                     </section>
                 </>
             ) : (
-                <Typography component="h3">You don't have any chat</Typography>
+                <Typography className={classes.noChatboxText} component="h3">
+                    You Don't Have Any Chat
+                </Typography>
             )}
         </div>
     );

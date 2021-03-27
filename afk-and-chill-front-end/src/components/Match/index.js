@@ -65,7 +65,7 @@ export default function Match() {
     let chillersState = chillers;
 
     // CDM
-    useEffect(async () => {
+    useEffect(() => {
         // Fetch matchable chillers
         (async () => {
             try {
