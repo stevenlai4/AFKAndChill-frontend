@@ -2,11 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Form from '../../components/Profile/Form';
 import Preferences from '../../components/Profile/Preferences';
 import { Button, Typography } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import { updateUser, getUser } from '../../network';
 import { updateCognitoUser } from '../../userAuth';
 import { Auth } from 'aws-amplify';
 import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +54,7 @@ export default function ProfilePage() {
     });
     const [errorMsgs, setErrorMsgs] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     // CDM
     useEffect(() => {
@@ -96,9 +100,10 @@ export default function ProfilePage() {
         return tempArr;
     };
 
-    // Handle register form submit
+    // Handle update form submit
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setOpen(true);
 
         // Check user input errors before access the database
         const errors = handleErrors();
@@ -131,6 +136,13 @@ export default function ProfilePage() {
         }
     };
 
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     return (
         <div className={classes.root}>
             {isLoading ? (
@@ -159,7 +171,25 @@ export default function ProfilePage() {
                         >
                             Update
                         </Button>
-                    </form>{' '}
+                        <Snackbar
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            autoHideDuration={3000}
+                            onClose={handleClose}
+                            message="Update successful!"
+                            action={
+                                <React.Fragment>
+                                    <Button
+                                        onClose={handleClose}
+                                        severity="success"
+                                    ></Button>
+                                </React.Fragment>
+                            }
+                        />
+                    </form>
                 </>
             )}
         </div>
