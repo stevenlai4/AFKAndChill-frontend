@@ -174,7 +174,7 @@ export default function ProfilePage() {
                         <Snackbar
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'right',
+                                horizontal: 'center',
                             }}
                             open={open}
                             autoHideDuration={3000}
@@ -183,9 +183,17 @@ export default function ProfilePage() {
                             action={
                                 <React.Fragment>
                                     <Button
+                                        color="secondary"
                                         onClose={handleClose}
-                                        severity="success"
                                     ></Button>
+                                    <IconButton
+                                        size="small"
+                                        aria-label="close"
+                                        color="inherit"
+                                        onClick={handleClose}
+                                    >
+                                        <CloseIcon fontSize="small" />
+                                    </IconButton>
                                 </React.Fragment>
                             }
                         />
