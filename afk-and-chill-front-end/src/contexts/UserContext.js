@@ -4,7 +4,18 @@ import { getUser } from '../network';
 export const UserContext = createContext();
 
 export const UserProvider = (props) => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState({
+        id: '',
+        cognito_id: '',
+        name: '',
+        photo_url: '',
+        about: '',
+        gender: '',
+        gender_pref: '',
+        games: [],
+        likes: [],
+        dislikes: [],
+    });
 
     useEffect(() => {
         (async () => {
@@ -15,6 +26,8 @@ export const UserProvider = (props) => {
                     if (response) {
                         setUser(response.user);
                     }
+                } else {
+                    setUser({});
                 }
             } catch (error) {
                 console.error(error.message);
