@@ -19,7 +19,7 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function Preferences({ userInfo, setUserInfo }) {
+export default function Preferences({ user, setUser }) {
     const classes = useStyles();
 
     return (
@@ -33,9 +33,9 @@ export default function Preferences({ userInfo, setUserInfo }) {
                     <InputLabel htmlFor="gender">Gender</InputLabel>
                     <Select
                         id="gender"
-                        value={userInfo.gender}
+                        value={user.gender}
                         onChange={(e) =>
-                            setUserInfo({ ...userInfo, gender: e.target.value })
+                            setUser({ ...user, gender: e.target.value })
                         }
                         label="Gender"
                     >
@@ -57,10 +57,10 @@ export default function Preferences({ userInfo, setUserInfo }) {
                     </InputLabel>
                     <Select
                         id="genderPref"
-                        value={userInfo.genderPref}
+                        value={user.genderPref}
                         onChange={(e) =>
-                            setUserInfo({
-                                ...userInfo,
+                            setUser({
+                                ...user,
                                 genderPref: e.target.value,
                             })
                         }
@@ -75,7 +75,7 @@ export default function Preferences({ userInfo, setUserInfo }) {
                     </Select>
                 </FormControl>
             </div>
-            <Games userInfo={userInfo} setUserInfo={setUserInfo} />
+            <Games user={user} setUser={setUser} />
         </>
     );
 }

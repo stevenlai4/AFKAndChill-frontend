@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(45),
     },
 }));
-export default function Form({ userInfo, setUserInfo }) {
+export default function Form({ user, setUser }) {
     const classes = useStyles();
     const [file, setFile] = useState();
     const [filePreview, setFilePreview] = useState();
@@ -61,7 +61,7 @@ export default function Form({ userInfo, setUserInfo }) {
             const url = await savePhotoFile(photo);
 
             if (url) {
-                setUserInfo({ ...userInfo, photoUrl: url });
+                setUser({ ...user, photoUrl: url });
             }
         } catch (error) {
             console.error(error.message);
@@ -82,11 +82,11 @@ export default function Form({ userInfo, setUserInfo }) {
                     variant="outlined"
                     className={classes.input}
                     id="name"
-                    value={userInfo.name}
+                    value={user.name}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             name: e.target.value,
                         })
                     }
@@ -98,11 +98,11 @@ export default function Form({ userInfo, setUserInfo }) {
                     type="email"
                     id="email"
                     className={classes.input}
-                    value={userInfo.email}
+                    value={user.email}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             email: e.target.value,
                         })
                     }
@@ -115,11 +115,11 @@ export default function Form({ userInfo, setUserInfo }) {
                     className={classes.input}
                     type="password"
                     id="password"
-                    value={userInfo.password}
+                    value={user.password}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             password: e.target.value,
                         })
                     }
@@ -132,11 +132,11 @@ export default function Form({ userInfo, setUserInfo }) {
                     className={classes.input}
                     type="password"
                     id="confirmPassword"
-                    value={userInfo.confirmPassword}
+                    value={user.confirmPassword}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             confirmPassword: e.target.value,
                         })
                     }
@@ -147,10 +147,10 @@ export default function Form({ userInfo, setUserInfo }) {
                     multiline={true}
                     id="about"
                     variant="outlined"
-                    value={userInfo.about}
+                    value={user.about}
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             about: e.target.value,
                         })
                     }
@@ -181,7 +181,7 @@ export default function Form({ userInfo, setUserInfo }) {
                             accept="image/*"
                             id="photo-upload-btn"
                             className={classes.photoUploadInput}
-                            filename={userInfo.photo}
+                            filename={user.photo}
                             onChange={fileSelected}
                             type="file"
                         />
