@@ -24,13 +24,13 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
+export default function GameItem({ user, setUser, game, imgUrl }) {
     const [isSelected, setIsSelected] = useState(false);
     const classes = useStyles();
 
     // CDM
     useEffect(() => {
-        const userGames = userInfo.games;
+        const userGames = user.games;
 
         userGames.forEach((userGame) => {
             if (userGame.id === game.id) {
@@ -38,13 +38,13 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userInfo]);
+    }, [user]);
 
     const selectGame = () => {
         // If isSelected is true then when the user clicks it
         // the game should be removed from the games array
         // Else the game should be added to the games array
-        const userGames = userInfo.games;
+        const userGames = user.games;
 
         if (isSelected) {
             // Check if the game exists in the array
@@ -58,8 +58,8 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
             userGames.push(game);
         }
 
-        setUserInfo({
-            ...userInfo,
+        setUser({
+            ...user,
             games: userGames,
         });
         setIsSelected((prev) => !prev);

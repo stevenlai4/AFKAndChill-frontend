@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Avatar,
@@ -13,6 +13,7 @@ import MessageForm from './MessageForm';
 import UserMessage from './UserMessage';
 import ChillerItem from './ChillerItem';
 import { getMsges } from '../../network';
+import { UserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         boxSizing: 'border-box',
-        // justifyContent: 'space-between',
         width: '100%',
     },
     messageForm: {
@@ -80,18 +80,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function ChatBox({ chatboxes, cognitoId }) {
+export default function ChatBox({ chatboxes }) {
     const classes = useStyles();
     const [chatboxId, setChatboxId] = useState('');
     const [messages, setMessage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [matchedChiller, setMatchedChiller] = useState({});
     const [rerender, setRerender] = useState(false);
+    const [user, setUser] = useContext(UserContext);
 
     // CDM
     useEffect(() => {
         if (chatboxes.length > 0) {
-            if (chatboxes[0].user_one.cognito_id === cognitoId) {
+            if (chatboxes[0].user_one.cognito_id === user.cognito_id) {
                 setMatchedChiller(chatboxes[0].user_two);
             } else {
                 setMatchedChiller(chatboxes[0].user_one);
@@ -124,7 +125,7 @@ export default function ChatBox({ chatboxes, cognitoId }) {
     //----------------------------Submit Message---------------------------------------//
     const onChatItem = (chatItem) => {
         // Check user_one or user_two is the matched chiller
-        if (chatItem.user_one.cognito_id === cognitoId) {
+        if (chatItem.user_one.cognito_id === user.cognito_id) {
             setMatchedChiller(chatItem.user_two);
         } else {
             setMatchedChiller(chatItem.user_one);
@@ -137,13 +138,13 @@ export default function ChatBox({ chatboxes, cognitoId }) {
             {chatboxes.length > 0 ? (
                 <>
                     <ChatDrawer
-                        cognitoId={cognitoId}
+                        cognitoId={user.cognito_id}
                         chatboxes={chatboxes}
                         onChatItem={onChatItem}
                     />
                     <section className={classes.AFKChat}>
                         <ChillerItem
-                            cognitoId={cognitoId}
+                            cognitoId={user.cognito_id}
                             chatboxes={chatboxes}
                             onChatItem={onChatItem}
                         />
@@ -183,7 +184,7 @@ export default function ChatBox({ chatboxes, cognitoId }) {
                                                     key={message._id}
                                                     className={classes.message}
                                                     message={message}
-                                                    cognitoId={cognitoId}
+                                                    cognitoId={user.cognito_id}
                                                 ></UserMessage>
                                             ))}
                                         </CardContent>

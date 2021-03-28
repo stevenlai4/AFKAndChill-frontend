@@ -22,8 +22,8 @@ const useStyles = makeStyles(() => ({
 export default function Preferences({
     gameSearch,
     setGameSearch,
-    userInfo,
-    setUserInfo,
+    user,
+    setUser,
 }) {
     const classes = useStyles();
 
@@ -36,7 +36,7 @@ export default function Preferences({
                     disabled
                 >
                     <InputLabel htmlFor="gender">Gender</InputLabel>
-                    <Select id="gender" value={userInfo.gender} label="Gender">
+                    <Select id="gender" value={user.gender} label="Gender">
                         <MenuItem value="">
                             <em>None</em>
                         </MenuItem>
@@ -55,11 +55,11 @@ export default function Preferences({
                     </InputLabel>
                     <Select
                         id="genderPref"
-                        value={userInfo.genderPref}
+                        value={user.gender_pref}
                         onChange={(e) =>
-                            setUserInfo({
-                                ...userInfo,
-                                genderPref: e.target.value,
+                            setUser({
+                                ...user,
+                                gender_pref: e.target.value,
                             })
                         }
                         label="Gender Preference"
@@ -74,8 +74,8 @@ export default function Preferences({
                 </FormControl>
             </div>
             <Games
-                userInfo={userInfo}
-                setUserInfo={setUserInfo}
+                user={user}
+                setUser={setUser}
                 gameSearch={gameSearch}
                 setGameSearch={setGameSearch}
             />

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextField, IconButton, Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { PhotoCamera, Close } from '@material-ui/icons';
 import { savePhotoFile } from '../../../network';
+import { getUserInfo } from '../../../userAuth';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,13 +44,30 @@ const useStyles = makeStyles((theme) => ({
         height: theme.spacing(45),
     },
 }));
-export default function Form({ userInfo, setUserInfo }) {
+export default function Form({ user, setUser }) {
     const classes = useStyles();
+    const [email, setEmail] = useState('');
     const [file, setFile] = useState();
     const [filePreview, setFilePreview] = useState();
 
+    // CDM
+    useEffect(() => {
+        (async () => {
+            try {
+                // Fetch current authenticated user from cognito
+                const cognitouser = await getUserInfo();
+
+                if (cognitouser) {
+                    setEmail(cognitouser.attributes.email);
+                }
+            } catch (error) {
+                console.error(error.message);
+            }
+        })();
+    });
+
     const deletePhoto = () => {
-        setUserInfo({ ...userInfo, photoUrl: '' });
+        setUser({ ...user, photo_url: '' });
         setFile(null);
         setFilePreview(null);
     };
@@ -62,7 +80,7 @@ export default function Form({ userInfo, setUserInfo }) {
             const url = await savePhotoFile(photo);
 
             if (url) {
-                setUserInfo({ ...userInfo, photoUrl: url });
+                setUser({ ...user, photo_url: url });
             }
         } catch (error) {
             console.error(error.message);
@@ -83,11 +101,11 @@ export default function Form({ userInfo, setUserInfo }) {
                     variant="outlined"
                     className={classes.input}
                     id="name"
-                    value={userInfo.name}
+                    value={user.name}
                     autoComplete="on"
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             name: e.target.value,
                         })
                     }
@@ -98,7 +116,7 @@ export default function Form({ userInfo, setUserInfo }) {
                     type="email"
                     id="email"
                     className={classes.input}
-                    value={userInfo.email}
+                    value={email}
                     disabled
                 />
                 <TextField
@@ -107,10 +125,10 @@ export default function Form({ userInfo, setUserInfo }) {
                     multiline={true}
                     id="about"
                     variant="outlined"
-                    value={userInfo.about}
+                    value={user.about}
                     onChange={(e) =>
-                        setUserInfo({
-                            ...userInfo,
+                        setUser({
+                            ...user,
                             about: e.target.value,
                         })
                     }
@@ -120,7 +138,7 @@ export default function Form({ userInfo, setUserInfo }) {
                 />
             </div>
             <div className={classes.photoUploadContainer}>
-                {file || userInfo.photoUrl ? (
+                {file || user.photo_url ? (
                     <div className={classes.imagePreview}>
                         <IconButton
                             className={classes.photoDeleteBtn}
@@ -132,7 +150,7 @@ export default function Form({ userInfo, setUserInfo }) {
                         <Avatar
                             className={classes.lgAvatar}
                             alt="selfie"
-                            src={filePreview ?? userInfo.photoUrl}
+                            src={filePreview ?? user.photo_url}
                         />
                     </div>
                 ) : (
@@ -141,7 +159,7 @@ export default function Form({ userInfo, setUserInfo }) {
                             accept="image/*"
                             id="photo-upload-btn"
                             className={classes.photoUploadInput}
-                            filename={userInfo.photo}
+                            filename={user.photo_url}
                             onChange={fileSelected}
                             type="file"
                         />
