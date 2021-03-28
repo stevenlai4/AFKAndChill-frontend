@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function RegisterPage() {
     const classes = useStyles();
     const history = useHistory();
-    const [userInfo, setUserInfo] = useState({
+    const [user, setUser] = useState({
         name: '',
         email: '',
         password: '',
@@ -48,39 +48,39 @@ export default function RegisterPage() {
         let tempArr = [];
 
         //Password length validation;
-        if (userInfo.password.length < 8) {
+        if (user.password.length < 8) {
             tempArr.push('Password needs to be a minimum of 8 characters');
         }
 
         // Uppercase validation
         let upperCase = new RegExp(/^(?=.*[A-Z])/);
-        if (!upperCase.test(userInfo.password)) {
+        if (!upperCase.test(user.password)) {
             tempArr.push('Password needs an UPPERCASE letter');
         }
 
         //Lowercase validation
         let lowerCase = new RegExp(/^(?=.*[a-z])/);
-        if (!lowerCase.test(userInfo.password)) {
+        if (!lowerCase.test(user.password)) {
             tempArr.push('Password needs an lowercase letter');
         }
         //Number validation
         let digits = new RegExp(/^(?=.*[0-9])/);
-        if (!digits.test(userInfo.password)) {
+        if (!digits.test(user.password)) {
             tempArr.push('Password needs to include a number');
         }
         //Special character validaton
         let special = new RegExp(/^(?=.*?[#?!@$%^&*-])/);
-        if (!special.test(userInfo.password)) {
+        if (!special.test(user.password)) {
             tempArr.push('Password needs to include a special character');
         }
 
         //Password match validation
-        if (userInfo.password !== userInfo.confirmPassword) {
+        if (user.password !== user.confirmPassword) {
             tempArr.push('Password & Confirm Password does not match');
         }
 
         //Game minimum selection validation
-        if (userInfo.games.length <= 0) {
+        if (user.games.length <= 0) {
             tempArr.push('Please select at least 1 game!');
         }
 
@@ -110,19 +110,19 @@ export default function RegisterPage() {
         try {
             // cognito register api
             const userSub = await register({
-                name: userInfo.name,
-                email: userInfo.email,
-                password: userInfo.password,
+                name: user.name,
+                email: user.email,
+                password: user.password,
             });
 
             await registerUser({
                 userId: userSub,
-                name: userInfo.name,
-                about: userInfo.about,
-                gender: userInfo.gender,
-                genderPref: userInfo.genderPref,
-                photoUrl: userInfo.photoUrl,
-                games: userInfo.games,
+                name: user.name,
+                about: user.about,
+                gender: user.gender,
+                genderPref: user.genderPref,
+                photoUrl: user.photoUrl,
+                games: user.games,
             });
 
             if (userSub) {
@@ -146,13 +146,13 @@ export default function RegisterPage() {
                 {errorMsgs.map((errorMsg) => (
                     <p className={classes.errorMsg}>{errorMsg}</p>
                 ))}
-                <Form userInfo={userInfo} setUserInfo={setUserInfo} />
+                <Form user={user} setUser={setUser} />
                 <Typography className={classes.heading} variant="h4">
                     Preferences
                 </Typography>
-                <Preferences userInfo={userInfo} setUserInfo={setUserInfo} />
+                <Preferences user={user} setUser={setUser} />
                 {isRegistering ? (
-                    <CircularProgress color="#1A2E46" />
+                    <CircularProgress />
                 ) : (
                     <Button
                         variant="contained"

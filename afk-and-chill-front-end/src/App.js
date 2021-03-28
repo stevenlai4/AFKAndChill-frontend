@@ -50,7 +50,7 @@ function App() {
                     )}
                 </Route>
                 <Route component={ConfirmEmail} path="/confirmEmail" />
-                <Route
+                <GuardedRoute
                     component={ChatBox}
                     path="/chatBox"
                     isAuthenticated={isAuthenticated}

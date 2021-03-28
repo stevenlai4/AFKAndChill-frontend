@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+import { UserProvider } from '../../contexts/UserContext';
 
 export default function GuardedRoute({
     component: Component,
@@ -8,7 +9,13 @@ export default function GuardedRoute({
 }) {
     return (
         <Route path={path}>
-            {isAuthenticated ? <Component /> : <Redirect to="/" />}
+            {isAuthenticated ? (
+                <UserProvider isAuthenticated={isAuthenticated}>
+                    <Component />
+                </UserProvider>
+            ) : (
+                <Redirect to="/" />
+            )}
         </Route>
     );
 }

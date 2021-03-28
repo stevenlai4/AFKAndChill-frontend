@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from '../../components/Profile/Form';
 import Preferences from '../../components/Profile/Preferences';
 import { Button, Typography, CircularProgress } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
 import { Alert } from '@material-ui/lab';
-import { updateUser, getUser } from '../../network';
+import { updateUser } from '../../network';
 import { updateCognitoUser } from '../../userAuth';
-import { Auth } from 'aws-amplify';
-import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
+import { UserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,59 +41,18 @@ const useStyles = makeStyles((theme) => ({
 export default function ProfilePage() {
     const classes = useStyles();
     const [gameSearch, setGameSearch] = useState('');
-    const [userInfo, setUserInfo] = useState({
-        name: '',
-        email: '',
-        photoUrl: '',
-        about: '',
-        gender: '',
-        genderPref: '',
-        games: [],
-    });
+    const [user, setUser] = useContext(UserContext);
     const [errorMsgs, setErrorMsgs] = useState([]);
     const [successMsg, setSuccessMsg] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
     const [isUpdating, setIsUpdating] = useState(false);
     const [open, setOpen] = useState(false);
-
-    // CDM
-    useEffect(() => {
-        (async () => {
-            try {
-                setIsLoading(true);
-
-                // Fetch current user from MongoDB
-                const response = await getUser();
-                const tempUserInfo = response.user;
-
-                // Fetch current authenticated user from cognito
-                const cognitoUserInfo = await Auth.currentUserInfo();
-
-                if (response && cognitoUserInfo) {
-                    setUserInfo({
-                        name: tempUserInfo.name,
-                        email: cognitoUserInfo.attributes.email,
-                        about: tempUserInfo.about,
-                        photoUrl: tempUserInfo.photo_url,
-                        gender: tempUserInfo.gender,
-                        genderPref: tempUserInfo.gender_pref,
-                        games: tempUserInfo.games,
-                    });
-                }
-
-                setIsLoading(false);
-            } catch (error) {
-                console.error(error.message);
-            }
-        })();
-    }, []);
 
     // Handle errors function
     const handleErrors = () => {
         let tempArr = [];
 
         //Game minimum selection validation
-        if (userInfo.games.length <= 0) {
+        if (user.games.length <= 0) {
             tempArr.push('Please select at least 1 game!');
         }
 
@@ -125,19 +83,19 @@ export default function ProfilePage() {
         try {
             // Update username in cognito
             await updateCognitoUser({
-                name: userInfo.name,
+                name: user.name,
             });
 
             // Update user info in the database
             const response = await updateUser({
-                name: userInfo.name,
-                about: userInfo.about,
-                gender: userInfo.gender,
-                genderPref: userInfo.genderPref,
+                name: user.name,
+                about: user.about,
+                gender: user.gender,
+                genderPref: user.gender_pref,
                 photoUrl:
-                    userInfo.photoUrl ||
+                    user.photo_url ||
                     'https://afk-and-chill-bucket.s3.us-east-2.amazonaws.com/Portrait_Placeholder.png',
-                games: userInfo.games,
+                games: user.games,
             });
 
             if (response) {
@@ -161,52 +119,48 @@ export default function ProfilePage() {
 
     return (
         <div className={classes.root}>
-            {isLoading ? (
-                <LoadingBeanEater className={classes.loadingSVG} />
-            ) : (
-                <>
-                    <Typography className={classes.heading} variant="h3">
-                        Profile
-                    </Typography>
-                    <form onSubmit={handleSubmit}>
-                        {errorMsgs.map((errorMsg) => (
-                            <p className={classes.errorMsg}>{errorMsg}</p>
-                        ))}
-                        <Form userInfo={userInfo} setUserInfo={setUserInfo} />
-                        <Preferences
-                            gameSearch={gameSearch}
-                            setGameSearch={setGameSearch}
-                            userInfo={userInfo}
-                            setUserInfo={setUserInfo}
-                        />
-                        {isUpdating ? (
-                            <CircularProgress color="#1A2E46" />
-                        ) : (
-                            <Button
-                                variant="contained"
-                                type="submit"
-                                id="Register"
-                                className={classes.button}
-                            >
-                                Update
-                            </Button>
-                        )}
-                    </form>
-                    <Snackbar
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'center',
-                        }}
-                        open={open}
-                        autoHideDuration={4000}
-                        onClose={handleClose}
-                    >
-                        <Alert onClose={handleClose} severity="success">
-                            {successMsg}
-                        </Alert>
-                    </Snackbar>
-                </>
-            )}
+            <>
+                <Typography className={classes.heading} variant="h3">
+                    Profile
+                </Typography>
+                <form onSubmit={handleSubmit}>
+                    {errorMsgs.map((errorMsg) => (
+                        <p className={classes.errorMsg}>{errorMsg}</p>
+                    ))}
+                    <Form user={user} setUser={setUser} />
+                    <Preferences
+                        gameSearch={gameSearch}
+                        setGameSearch={setGameSearch}
+                        user={user}
+                        setUser={setUser}
+                    />
+                    {isUpdating ? (
+                        <CircularProgress />
+                    ) : (
+                        <Button
+                            variant="contained"
+                            type="submit"
+                            id="Register"
+                            className={classes.button}
+                        >
+                            Update
+                        </Button>
+                    )}
+                </form>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'center',
+                    }}
+                    open={open}
+                    autoHideDuration={4000}
+                    onClose={handleClose}
+                >
+                    <Alert onClose={handleClose} severity="success">
+                        {successMsg}
+                    </Alert>
+                </Snackbar>
+            </>
         </div>
     );
 }
