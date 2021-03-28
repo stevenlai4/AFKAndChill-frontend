@@ -4,12 +4,11 @@ import Preferences from '../../components/Profile/Preferences';
 import { Button, Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import { makeStyles } from '@material-ui/core/styles';
+import { Alert } from '@material-ui/lab';
 import { updateUser, getUser } from '../../network';
 import { updateCognitoUser } from '../../userAuth';
 import { Auth } from 'aws-amplify';
 import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -53,6 +52,7 @@ export default function ProfilePage() {
         games: [],
     });
     const [errorMsgs, setErrorMsgs] = useState([]);
+    const [successMsg, setSuccessMsg] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false);
 
@@ -103,7 +103,6 @@ export default function ProfilePage() {
     // Handle update form submit
     const handleSubmit = async (event) => {
         event.preventDefault();
-        setOpen(true);
 
         // Check user input errors before access the database
         const errors = handleErrors();
@@ -111,6 +110,8 @@ export default function ProfilePage() {
         if (errors.length > 0) {
             setErrorMsgs(errors);
             return;
+        } else {
+            setErrorMsgs([]);
         }
 
         try {
@@ -130,6 +131,9 @@ export default function ProfilePage() {
                     'https://afk-and-chill-bucket.s3.us-east-2.amazonaws.com/Portrait_Placeholder.png',
                 games: userInfo.games,
             });
+
+            setSuccessMsg(response);
+            setOpen(true);
         } catch (error) {
             setErrorMsgs([error.message]);
             console.error(error.message);
@@ -171,33 +175,20 @@ export default function ProfilePage() {
                         >
                             Update
                         </Button>
-                        <Snackbar
-                            anchorOrigin={{
-                                vertical: 'bottom',
-                                horizontal: 'center',
-                            }}
-                            open={open}
-                            autoHideDuration={3000}
-                            onClose={handleClose}
-                            message="Update successful!"
-                            action={
-                                <React.Fragment>
-                                    <Button
-                                        color="secondary"
-                                        onClose={handleClose}
-                                    ></Button>
-                                    <IconButton
-                                        size="small"
-                                        aria-label="close"
-                                        color="inherit"
-                                        onClick={handleClose}
-                                    >
-                                        <CloseIcon fontSize="small" />
-                                    </IconButton>
-                                </React.Fragment>
-                            }
-                        />
                     </form>
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'center',
+                        }}
+                        open={open}
+                        autoHideDuration={4000}
+                        onClose={handleClose}
+                    >
+                        <Alert onClose={handleClose} severity="success">
+                            {successMsg}
+                        </Alert>
+                    </Snackbar>
                 </>
             )}
         </div>
