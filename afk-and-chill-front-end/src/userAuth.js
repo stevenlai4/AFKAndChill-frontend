@@ -15,6 +15,17 @@ export async function userToken() {
     }
 }
 
+export async function updateCognitoUser({ name }) {
+    try {
+        const user = await Auth.currentAuthenticatedUser();
+        await Auth.updateUserAttributes(user, {
+            name: name,
+        });
+    } catch (error) {
+        throw error;
+    }
+}
+
 export async function getUserInfo() {
     try {
         const userInfo = await Auth.currentUserInfo();

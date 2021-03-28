@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     loginBtn: {
         backgroundColor: '#1A2E46',
         color: '#fff',
+        '&:hover': {
+            backgroundColor: '#0a1829',
+        },
     },
     helperText: {
         color: 'red',
@@ -53,10 +56,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Form({ setIsAuthenticated }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const classes = useStyles();
     const history = useHistory();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
 
     const handleSubmit = async (event) => {
@@ -65,6 +68,8 @@ export default function Form({ setIsAuthenticated }) {
         try {
             await login(email.trim(), password);
             setIsAuthenticated(true);
+
+            // Push to find chillers page if login successfully
             history.push('/findChillers');
         } catch (error) {
             setErrorMsg(error.message);

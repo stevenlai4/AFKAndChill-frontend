@@ -13,9 +13,11 @@ const useStyles = makeStyles((theme) => ({
     },
     heading: {
         marginBottom: 20,
+        marginTop: 20,
     },
     button: {
         marginTop: 20,
+        marginBottom: 20,
     },
     errorMsg: {
         color: 'red',
@@ -99,6 +101,8 @@ export default function RegisterPage() {
             document.body.scrollTop = 0; // For Safari
             document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
             return;
+        } else {
+            setErrorMsgs([]);
         }
 
         setIsRegistering(true);
@@ -129,7 +133,7 @@ export default function RegisterPage() {
             }
         } catch (error) {
             setErrorMsgs([error.message]);
-            console.error(error.message);
+            setIsRegistering(false);
         }
     };
 

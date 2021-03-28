@@ -154,6 +154,43 @@ export async function getChatBoxes() {
     }
 }
 
+//Update User information
+export async function updateUser({
+    name,
+    genderPref,
+    gender,
+    about,
+    photoUrl,
+    games,
+}) {
+    try {
+        const token = await getToken();
+        const response = await api.patch(
+            '/user',
+            {
+                userName: name,
+                genderPref,
+                gender,
+                about,
+                photoUrl,
+                games,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        if (response) {
+            const body = response.data?.body;
+            const data = await JSON.parse(body);
+            return data.successMsg;
+        }
+    } catch (error) {
+        throw error;
+    }
+}
+
 // create msg
 export const sendMsg = async ({ message, chatboxId }) => {
     try {

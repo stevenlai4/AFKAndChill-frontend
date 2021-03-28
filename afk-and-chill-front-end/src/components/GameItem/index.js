@@ -38,7 +38,7 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
             }
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [userInfo]);
 
     const selectGame = () => {
         // If isSelected is true then when the user clicks it
@@ -58,7 +58,10 @@ export default function GameItem({ userInfo, setUserInfo, game, imgUrl }) {
             userGames.push(game);
         }
 
-        setUserInfo({ ...userInfo, games: userGames });
+        setUserInfo({
+            ...userInfo,
+            games: userGames,
+        });
         setIsSelected((prev) => !prev);
     };
 
