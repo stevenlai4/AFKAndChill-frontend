@@ -11,6 +11,7 @@ import Profile from './layouts/ProfilePage';
 import ConfirmEmail from './layouts/ConfirmEmail';
 import { Redirect } from 'react-router-dom';
 import { refreshAuthToken } from './userAuth';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useLocalStorage(
@@ -31,10 +32,12 @@ function App() {
 
     return (
         <Router>
-            <Header
-                setIsAuthenticated={setIsAuthenticated}
-                isAuthenticated={isAuthenticated}
-            />
+            <UserProvider isAuthenticated={isAuthenticated}>
+                <Header
+                    setIsAuthenticated={setIsAuthenticated}
+                    isAuthenticated={isAuthenticated}
+                />
+            </UserProvider>
             <Switch>
                 <Route path="/register">
                     <Register />

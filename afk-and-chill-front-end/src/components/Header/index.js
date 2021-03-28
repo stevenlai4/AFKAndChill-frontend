@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
     Link,
@@ -10,6 +10,7 @@ import {
     Avatar,
 } from '@material-ui/core';
 import Menu from '@material-ui/core/Menu';
+import { UserContext } from '../../contexts/UserContext';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -42,14 +43,13 @@ export default function Header({
     signOut,
     login,
     findChillersClicked,
-    chillersPostClicked,
     AFKChatClicked,
     logoClicked,
     profileClicked,
-    userInfo,
 }) {
     const classes = useStyles();
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [user, setUser] = useContext(UserContext);
     const open = Boolean(anchorEl);
 
     const handleMenu = (event) => {
@@ -83,7 +83,7 @@ export default function Header({
                             >
                                 <Avatar
                                     alt="userIcon"
-                                    src={userInfo.photo_url}
+                                    src={user.photo_url}
                                     className={classes.avatar}
                                 />
                                 {/* <AccountCircle /> */}
