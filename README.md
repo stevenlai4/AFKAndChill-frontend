@@ -23,20 +23,19 @@ Team Members: Karen, Steven, Kalvin
     <li>Clone the <a href="https://github.com/BCIT-SSD-2020-21/front-end-team1.git">AFK & Chill Repo</a> to your Local machine</li>
     <li>Navigate to the project directory then type `npm install` in the command line</li>
     <li>Create your own cognito user pool in AWS & Twitch developer API at https://dev.twitch.tv/</li>
-    <li>Create a config.json file in the src folder with: </li>
 
     ```json
-        {
-            "cognito": {
-                "REGION": "COGNITO_REGION",
-                "USER_POOL_ID": "COGNITO_USER_POOL_ID",
-                "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
-            },
-            "twitch": {
-                "CLIENT_ID": "TWITCH_CLIENT_ID",
-                "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
-            }
+    {
+        "cognito": {
+            "REGION": "COGNITO_REGION",
+            "USER_POOL_ID": "COGNITO_USER_POOL_ID",
+            "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
+        },
+        "twitch": {
+            "CLIENT_ID": "TWITCH_CLIENT_ID",
+            "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
         }
+    }
     ```
 
 </ol>
