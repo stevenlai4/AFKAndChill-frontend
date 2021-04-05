@@ -101,3 +101,17 @@ All posts:
 
 Messaging:
 <img src="https://i.imgur.com/PYmLIM4.png" alt="Low Fidelity for AFK & Chill" width="100%" />
+
+```json
+{
+    "cognito": {
+        "REGION": "COGNITO_REGION",
+        "USER_POOL_ID": "COGNITO_USER_POOL_ID",
+        "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
+    },
+    "twitch": {
+        "CLIENT_ID": "TWITCH_CLIENT_ID",
+        "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
+    }
+}
+```
