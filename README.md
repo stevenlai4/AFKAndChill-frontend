@@ -14,8 +14,6 @@ Team Members: Karen, Steven, Kalvin
 <br/>
 </br>
 
-<details>
-
 <summary> :key: &nbsp; INSTALLATION INSTRUCTIONS HERE! </summary>
 <br/>
 <b>React Client </b> <br/>
@@ -25,21 +23,19 @@ Team Members: Karen, Steven, Kalvin
     <li>Create your own cognito user pool in AWS & Twitch developer API at https://dev.twitch.tv/</li>
 </ol>
 
-    ```json
-        {
-            "cognito": {
-                "REGION": "COGNITO_REGION",
-                "USER_POOL_ID": "COGNITO_USER_POOL_ID",
-                "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
-            },
-            "twitch": {
-                "CLIENT_ID": "TWITCH_CLIENT_ID",
-                "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
-            }
-        }
-    ```
-
-</details>
+```json
+{
+    "cognito": {
+        "REGION": "COGNITO_REGION",
+        "USER_POOL_ID": "COGNITO_USER_POOL_ID",
+        "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
+    },
+    "twitch": {
+        "CLIENT_ID": "TWITCH_CLIENT_ID",
+        "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
+    }
+}
+```
 
 ## :bookmark_tabs: &nbsp; FEATURE LIST
 
@@ -101,17 +97,3 @@ All posts:
 
 Messaging:
 <img src="https://i.imgur.com/PYmLIM4.png" alt="Low Fidelity for AFK & Chill" width="100%" />
-
-```json
-{
-    "cognito": {
-        "REGION": "COGNITO_REGION",
-        "USER_POOL_ID": "COGNITO_USER_POOL_ID",
-        "APP_CLIENT_ID": "COGNITO_APP_CLIENT_ID"
-    },
-    "twitch": {
-        "CLIENT_ID": "TWITCH_CLIENT_ID",
-        "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
-    }
-}
-```
