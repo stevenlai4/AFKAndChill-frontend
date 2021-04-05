@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import TinderCard from 'react-tinder-card';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Typography, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { ReactComponent as LoadingBeanEater } from '../../assests/loading-bean-eater.svg';
 import { getMatchableChillers, dislike, like } from '../../network';
 import UserInfo from './UserInfo';
@@ -61,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Match() {
     const [chillers, setChillers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [successMsg, setSuccessMsg] = useState('');
+    const [open, setOpen] = useState(false);
     const classes = useStyles();
     let chillersState = chillers;
 
@@ -81,16 +84,29 @@ export default function Match() {
         })();
     }, []);
 
+    // Handle snackbar close
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
     const swiped = async (direction, chiller) => {
+        let response = '';
+
         try {
             if (direction === 'left') {
                 // Dislike the chiller
-                const successMsg = await dislike(chiller.cognito_id);
-                console.log(successMsg);
+                response = await dislike(chiller.cognito_id);
             } else if (direction === 'right') {
                 // Like the chiller
-                const successMsg = await like(chiller.cognito_id);
-                console.log(successMsg);
+                response = await like(chiller.cognito_id);
+            }
+
+            if (response) {
+                setSuccessMsg(response);
+                setOpen(true);
             }
         } catch (error) {
             console.error(error);
@@ -132,6 +148,19 @@ export default function Match() {
                     No More Matchable Chillers
                 </Typography>
             )}
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                open={open}
+                autoHideDuration={2000}
+                onClose={handleClose}
+            >
+                <Alert onClose={handleClose} severity="success">
+                    {successMsg}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
