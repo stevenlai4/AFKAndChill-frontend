@@ -49,7 +49,7 @@ export default function Header({
 }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = useState(null);
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
     const open = Boolean(anchorEl);
 
     const handleMenu = (event) => {

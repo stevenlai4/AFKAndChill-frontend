@@ -87,7 +87,7 @@ export default function ChatBox({ chatboxes }) {
     const [isLoading, setIsLoading] = useState(false);
     const [matchedChiller, setMatchedChiller] = useState({});
     const [rerender, setRerender] = useState(false);
-    const [user, setUser] = useContext(UserContext);
+    const [user] = useContext(UserContext);
 
     // CDM
     useEffect(() => {
