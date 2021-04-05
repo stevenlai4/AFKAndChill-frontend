@@ -24,7 +24,8 @@ Team Members: Karen, Steven, Kalvin
     <li>Navigate to the project directory then type `npm install` in the command line</li>
     <li>Create your own cognito user pool in AWS & Twitch developer API at https://dev.twitch.tv/</li>
     <li>Create a config.json file in the src folder with: </li>
-    ```json
+</ol>
+ ```json
     {
         "cognito": {
             "REGION": "COGNITO_REGION",
@@ -36,8 +37,7 @@ Team Members: Karen, Steven, Kalvin
             "CLIENT_SECRET": "TWITCH_CLIENT_SECRET"
         }
     }
-    ```
-</ol>
+```
 </details>
 
 </br>
