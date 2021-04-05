@@ -14,9 +14,10 @@ Team Members: Karen, Steven, Kalvin
 <br/>
 </br>
 
-<summary> :key: &nbsp; INSTALLATION INSTRUCTIONS HERE! </summary>
+:key: &nbsp; INSTALLATION INSTRUCTIONS HERE!
 <br/>
 <b>React Client </b> <br/>
+
 <ol>
     <li>Clone the <a href="https://github.com/BCIT-SSD-2020-21/front-end-team1.git">AFK & Chill Repo</a> to your Local machine</li>
     <li>Navigate to the project directory then type `npm install` in the command line</li>
